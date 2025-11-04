@@ -2,18 +2,75 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Pāśupata Sūtra - Scholarly Sentence Analysis</title>
+    <title>Sanskrit Texts - Scholarly Analysis</title>
     <style>
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            margin: 20px;
+            margin: 0;
+            padding: 0;
             line-height: 1.6;
+        }
+        .main-header {
+            text-align: center;
+            color: #8B4513;
+            font-size: 24pt;
+            margin: 20px 0 10px 0;
+            padding: 0 20px;
+        }
+        .tabs {
+            display: flex;
+            justify-content: center;
+            background-color: #F5F5DC;
+            border-bottom: 3px solid #8B4513;
+            margin: 0;
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .tab {
+            padding: 15px 40px;
+            cursor: pointer;
+            background-color: #E8E8D0;
+            border: none;
+            border-right: 1px solid #8B4513;
+            font-size: 14pt;
+            font-weight: bold;
+            color: #666;
+            transition: all 0.3s ease;
+        }
+        .tab:hover {
+            background-color: #D2B48C;
+            color: #000;
+        }
+        .tab.active {
+            background-color: #8B4513;
+            color: white;
+        }
+        .tab-content {
+            display: none;
+            padding: 20px;
+            animation: fadeIn 0.3s;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         h1 {
             text-align: center;
             color: #8B4513;
             font-size: 24pt;
             margin-bottom: 30px;
+        }
+        h2 {
+            text-align: center;
+            color: #666;
+            font-size: 18pt;
+            margin-bottom: 20px;
+            font-style: italic;
         }
         table {
             width: 100%;
@@ -335,10 +392,12 @@
 <div id="unsavedIndicator" class="unsaved-indicator">● Unsaved changes</div>
 <div id="notification" class="notification">✓ File saved successfully!</div>
 
-<h1>Pāśupata Sūtra - Comprehensive Scholarly Analysis</h1>
-<p style="text-align: center; font-style: italic; margin-bottom: 30px;">
-Sentence-by-Sentence Translation with Linguistic Analysis
-</p>
+<h1 class="main-header">Sanskrit Texts - Scholarly Analysis</h1>
+
+<div class="tabs">
+    <div class="tab active" onclick="switchTab('pasupata')">Pāśupatasūtra</div>
+    <div class="tab" onclick="switchTab('vivekamartanda')">Vivekamartanda</div>
+</div>
 
 <div id="setupBanner" class="setup-banner" style="display: none;">
     <h2>⚠️ Cloud Storage Setup Required</h2>
@@ -353,6 +412,13 @@ Sentence-by-Sentence Translation with Linguistic Analysis
     </ol>
     <p><strong>Alternative:</strong> Your edits are still saved in this browser using localStorage. They just won't sync to other browsers yet.</p>
 </div>
+
+<!-- Pāśupatasūtra Tab Content -->
+<div id="pasupata" class="tab-content active">
+    <h1>Pāśupata Sūtra - Comprehensive Scholarly Analysis</h1>
+    <p style="text-align: center; font-style: italic; margin-bottom: 30px;">
+    Sentence-by-Sentence Translation with Linguistic Analysis
+    </p>
 
 <table>
     <thead>
@@ -2567,6 +2633,77 @@ unmādaḥ kauṇyakuṣṭhitvam klaibyodāvartapāṅgutāḥ ||</td>
 Complete Document - All Sentences Analyzed with Introductory Section
 </p>
 
+</div>
+<!-- End Pāśupatasūtra Tab -->
+
+<!-- Vivekamartanda Tab Content -->
+<div id="vivekamartanda" class="tab-content">
+    <h1>Vivekamartanda - Comprehensive Scholarly Analysis</h1>
+    <p style="text-align: center; font-style: italic; margin-bottom: 30px;">
+    Sentence-by-Sentence Translation with Linguistic Analysis
+    </p>
+
+    <div style="text-align: center; padding: 60px 20px; background-color: #FFF8DC; border: 2px dashed #D2B48C; border-radius: 10px; margin: 40px auto; max-width: 800px;">
+        <h2 style="color: #8B4513; margin-bottom: 20px;">📖 Vivekamartanda Content</h2>
+        <p style="font-size: 14pt; color: #666; margin-bottom: 20px;">
+            This tab is ready for the Vivekamartanda translation table.
+        </p>
+        <p style="font-size: 12pt; color: #888; font-style: italic;">
+            The same editable format will be used: Sanskrit Text, Word-by-Word Analysis (editable),
+            Literal Translation (editable), Interpretative Meaning, and Literary Translation.
+        </p>
+        <p style="font-size: 12pt; color: #888; margin-top: 20px;">
+            Content will be added soon...
+        </p>
+    </div>
+
+</div>
+<!-- End Vivekamartanda Tab -->
+
+<script>
+    // Tab switching function
+    function switchTab(tabName) {
+        // Hide all tab contents
+        const tabContents = document.getElementsByClassName('tab-content');
+        for (let i = 0; i < tabContents.length; i++) {
+            tabContents[i].classList.remove('active');
+        }
+
+        // Remove active class from all tabs
+        const tabs = document.getElementsByClassName('tab');
+        for (let i = 0; i < tabs.length; i++) {
+            tabs[i].classList.remove('active');
+        }
+
+        // Show selected tab content
+        const selectedContent = document.getElementById(tabName);
+        if (selectedContent) {
+            selectedContent.classList.add('active');
+        }
+
+        // Mark selected tab as active
+        const allTabs = document.querySelectorAll('.tab');
+        allTabs.forEach(tab => {
+            if (tab.getAttribute('onclick').includes(tabName)) {
+                tab.classList.add('active');
+            }
+        });
+
+        // Save current tab to localStorage
+        localStorage.setItem('activeTab', tabName);
+
+        console.log('Switched to tab:', tabName);
+    }
+
+    // Restore last active tab on page load
+    function restoreActiveTab() {
+        const lastTab = localStorage.getItem('activeTab');
+        if (lastTab && document.getElementById(lastTab)) {
+            switchTab(lastTab);
+        }
+    }
+</script>
+
 <script>
     // Cloud Storage Configuration
     // ⚠️ SETUP REQUIRED: Get your free API key at https://jsonbin.io/
@@ -2770,6 +2907,9 @@ Complete Document - All Sentences Analyzed with Introductory Section
 
     // Initialize on page load
     document.addEventListener('DOMContentLoaded', function() {
+        // Restore last active tab
+        restoreActiveTab();
+
         // Show setup banner if not configured
         if (!isConfigured) {
             const banner = document.getElementById('setupBanner');
