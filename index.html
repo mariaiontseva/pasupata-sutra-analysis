@@ -170,6 +170,38 @@
             z-index: 999;
             display: none;
         }
+        /* Tab styles */
+        .tab-container {
+            border-bottom: 2px solid #8B4513;
+            margin-bottom: 20px;
+            padding-top: 10px;
+        }
+        .tab-button {
+            background-color: #D2B48C;
+            border: 2px solid #8B4513;
+            border-bottom: none;
+            padding: 12px 24px;
+            cursor: pointer;
+            font-size: 14pt;
+            font-weight: bold;
+            color: #000;
+            margin-right: 5px;
+            border-radius: 8px 8px 0 0;
+            transition: background-color 0.3s;
+        }
+        .tab-button:hover {
+            background-color: #C9A870;
+        }
+        .tab-button.active {
+            background-color: #8B4513;
+            color: white;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
     </style>
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
@@ -335,6 +367,14 @@
 <div id="unsavedIndicator" class="unsaved-indicator">● Unsaved changes</div>
 <div id="notification" class="notification">✓ File saved successfully!</div>
 
+<!-- Tab Navigation -->
+<div class="tab-container">
+    <button class="tab-button active" onclick="switchTab('pasupata')">Pāśupata Sūtra</button>
+    <button class="tab-button" onclick="switchTab('vivekamartanda')">Vivekamārtaṇḍa</button>
+</div>
+
+<!-- Pāśupata Sūtra Tab Content -->
+<div id="pasupata-tab" class="tab-content active">
 <h1>Pāśupata Sūtra - Comprehensive Scholarly Analysis</h1>
 <p style="text-align: center; font-style: italic; margin-bottom: 30px;">
 Sentence-by-Sentence Translation with Linguistic Analysis
@@ -2566,6 +2606,55 @@ unmādaḥ kauṇyakuṣṭhitvam klaibyodāvartapāṅgutāḥ ||</td>
 <p style="text-align: center; font-style: italic; margin-top: 30px; color: #8B4513;">
 Complete Document - All Sentences Analyzed with Introductory Section
 </p>
+</div>
+<!-- End Pāśupata Sūtra Tab -->
+
+<!-- Vivekamārtaṇḍa Tab Content -->
+<div id="vivekamartanda-tab" class="tab-content">
+<h1>Vivekamārtaṇḍa - Comprehensive Scholarly Analysis</h1>
+<p style="text-align: center; font-style: italic; margin-bottom: 30px;">
+Sentence-by-Sentence Translation with Linguistic Analysis
+</p>
+
+<div id="setupBanner-vm" class="setup-banner" style="display: none;">
+    <h2>⚠️ Cloud Storage Setup Required</h2>
+    <p>To save your edits across browsers, you need to configure cloud storage (takes 2 minutes):</p>
+    <ol>
+        <li>Go to <a href="https://jsonbin.io/" target="_blank">https://jsonbin.io/</a> and create a free account</li>
+        <li>Click "API Keys" tab and copy your API key</li>
+        <li>Open this repository in GitHub: <code>pasupata-sutra-analysis/index.html</code></li>
+        <li>Edit the JSONBIN_API_KEY with your actual API key</li>
+        <li>Commit and push the changes</li>
+        <li>Refresh this page - your edits will now sync automatically!</li>
+    </ol>
+    <p><strong>Alternative:</strong> Your edits are still saved in this browser using localStorage. They just won't sync to other browsers yet.</p>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th style="width: 14%;">Sanskrit Text</th>
+            <th style="width: 27%;">Word-by-Word Analysis</th>
+            <th style="width: 19%;">Literal Translation</th>
+            <th style="width: 19%;">Interpretative Meaning</th>
+            <th style="width: 21%;">Literary Translation</th>
+        </tr>
+    </thead>
+    <tbody id="vivekamartanda-tbody">
+        <!-- Table content will be added here when you upload the document -->
+        <tr>
+            <td colspan="5" style="text-align: center; padding: 40px; color: #8B4513; font-style: italic;">
+                Please upload the Vivekamārtaṇḍa document to populate this table.
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<p style="text-align: center; font-style: italic; margin-top: 30px; color: #8B4513;">
+Vivekamārtaṇḍa Analysis
+</p>
+</div>
+<!-- End Vivekamārtaṇḍa Tab -->
 
 <script>
     // Cloud Storage Configuration
@@ -2864,6 +2953,48 @@ Complete Document - All Sentences Analyzed with Introductory Section
             e.preventDefault();
             e.returnValue = 'You have unsaved changes. Are you sure you want to leave?';
             return e.returnValue;
+        }
+    });
+
+    // Tab switching function
+    function switchTab(tabName) {
+        // Hide all tab contents
+        const tabContents = document.querySelectorAll('.tab-content');
+        tabContents.forEach(content => {
+            content.classList.remove('active');
+        });
+
+        // Remove active class from all buttons
+        const tabButtons = document.querySelectorAll('.tab-button');
+        tabButtons.forEach(button => {
+            button.classList.remove('active');
+        });
+
+        // Show selected tab content
+        const selectedTab = document.getElementById(tabName + '-tab');
+        if (selectedTab) {
+            selectedTab.classList.add('active');
+        }
+
+        // Activate clicked button
+        event.target.classList.add('active');
+
+        // Save current tab to localStorage
+        localStorage.setItem('currentTab', tabName);
+    }
+
+    // Restore last active tab on page load
+    window.addEventListener('load', function() {
+        const savedTab = localStorage.getItem('currentTab');
+        if (savedTab && document.getElementById(savedTab + '-tab')) {
+            switchTab(savedTab);
+            // Update button active state
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+                if (button.textContent.toLowerCase().includes(savedTab === 'pasupata' ? 'pāśupata' : 'viveka')) {
+                    button.classList.add('active');
+                }
+            });
         }
     });
 </script>
