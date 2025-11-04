@@ -1,15 +1,22 @@
-# Pāśupata Sūtra - Comprehensive Scholarly Analysis
+# Sanskrit Texts - Scholarly Analysis
 
-Interactive scholarly translation table for the Pāśupata Sūtra commentary with cloud-based auto-save.
+Interactive scholarly translation tables for multiple Sanskrit texts with cloud-based auto-save.
+
+## Texts Included
+
+- **Pāśupatasūtra** - Complete with sentence-by-sentence analysis
+- **Vivekamartanda** - Coming soon
 
 ## Features
 
+- 📑 **Tabbed Interface**: Switch between multiple texts with a single click
 - ✏️ **Editable Cells**: Both "Word-by-Word Analysis" (blue) and "Literal Translation" (yellow) columns are editable
 - ☁️ **Cloud Storage**: Changes automatically sync to JSONbin cloud database
 - 💾 **Auto-save**: Changes saved 2 seconds after you stop typing
 - 🔄 **Cross-Browser Sync**: Open in any browser and see your latest edits
 - 🔁 **Auto-sync**: Checks for updates from other browsers every 30 seconds
 - 💻 **Local Backup**: Always saves to browser localStorage as fallback
+- 🔖 **Tab Memory**: Remembers which tab you were viewing
 - 📝 **5-Column Analysis**:
   - Sanskrit Text
   - Word-by-Word Analysis (editable)
@@ -20,8 +27,9 @@ Interactive scholarly translation table for the Pāśupata Sūtra commentary wit
 ## Quick Start
 
 1. Open: https://mariaiontseva.github.io/pasupata-sutra-analysis/
-2. Click any blue or yellow cell to edit
-3. Your changes are automatically saved to your browser
+2. Choose a tab: **Pāśupatasūtra** or **Vivekamartanda**
+3. Click any blue or yellow cell to edit
+4. Your changes are automatically saved to your browser
 
 **To sync across browsers:** See setup instructions below.
 
@@ -69,10 +77,12 @@ The page works immediately with localStorage, but to sync edits across browsers 
 
 ## How to Use
 
-1. **Edit**: Click any blue (Word-by-Word) or yellow (Literal Translation) cell
-2. **Type**: Make your changes
-3. **Wait**: After 2 seconds of no typing, you'll see "✓ Saved to cloud"
-4. **Switch Browser**: Open same URL in another browser - changes are there!
+1. **Select Tab**: Click "Pāśupatasūtra" or "Vivekamartanda" at the top
+2. **Edit**: Click any blue (Word-by-Word) or yellow (Literal Translation) cell
+3. **Type**: Make your changes
+4. **Wait**: After 2 seconds of no typing, you'll see "✓ Saved to cloud"
+5. **Switch Tab**: Your last viewed tab is remembered
+6. **Switch Browser**: Open same URL in another browser - changes are there!
 
 ## Browser Requirements
 
