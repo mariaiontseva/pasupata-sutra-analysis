@@ -116,78 +116,54 @@
         .notification:hover {
             opacity: 0.9;
         }
-        .notification[style*="cursor: pointer"] {
-            text-decoration: underline;
+        .download-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 24px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 14pt;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+        .download-button:hover {
+            background-color: #45a049;
+        }
+        .unsaved-indicator {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            padding: 8px 16px;
+            background-color: #ff9800;
+            color: white;
+            border-radius: 5px;
+            font-size: 11pt;
+            z-index: 999;
+            display: none;
         }
     </style>
     <script>
-        let fileHandle = null;
-        let autoSaveEnabled = false;
         let hasUnsavedChanges = false;
+        let lastSaveTime = null;
 
-        async function setupAutoSave(isRetry = false) {
-            try {
-                // Request file handle for auto-save (File System Access API)
-                const options = {
-                    types: [{
-                        description: 'HTML Files',
-                        accept: {'text/html': ['.html']},
-                    }],
-                    suggestedName: 'Pasupata_Sutra_Complete_Analysis.html'
-                };
+        function downloadFile() {
+            const htmlContent = document.documentElement.outerHTML;
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'Pasupata_Sutra_Analysis_' + new Date().toISOString().slice(0,10) + '.html';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
 
-                if (!isRetry) {
-                    showNotification('📁 Please select this file to enable auto-save...', 'info', 3000);
-                }
-
-                fileHandle = await window.showSaveFilePicker(options);
-                autoSaveEnabled = true;
-
-                showNotification('✓ Auto-save enabled! Changes will be saved every 60 seconds.', 'success', 5000);
-
-                // Start auto-save interval
-                startAutoSave();
-            } catch (err) {
-                if (err.name === 'AbortError') {
-                    // User cancelled - ask again
-                    showNotification('❌ Auto-save cancelled. Click here to retry.', 'warning', 0);
-                    document.getElementById('notification').style.cursor = 'pointer';
-                    document.getElementById('notification').onclick = () => {
-                        document.getElementById('notification').onclick = null;
-                        document.getElementById('notification').style.cursor = 'default';
-                        setupAutoSave(true);
-                    };
-                } else {
-                    console.error('Error setting up auto-save:', err);
-                    showNotification('⚠️ Auto-save not available in this browser. Changes saved to browser only.', 'warning', 6000);
-                }
-            }
-        }
-
-        async function autoSave() {
-            if (!autoSaveEnabled || !fileHandle || !hasUnsavedChanges) return;
-
-            try {
-                const htmlContent = document.documentElement.outerHTML;
-                const writable = await fileHandle.createWritable();
-                await writable.write(htmlContent);
-                await writable.close();
-
-                hasUnsavedChanges = false;
-                showNotification('✓ Auto-saved', 'success', 2000);
-            } catch (err) {
-                console.error('Auto-save error:', err);
-                showNotification('Auto-save failed. Please save manually.', 'error');
-            }
-        }
-
-        function startAutoSave() {
-            // Auto-save every 60 seconds if there are changes
-            setInterval(() => {
-                if (hasUnsavedChanges) {
-                    autoSave();
-                }
-            }, 60000);
+            hasUnsavedChanges = false;
+            document.getElementById('unsavedIndicator').style.display = 'none';
+            showNotification('✓ File downloaded successfully!', 'success', 3000);
+            lastSaveTime = new Date();
         }
 
 
@@ -211,6 +187,7 @@
             editableCells.forEach(cell => {
                 cell.addEventListener('input', () => {
                     hasUnsavedChanges = true;
+                    document.getElementById('unsavedIndicator').style.display = 'block';
                     // Save to localStorage as backup
                     saveToLocalStorage();
                 });
@@ -219,16 +196,16 @@
             // Restore from localStorage on load
             restoreFromLocalStorage();
 
-            // Automatically set up auto-save
+            // Show welcome message
             setTimeout(() => {
-                setupAutoSave();
-            }, 1000);
+                showNotification('💾 Changes are auto-saved to your browser. Click "Download" to save a file.', 'info', 6000);
+            }, 500);
 
             // Warn before leaving if there are unsaved changes
             window.addEventListener('beforeunload', (e) => {
                 if (hasUnsavedChanges) {
                     e.preventDefault();
-                    e.returnValue = 'You have unsaved changes. Are you sure you want to leave?';
+                    e.returnValue = 'You have unsaved changes. Download the file before leaving!';
                 }
             });
         });
@@ -285,6 +262,8 @@
 </head>
 <body>
 
+<button class="download-button" onclick="downloadFile()">💾 Download</button>
+<div id="unsavedIndicator" class="unsaved-indicator">● Unsaved changes</div>
 <div id="notification" class="notification">✓ File saved successfully!</div>
 
 <h1>Pāśupata Sūtra - Comprehensive Scholarly Analysis</h1>
