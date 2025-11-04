@@ -151,7 +151,32 @@
         let lastSaveTime = null;
 
         function downloadFile() {
-            const htmlContent = document.documentElement.outerHTML;
+            // Create a clone of the document to preserve changes
+            const clone = document.documentElement.cloneNode(true);
+
+            // Get all editable cells from the original document
+            const literalCells = document.querySelectorAll('.literal[contenteditable="true"]');
+            const wordsCells = document.querySelectorAll('.words[contenteditable="true"]');
+
+            // Get corresponding cells in the clone
+            const cloneLiteralCells = clone.querySelectorAll('.literal[contenteditable="true"]');
+            const cloneWordsCells = clone.querySelectorAll('.words[contenteditable="true"]');
+
+            // Copy content from original to clone
+            literalCells.forEach((cell, index) => {
+                if (cloneLiteralCells[index]) {
+                    cloneLiteralCells[index].innerHTML = cell.innerHTML;
+                }
+            });
+
+            wordsCells.forEach((cell, index) => {
+                if (cloneWordsCells[index]) {
+                    cloneWordsCells[index].innerHTML = cell.innerHTML;
+                }
+            });
+
+            // Get the full HTML with preserved changes
+            const htmlContent = '<!DOCTYPE html>\n' + clone.outerHTML;
             const blob = new Blob([htmlContent], { type: 'text/html' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
@@ -162,7 +187,7 @@
 
             hasUnsavedChanges = false;
             document.getElementById('unsavedIndicator').style.display = 'none';
-            showNotification('✓ File downloaded successfully!', 'success', 3000);
+            showNotification('✓ File downloaded with all changes saved!', 'success', 3000);
             lastSaveTime = new Date();
         }
 
