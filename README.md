@@ -124,10 +124,49 @@ The page works immediately with localStorage, but to sync edits across browsers 
 
 This tool is designed for dissertation research on the Pāśupata Sūtra, providing an interactive platform for refining translations and grammatical analysis with automatic cloud backup.
 
+## Local Development
+
+To develop and test changes locally before pushing to GitHub:
+
+### Quick Start
+
+```bash
+cd /Users/mariaiontseva/pasupata-sutra-analysis
+./start-local.sh
+```
+
+Then open http://localhost:8080 in your browser.
+
+### Manual Method
+
+```bash
+# Start web server
+python3 -m http.server 8080
+
+# Open in browser
+open http://localhost:8080
+```
+
+### Development Workflow
+
+1. Edit `index.html` in your text editor
+2. Save the file
+3. Refresh browser (Cmd+R) to see changes
+4. When ready:
+   ```bash
+   git add index.html
+   git commit -m "Description of changes"
+   git push origin master
+   ```
+5. Wait 1-2 minutes for GitHub Pages to deploy
+6. Check https://mariaiontseva.github.io/pasupata-sutra-analysis/
+
 ## Files
 
 - `index.html` - Main application with editable table
 - `README.md` - This file
+- `start-local.sh` - Helper script to start local server
+- `.gitignore` - Git ignore rules
 
 ## Support
 
