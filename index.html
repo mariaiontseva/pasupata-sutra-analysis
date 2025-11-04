@@ -1,0 +1,2509 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Pāśupata Sūtra - Scholarly Sentence Analysis</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            text-align: center;
+            color: #8B4513;
+            font-size: 24pt;
+            margin-bottom: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        th {
+            background-color: #D2B48C;
+            color: #000;
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #8B4513;
+            font-weight: bold;
+            font-size: 11pt;
+        }
+        td {
+            border: 1px solid #D2B48C;
+            padding: 10px;
+            vertical-align: top;
+            font-size: 10pt;
+        }
+        .sanskrit {
+            font-weight: bold;
+            color: #8B0000;
+            font-size: 11pt;
+        }
+        .words {
+            font-style: italic;
+            color: #000080;
+        }
+        .words[contenteditable="true"] {
+            background-color: #E6F3FF;
+            border: 1px dashed #4682B4;
+            cursor: text;
+        }
+        .words[contenteditable="true"]:hover {
+            background-color: #CCE5FF;
+        }
+        .words[contenteditable="true"]:focus {
+            outline: 2px solid #4682B4;
+            background-color: #F0F8FF;
+        }
+        .literal {
+            color: #000;
+        }
+        .literal[contenteditable="true"] {
+            background-color: #FFFACD;
+            border: 1px dashed #DAA520;
+            cursor: text;
+        }
+        .literal[contenteditable="true"]:hover {
+            background-color: #FFFFE0;
+        }
+        .literal[contenteditable="true"]:focus {
+            outline: 2px solid #DAA520;
+            background-color: #FFFFF0;
+        }
+        .meaning {
+            color: #4B0082;
+        }
+        .literary {
+            background-color: #FFF8DC;
+            font-style: italic;
+        }
+        tr:nth-child(even) {
+            background-color: #FAFAF0;
+        }
+        .section-header {
+            background-color: #8B4513 !important;
+            color: white !important;
+            font-weight: bold;
+            text-align: center;
+            font-size: 12pt;
+        }
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 24px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            z-index: 1001;
+            display: none;
+            font-size: 11pt;
+        }
+        .notification-success {
+            background-color: #4CAF50;
+        }
+        .notification-error {
+            background-color: #f44336;
+        }
+        .notification-warning {
+            background-color: #ff9800;
+        }
+        .notification-info {
+            background-color: #2196F3;
+        }
+        .notification:hover {
+            opacity: 0.9;
+        }
+        .notification[style*="cursor: pointer"] {
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        let fileHandle = null;
+        let autoSaveEnabled = false;
+        let hasUnsavedChanges = false;
+
+        async function setupAutoSave(isRetry = false) {
+            try {
+                // Request file handle for auto-save (File System Access API)
+                const options = {
+                    types: [{
+                        description: 'HTML Files',
+                        accept: {'text/html': ['.html']},
+                    }],
+                    suggestedName: 'Pasupata_Sutra_Complete_Analysis.html'
+                };
+
+                if (!isRetry) {
+                    showNotification('📁 Please select this file to enable auto-save...', 'info', 3000);
+                }
+
+                fileHandle = await window.showSaveFilePicker(options);
+                autoSaveEnabled = true;
+
+                showNotification('✓ Auto-save enabled! Changes will be saved every 60 seconds.', 'success', 5000);
+
+                // Start auto-save interval
+                startAutoSave();
+            } catch (err) {
+                if (err.name === 'AbortError') {
+                    // User cancelled - ask again
+                    showNotification('❌ Auto-save cancelled. Click here to retry.', 'warning', 0);
+                    document.getElementById('notification').style.cursor = 'pointer';
+                    document.getElementById('notification').onclick = () => {
+                        document.getElementById('notification').onclick = null;
+                        document.getElementById('notification').style.cursor = 'default';
+                        setupAutoSave(true);
+                    };
+                } else {
+                    console.error('Error setting up auto-save:', err);
+                    showNotification('⚠️ Auto-save not available in this browser. Changes saved to browser only.', 'warning', 6000);
+                }
+            }
+        }
+
+        async function autoSave() {
+            if (!autoSaveEnabled || !fileHandle || !hasUnsavedChanges) return;
+
+            try {
+                const htmlContent = document.documentElement.outerHTML;
+                const writable = await fileHandle.createWritable();
+                await writable.write(htmlContent);
+                await writable.close();
+
+                hasUnsavedChanges = false;
+                showNotification('✓ Auto-saved', 'success', 2000);
+            } catch (err) {
+                console.error('Auto-save error:', err);
+                showNotification('Auto-save failed. Please save manually.', 'error');
+            }
+        }
+
+        function startAutoSave() {
+            // Auto-save every 60 seconds if there are changes
+            setInterval(() => {
+                if (hasUnsavedChanges) {
+                    autoSave();
+                }
+            }, 60000);
+        }
+
+
+        function showNotification(message, type = 'success', duration = 3000) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = 'notification notification-' + type;
+            notification.style.display = 'block';
+
+            if (duration > 0) {
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, duration);
+            }
+        }
+
+        // Track changes
+        document.addEventListener('DOMContentLoaded', () => {
+            const editableCells = document.querySelectorAll('.literal[contenteditable="true"], .words[contenteditable="true"]');
+
+            editableCells.forEach(cell => {
+                cell.addEventListener('input', () => {
+                    hasUnsavedChanges = true;
+                    // Save to localStorage as backup
+                    saveToLocalStorage();
+                });
+            });
+
+            // Restore from localStorage on load
+            restoreFromLocalStorage();
+
+            // Automatically set up auto-save
+            setTimeout(() => {
+                setupAutoSave();
+            }, 1000);
+
+            // Warn before leaving if there are unsaved changes
+            window.addEventListener('beforeunload', (e) => {
+                if (hasUnsavedChanges) {
+                    e.preventDefault();
+                    e.returnValue = 'You have unsaved changes. Are you sure you want to leave?';
+                }
+            });
+        });
+
+        function saveToLocalStorage() {
+            const literalCells = document.querySelectorAll('.literal[contenteditable="true"]');
+            const wordsCells = document.querySelectorAll('.words[contenteditable="true"]');
+
+            const literalData = {};
+            literalCells.forEach((cell, index) => {
+                literalData[index] = cell.innerHTML;
+            });
+
+            const wordsData = {};
+            wordsCells.forEach((cell, index) => {
+                wordsData[index] = cell.innerHTML;
+            });
+
+            localStorage.setItem('pasupata_literal_edits', JSON.stringify(literalData));
+            localStorage.setItem('pasupata_words_edits', JSON.stringify(wordsData));
+            localStorage.setItem('pasupata_last_save', new Date().toISOString());
+        }
+
+        function restoreFromLocalStorage() {
+            const savedLiteralData = localStorage.getItem('pasupata_literal_edits');
+            const savedWordsData = localStorage.getItem('pasupata_words_edits');
+
+            if (savedLiteralData) {
+                const data = JSON.parse(savedLiteralData);
+                const editableCells = document.querySelectorAll('.literal[contenteditable="true"]');
+                editableCells.forEach((cell, index) => {
+                    if (data[index]) {
+                        cell.innerHTML = data[index];
+                    }
+                });
+            }
+
+            if (savedWordsData) {
+                const data = JSON.parse(savedWordsData);
+                const editableCells = document.querySelectorAll('.words[contenteditable="true"]');
+                editableCells.forEach((cell, index) => {
+                    if (data[index]) {
+                        cell.innerHTML = data[index];
+                    }
+                });
+            }
+
+            const lastSave = localStorage.getItem('pasupata_last_save');
+            if (lastSave) {
+                showNotification('Restored from backup: ' + new Date(lastSave).toLocaleString(), 'info', 5000);
+            }
+        }
+    </script>
+</head>
+<body>
+
+<div id="notification" class="notification">✓ File saved successfully!</div>
+
+<h1>Pāśupata Sūtra - Comprehensive Scholarly Analysis</h1>
+<p style="text-align: center; font-style: italic; margin-bottom: 30px;">
+Sentence-by-Sentence Translation with Linguistic Analysis
+</p>
+
+<table>
+    <thead>
+        <tr>
+            <th style="width: 14%;">Sanskrit Text</th>
+            <th style="width: 27%;">Word-by-Word Analysis</th>
+            <th style="width: 19%;">Literal Translation</th>
+            <th style="width: 19%;">Interpretative Meaning</th>
+            <th style="width: 21%;">Literary Translation</th>
+        </tr>
+    </thead>
+    <tbody>
+
+<!-- INTRODUCTORY SECTION -->
+<tr>
+    <td colspan="5" class="section-header">INTRODUCTORY SECTION: THE CIRCUMSTANCES OF THE TEACHING</td>
+</tr>
+
+<tr>
+    <td class="sanskrit">iti | tathā brahmaṇagrahaṇāt stripratiṣedhād indriyajayopadeśāc ca</td>
+    <td class="words" contenteditable="true">
+        • iti = therefore<br>
+        • tathā = likewise<br>
+        • brahmaṇa-grahaṇāt = from the specification of a Brahmin (abl. sg.)<br>
+        • strī-pratiṣedhāt = from the prohibition regarding women (abl. sg.)<br>
+        • indriya-jaya-upadeśāt = from the teaching about sense-control (abl. sg.)<br>
+        • ca = and
+    </td>
+    <td class="literal" contenteditable="true">
+        Therefore, likewise [as with the teacher's excellence], from the scriptural specification [requiring the student to be] a Brahmin, from the prohibition regarding women [as students], and from the teaching about sense-conquest.
+    </td>
+    <td class="meaning">
+        Creates a parallel to the teacher's pre-eminence: "tathā" (likewise/just so) indicates that just as the teacher has been shown to be supreme, so too the student is distinguished above all other students based on scriptural qualifications - Brahmin birth (PS 4.20), male gender (prohibition of women, PS 1.13), and mastery of senses (PS 5.7).
+    </td>
+    <td class="literary">
+        Just so, on the strength of the Sūtras mentioning brāhmaṇa, forbidding [intercourse] with women and instructing the conquest of the senses...
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">uktaṃ hi:</td>
+    <td class="words" contenteditable="true">
+        • uktam = it has been said (nom. sg., past pass. part.)<br>
+        • hi = for, indeed
+    </td>
+    <td class="literal" contenteditable="true">
+        For it has been said.
+    </td>
+    <td class="meaning">
+        Introduces scriptural citation as authoritative support.
+    </td>
+    <td class="literary">
+        As it has been said [in scripture]:
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">bādhiryam āndhyam aghratvam mukatā jaḍatā tathā |<br>
+unmādaḥ kauṇyakuṣṭhitvam klaibyodāvartapāṅgutāḥ ||</td>
+    <td class="words" contenteditable="true">
+        • bādhiryam = deafness (nom. sg.)<br>
+        • āndhyam = blindness (nom. sg.)<br>
+        • aghratvam = inability to smell (nom. sg.)<br>
+        • mukatā = dumbness (nom. sg.)<br>
+        • jaḍatā = numbness/insensitivity (nom. sg.)<br>
+        • tathā = likewise<br>
+        • unmādaḥ = madness (nom. sg.)<br>
+        • kauṇya = paralysis of the hands (nom. sg.)<br>
+        • kuṣṭhitvam = scabies/leprosy (nom. sg.)<br>
+        • klaibya = impotence (nom. sg.)<br>
+        • udāvarta = constipation/intestinal obstruction (nom. sg.)<br>
+        • pāṅgutāḥ = lameness (nom. pl.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Deafness, blindness, inability to smell, dumbness, numbness, madness, paralysis of the hands, scabies, impotence, constipation, and lameness.
+    </td>
+    <td class="meaning">
+        Lists disqualifying physical and sensory impairments for discipleship - complete sensory deprivation (deaf, blind, unable to smell, mute), physical insensitivity (numbness/jaḍatā), mental disorder (madness), motor disabilities (hand paralysis, lameness), skin disease (scabies/leprosy), sexual dysfunction (impotence), and digestive disorder (constipation).
+    </td>
+    <td class="literary">
+        "Deafness, blindness, inability to smell, dumbness, numbness, madness, paralysis of the hands, scabies, impotence, constipation, and lameness..."
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">vyādhirahitaḥ patvindriyo brāhmaṇaḥ śiṣyaḥ</td>
+    <td class="words" contenteditable="true">
+        • vyādhi-rahitaḥ = free from disease (nom. sg.)<br>
+        • patvi-indriyaḥ = possessing keen/sharp senses (nom. sg.)<br>
+        • brāhmaṇaḥ = a Brahmin (nom. sg.)<br>
+        • śiṣyaḥ = the student (nom. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        The student is a Brahmin who possesses keen senses and is free from disease.
+    </td>
+    <td class="meaning">
+        Positive qualifications: physical health (vyādhirahita), keen sensory powers (patvindṛiya = having sharp/acute senses, from patvin "sharp, keen"), and Brahmin birth. Unlike the disabled who lack sensory function, the qualified student must have excellent sensory capacity.
+    </td>
+    <td class="literary">
+        The pupil is a brahmin who is provided with keen sensory powers and is free of illness.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">tathā kāmitvād indrakauśikādibhyaś cācāryo divyaḥ</td>
+    <td class="words" contenteditable="true">
+        • tathā = likewise<br>
+        • kāmitvāt = from [the sūtra's mention of] wish-fulfillment power (abl. sg.)<br>
+        • indra-kauśika-ādibhyaḥ = [in contrast] to Indra, Kauśika and others (abl. pl.)<br>
+        • ca = and<br>
+        • ācāryaḥ = the teacher (nom. sg.)<br>
+        • divyaḥ = divine (nom. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Likewise, on the strength of [the scriptural reference to] wish-fulfillment power (kāmitva), in contrast to Indra, Kauśika and others, the teacher is divine.
+    </td>
+    <td class="meaning">
+        Establishes the teacher's divinity based on scriptural evidence: the sūtras mention kāmitva (one of the eight great supernatural powers - the ability to obtain anything wished for). This divine power distinguishes the teacher from even exalted disciples like Indra and Kauśika who lack such spontaneous sovereignty.
+    </td>
+    <td class="literary">
+        So also, on the strength of the Sūtras that speak of [kāmitva - wish-fulfillment], the teacher is divine, in contrast to Indra, Kauśika and others.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">niratīśayakrīḍaiśvaryasvābhāvyād ity arthaḥ</td>
+    <td class="words" contenteditable="true">
+        • nir-atiśaya-krīḍā = play without a superior (nom. sg.)<br>
+        • aiśvarya-svābhāvya = sovereignty as innermost nature (nom. sg.)<br>
+        • -āt = from/because of (abl. ending)<br>
+        • iti = thus<br>
+        • arthaḥ = the meaning (nom. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        This is the meaning: because sovereignty is His innermost nature and His play is without a superior.
+    </td>
+    <td class="meaning">
+        Explains two aspects of divine nature: (1) aiśvaryasvābhāvya - sovereignty (aiśvarya) is not acquired but is His essential being (svābhāvya), His very nature; (2) niratīśayakrīḍā - His activity manifests as spontaneous play (krīḍā) that has no superior (niratiśaya), unmatched by any other being.
+    </td>
+    <td class="literary">
+        His sovereignty (aiśvarya) is His innermost nature, His play is without a superior.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">codanopasadanasaṃskāravaśyādiduḥkhair abhibhūtatvāc cādivyā indrakauśikādyāḥ śiṣyā iti</td>
+    <td class="words" contenteditable="true">
+        • codana-upasadana-saṃskāra-vaśya-ādi-duḥkhaiḥ = by sufferings such as injunction, attendance, ritual, subjection, etc. (inst. pl.)<br>
+        • abhi-bhūta-tvāt = because of being overcome (abl. sg.)<br>
+        • ca = and<br>
+        • adivyāḥ = non-divine (nom. pl.)<br>
+        • indra-kauśika-ādyāḥ = Indra, Kauśika and others (nom. pl.)<br>
+        • śiṣyāḥ = disciples (nom. pl.)<br>
+        • iti = therefore
+    </td>
+    <td class="literal" contenteditable="true">
+        And because of being overcome by afflictions such as being impelled, reverently approaching [a teacher], initiation, submission and so on, therefore the disciples beginning with Indra and Kauśika are non-divine.
+    </td>
+    <td class="meaning">
+        Even great beings like Indra and Kauśika are "non-divine/not playing" (adivya - in contrast to the divine teacher's spontaneous krīḍā) because they undergo (abhibhūta) the afflictions (duḥkha) of spiritual discipline: being commanded (codanā), serving the teacher with reverence (upasadana), undergoing initiation (saṃskāra), and accepting submission (vaśya). Unlike God's effortless sovereignty, they must work and submit.
+    </td>
+    <td class="literary">
+        The pupils (on the other hand), such as Indra, Kauśika etc., are not divine/playing (adivya), because they undergo afflictions such as being impelled, reverently approaching a teacher, initiation, submission etc.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">tathā kāmitvād ajātatvāc ca manuṣyarūpī bhagavān brāhmaṇakāyam āsthāya kāyāvataraṇe avatīrṇa iti</td>
+    <td class="words" contenteditable="true">
+        • tathā = and so, likewise<br>
+        • kāmitvāt = because of wish-fulfillment power (abl. sg.)<br>
+        • ajāta-tvāt = because of being unborn/not subject to rebirth (abl. sg.)<br>
+        • ca = and<br>
+        • manuṣya-rūpī = in human form (nom. sg.)<br>
+        • bhagavān = the Blessed Lord/God (nom. sg.)<br>
+        • brāhmaṇa-kāyam = Brahmin body (acc. sg.)<br>
+        • āsthāya = having assumed (absolutive)<br>
+        • kāya-avataraṇe = at Kāyāvataraṇa (loc. sg.)<br>
+        • avatīrṇaḥ = descended (nom. sg.)<br>
+        • iti = thus
+    </td>
+    <td class="literal" contenteditable="true">
+        And so, because He is able to do whatever He wishes (kāmitva) and because He is not subject to rebirth (ajātatva), God, in human form, having assumed the body of a Brahmin, has descended at Kāyāvataraṇa.
+    </td>
+    <td class="meaning">
+        Describes the voluntary divine incarnation based on two qualities: (1) kāmitva - the power to manifest any desired form at will (unlike beings bound by karma); (2) ajātatva - being "unborn," meaning not subject to compulsory rebirth through karmic bonds. God freely chooses human embodiment (manuṣyarūpin), specifically as a Brahmin (brāhmaṇakāya), at the sacred site Kāyāvataraṇa ("place of bodily descent").
+    </td>
+    <td class="literary">
+        And so, because He is able to do whatever He wishes and because He is not subject to rebirth, God has descended (avatīrṇa) in human form in Kāyāvataraṇa, assuming the body (kāya) of a brahmin.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">tathā padbhyām ujjayaniṃ prāptaḥ</td>
+    <td class="words" contenteditable="true">
+        • tathā = likewise<br>
+        • padbhyām = by the two feet (inst. dual)<br>
+        • ujjayaniṃ = [to] Ujjayinī (acc. sg.)<br>
+        • prāptaḥ = reached (nom. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Likewise, on foot, he reached Ujjayinī.
+    </td>
+    <td class="meaning">
+        Despite divine nature, God walks on foot to Ujjayinī, demonstrating His full participation in human embodiment.
+    </td>
+    <td class="literary">
+        And then he reached Ujjayinī by foot.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">kasmāt</td>
+    <td class="words" contenteditable="true">
+        • kasmāt = why/how (interrogative)
+    </td>
+    <td class="literal" contenteditable="true">
+        How [do we know that]? / On what basis [is this known]?
+    </td>
+    <td class="meaning">
+        Questions the epistemic basis - asks for the source of knowledge/evidence (pramāṇa) for this claim about His journey to Ujjayinī. "Kasmāt" here means "from what [evidence]?"
+    </td>
+    <td class="literary">
+        [Pupil:] "How do we know that?"
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">śiṣṭaprāmāṇyāt</td>
+    <td class="words" contenteditable="true">
+        • śiṣṭa-prāmāṇyāt = from the authoritativeness of accomplished masters (abl. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        [We know that] on account of the authoritativeness of accomplished masters.
+    </td>
+    <td class="meaning">
+        Evidence based on śiṣṭaprāmāṇya - the authority (prāmāṇya) of the śiṣṭa (accomplished masters, the learned and virtuous who embody the tradition). This is a recognized source of valid knowledge (pramāṇa) in Indian epistemology.
+    </td>
+    <td class="literary">
+        [We know that] on account of the authoritativeness of accomplished masters (śiṣṭa).
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">cihnadarśanāśravaṇāc ca</td>
+    <td class="words" contenteditable="true">
+        • cihna-darśana-āśravaṇāt = from seeing and hearing the signs (abl. sg.)<br>
+        • ca = and
+    </td>
+    <td class="literal" contenteditable="true">
+        And from seeing and hearing the signs.
+    </td>
+    <td class="meaning">
+        Additional evidence: direct perception (darśana) and reliable testimony (āśravaṇa) of the signs/marks (cihna) of His presence.
+    </td>
+    <td class="literary">
+        And because we [still] see and hear proofs thereof.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">atyāśramaprasiddhaṃ liṅgam āsthāya pravacanaṃ uktavān</td>
+    <td class="words" contenteditable="true">
+        • ati-āśrama-prasiddham = renowned/known for [the life] beyond the āśramas (acc. sg.)<br>
+        • liṅgam = the marks/signs (acc. sg.)<br>
+        • āsthāya = having assumed/adopted (absolutive)<br>
+        • pravacanaṃ = the teaching/doctrine (acc. sg.)<br>
+        • uktavān = proclaimed (nom. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        After He had assumed the marks (liṅga) renowned for [indicating] the life beyond the traditional four stages (atyāśrama), He proclaimed the doctrine.
+    </td>
+    <td class="meaning">
+        God adopts the external signs (liṅga - distinctive dress, practices, lifestyle) of the atyāśrama ("beyond the āśramas") - a fifth stage that transcends the traditional four life-stages (brahmacharya, gṛhastha, vānaprastha, sannyāsa). These marks (prasiddha - well-known) identify Him as operating outside conventional social structures. Only after assuming this distinctive identity does He begin teaching.
+    </td>
+    <td class="literary">
+        After he had assumed the marks (liṅga) that demonstrate the life beyond the traditional four stages (atyāśrama), He proclaimed the doctrine.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">bhasmasnānasayanānusnānanirmālyaikavāsograhaṇād, adhikaraṇaprasiddhyarthaṃ ca svaśāstrokte āyatane śiṣyasaṃbandhārthaṃ śucau deśe bhasmavedyāṃ uṣitaḥ</td>
+    <td class="words" contenteditable="true">
+        • bhasma-snāna-sayana-anusnāna-nirmālya-eka-vāsa-ugrahaṇāt = from mentioning ash, bathing, lying, post-bath, garlands, single garment (abl. sg.)<br>
+        • adhikaraṇa-prasiddhi-artham = for establishing authority/qualification (acc. sg.)<br>
+        • ca = and<br>
+        • sva-śāstra-ukte āyatane = in the sacred place mentioned in his teaching (loc. sg.)<br>
+        • śiṣya-saṃbandha-artham = for connection with disciples (acc. sg.)<br>
+        • śucau deśe = in a pure place (loc. sg.)<br>
+        • bhasma-vedyām = on an ash platform (loc. sg.)<br>
+        • uṣitaḥ = he dwelt (nom. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        In accordance with the mentioning of "bathing with and lying in ashes, after-bath, garland, and wearing a single cloth," and with the aim of establishing the empowerment (adhikaraṇa) in the Pāśupata yoga, He stayed on a bed of ashes at a pure spot within a sanctuary (āyatana), as spoken of in His own Śāstra, for the sake of connecting with a pupil.
+    </td>
+    <td class="meaning">
+        Describes the ritual setting based on sūtra references to specific practices. God follows these practices (bhasmasnāna = ash bathing, sayana = lying in ashes, anusnāna = after-bath ritual, nirmālya = garlands, ekavāsa = single garment) in order to establish adhikaraṇa (the empowerment/qualification/confirmation in Pāśupata yoga). He waits at an āyatana (sanctuary/sacred dwelling mentioned in His own śāstra) on a bhasmavedī (ash platform/bed) at a pure spot (śucau deśe) for the purpose of connecting with the qualified pupil.
+    </td>
+    <td class="literary">
+        In accordance with the mentioning of "bathing with and lying in ashes, after-bath, garland, and wearing a single cloth," and with the aim of establishing the empowering/confirmation (adhikaraṇa) in the Pāśupata yoga, he stayed on a bed of ashes at a pure spot within a sanctuary (āyatana), as spoken of in his own Śāstra, for the sake of connecting with a pupil.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">ato rudrapracoditaḥ kuśikabhagavān abhyagatyācarye paripūrṇaparitṛptyādyutkarṣalakṣaṇaṃ vipariṇatam cātmani dṛṣṭvā pādāv upasaṃgṛhya nyāyena jātigotraṃ śrutam anṛṇatvaṃ ca nivedayitvā kṛtaparikṣaṇam ācāryaṃ kale vaidyavad avasthitam āturavad avasthitaḥ śiṣyaḥ pṛṣṭavān:</td>
+    <td class="words" contenteditable="true">
+        • ataḥ = therefore<br>
+        • rudra-pracoditaḥ = impelled by Rudra (nom. sg.)<br>
+        • kuśika-bhagavān = the venerable Kuśika (nom. sg.)<br>
+        • abhyagatya = having approached (absolutive)<br>
+        • ācārye = the teacher (loc. sg.)<br>
+        • paripūrṇa-paritṛpti-ādi-utkarṣa-lakṣaṇam = characterized by excellence of perfect satisfaction (acc. sg.)<br>
+        • vipariṇatam = transformation/opposite (acc. sg.)<br>
+        • ca = and<br>
+        • ātmani = in himself (loc. sg.)<br>
+        • dṛṣṭvā = having seen (absolutive)<br>
+        • pādau = the feet (acc. dual)<br>
+        • upasaṃgṛhya = having grasped (absolutive)<br>
+        • nyāyena = according to propriety (inst. sg.)<br>
+        • jāti-gotram = birth and lineage (acc. sg.)<br>
+        • śrutam = learning (acc. sg.)<br>
+        • anṛṇatvam = freedom from debt (acc. sg.)<br>
+        • ca = and<br>
+        • nivedayitvā = having declared (absolutive)<br>
+        • kṛta-parikṣaṇam = having examined (acc. sg.)<br>
+        • ācāryam = the teacher (acc. sg.)<br>
+        • kale = at the proper time (loc. sg.)<br>
+        • vaidya-vat = like a physician<br>
+        • avasthitam = situated (acc. sg.)<br>
+        • ātura-vat = like a patient<br>
+        • avasthitaḥ = situated (nom. sg.)<br>
+        • śiṣyaḥ = the disciple (nom. sg.)<br>
+        • pṛṣṭavān = asked (nom. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Thereupon, impelled by Rudra, Lord Kuśika arrived. Having seen in the preceptor the signs characterized by the excellence of complete contentment and other [perfections], and [having seen] the opposites thereof in himself, [and] falling at His feet, he informed Him dutifully about his caste, lineage, Vedic learning, and his being debt-free. Then, having examined [that] the preceptor [was ready], like a sick person, [this] pupil, [before] the preceptor who was like a doctor appearing at the right moment (kāle), asked:
+    </td>
+    <td class="meaning">
+        Narrates Kuśika's approach in six stages: (1) divine impulsion - moved by Rudra's command to seek the teacher; (2) recognition of contrast - sees paripūrṇaparitṛpti (complete contentment/satisfaction) and other excellences (utkarṣa) in the teacher (ācārye), while seeing vipariṇata (the opposite, i.e., deficiency/incompleteness) in himself (ātmani); (3) prostration - grasps the teacher's feet in reverence; (4) proper introduction - declares his qualifications (jātigotra = caste and lineage, śruta = Vedic learning, anṛṇatva = freedom from ritual/familial debts); (5) examination - confirms the teacher's readiness (kṛtaparikṣaṇa); (6) proper approach - positions himself as patient (āturavat) before physician (vaidyavat) at the auspicious moment.
+    </td>
+    <td class="literary">
+        Thereupon Lord Kuśika arrived, impelled by Rudra. He saw the signs of perfection, such as complete contentment, in the preceptor and the opposites thereof in himself, and, falling at His feet, he informed Him dutifully about his caste, gotra, Vedic affiliation, and his being debt-free. Then, like a sick person, [this] pupil consulted the preceptor, who had finished his examination and was like a doctor who had appeared at the right moment (kāle):
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">bhagavan kim eteṣām ādhyātmikādhibhautikādhidaivikānāṃ sarvaduḥkhānām aikāntiko 'tyantiko vyapoho 'sty uta neti</td>
+    <td class="words" contenteditable="true">
+        • bhagavan = O Blessed One (voc. sg.)<br>
+        • kim = what/whether<br>
+        • eteṣām = of these (gen. pl.)<br>
+        • ādhyātmika-ādhibhautika-ādhidaivikānām = spiritual, physical, divine (gen. pl.)<br>
+        • sarva-duḥkhānām = of all sufferings (gen. pl.)<br>
+        • aikāntikaḥ = focused/absolute (nom. sg.)<br>
+        • atyāntikaḥ = complete/final (nom. sg.)<br>
+        • vyapohaḥ = removal (nom. sg.)<br>
+        • asti = is there<br>
+        • uta = or<br>
+        • na = not<br>
+        • iti = thus
+    </td>
+    <td class="literal" contenteditable="true">
+        O Blessed One, is there an absolute, complete removal of all these spiritual, physical, and divine sufferings, or not?
+    </td>
+    <td class="meaning">
+        Kuśika's fundamental question addresses the three types of suffering recognized in Indian philosophy: ādhyātmika (internal/psychological), ādhibhautika (from other beings/physical), ādhidaivika (from divine/fate), asking if complete (aikāntika atyantika) cessation (vyapoha) is possible.
+    </td>
+    <td class="literary">
+        "Lord, is there a remedy that is effective and final for all these sufferings which fate, the world and we ourselves afflict upon us, or not?"
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">athoktaparigrāhādhikāralipsāsu parāpadeśenopadese sacchiṣyasādhakapāṭhaprasiddhyarthaṃ kāraṇapadārthādhigamārthaṃ cātmani parāpadeśaṃ kṛtvā bhagavān evoktavān</td>
+    <td class="words" contenteditable="true">
+        • atha = then<br>
+        • ukta-parigrāha-ādhikāra-lipsāsu = of acceptance and authority (loc. pl.)<br>
+        • para-upadeśena = through reference to another (inst. sg.)<br>
+        • upadeśe = in teaching (loc. sg.)<br>
+        • sat-śiṣya-sādhaka-pāṭha-prasiddhi-artham = for establishing the text for disciples (acc. sg.)<br>
+        • kāraṇa-pada-artha-adhigama-artham = for understanding causal principles (acc. sg.)<br>
+        • ca = and<br>
+        • ātmani = in himself (loc. sg.)<br>
+        • para-upadeśam = reference to another (acc. sg.)<br>
+        • kṛtvā = having made (absolutive)<br>
+        • bhagavān = the Blessed One (nom. sg.)<br>
+        • eva = indeed<br>
+        • uktavān = proclaimed (nom. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Since, whenever the wish/desire exists to obtain acceptance (parigraha) along with qualification/empowerment (adhikāra) [that has been] mentioned, the instruction is given through [speaking in the] guise of another (parāpadeśa) - for that reason the Lord Himself, having assumed a guise [speaking as if about another] in Himself, indeed spoke "atha" (certainly), so that thereby the recitation that establishes the qualified pupil on the path of the adept (sādhaka) came to be established, and [so that] the category/principle of the Creator (kāraṇapadārtha) came to be understood.
+    </td>
+    <td class="meaning">
+        Explains the teaching method and its purposes: When there is desire (lipsā) for both parigraha (acceptance as disciple) and adhikāra (empowerment/qualification in the practice), instruction uses parāpadeśa - speaking in third person as if about another. God employs this technique for two reasons: (1) to establish the authoritative text (pāṭhaprasiddhi) that guides the qualified disciple (sacchiṣya) onto the practitioner's path (sādhaka); (2) to enable understanding of kāraṇapadārtha (the metaphysical category/principle of the Creator, i.e., God's nature as cause/kāraṇa versus effect/kārya).
+    </td>
+    <td class="literary">
+        Since, whenever the wish exists to obtain acceptance/admission (parigraha) along with qualification/empowerment (adhikāra), the instruction is given in the guise of someone - for that reason the Lord Himself has assumed a guise and spoke "certainly" (atha), so that therewith the recitation that puts the qualified pupil on the path of the adept (sādhaka) came to be established and the category of the Creator came to be understood.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">atha iti | atra pūrvaprakṛtāpekṣo 'yam athaśabdaḥ</td>
+    <td class="words" contenteditable="true">
+        • atha = now/certainly<br>
+        • iti = thus<br>
+        • atra = here (loc. sg.)<br>
+        • pūrva-prakṛta-apekṣaḥ = referring to the previous topic (nom. sg.)<br>
+        • ayam = this (nom. sg.)<br>
+        • atha-śabdaḥ = word 'atha' (nom. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Now - here this word 'atha' refers to the previous topic.
+    </td>
+    <td class="meaning">
+        Grammatical analysis: atha here functions as a reference back (pūrvaprakṛtāpekṣa) to Kuśika's question.
+    </td>
+    <td class="literary">
+        The word "Certainly" in the Sūtra refers to what earlier had been put forward.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">katham | śiṣyeṇodīritam pūrvam praśnam apekṣyoktavān atha iti</td>
+    <td class="words" contenteditable="true">
+        • katham = how<br>
+        • śiṣyeṇa = by the disciple (inst. sg.)<br>
+        • udīritam = expressed (acc. sg.)<br>
+        • pūrvam = previously (adv.)<br>
+        • praśnam = the question (acc. sg.)<br>
+        • apekṣya = having considered (absolutive)<br>
+        • uktavān = he spoke (nom. sg.)<br>
+        • atha = now/certainly<br>
+        • iti = thus
+    </td>
+    <td class="literal" contenteditable="true">
+        How? Having considered the question previously expressed by the disciple, he spoke 'atha.'
+    </td>
+    <td class="meaning">
+        Explains the back-reference: God responds to (apekṣya) the question (praśna) that was raised (udīrita) earlier by the disciple.
+    </td>
+    <td class="literary">
+        [Pupil:] "How?" He has spoken "certainly" in answer to the question asked previously by the pupil.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">evam ayam athaśabdaḥ pṛṣṭaprativacanārthaḥ | asti sa duḥkhānta ity arthaḥ</td>
+    <td class="words" contenteditable="true">
+        • evam = thus<br>
+        • ayam = this (nom. sg.)<br>
+        • atha-śabdaḥ = word 'atha' (nom. sg.)<br>
+        • pṛṣṭa-prativacana-arthaḥ = meaning of answering what was asked (nom. sg.)<br>
+        • asti = there is<br>
+        • saḥ = that (nom. sg.)<br>
+        • duḥkha-antaḥ = end of suffering (nom. sg.)<br>
+        • iti = thus<br>
+        • arthaḥ = the meaning (nom. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Thus this word 'atha' has the meaning of answering what was asked. The meaning is: "There is [certainly] an end of suffering."
+    </td>
+    <td class="meaning">
+        Defines atha as affirmative response (prativacana): "Yes, there IS (asti) an end to suffering" - answering Kuśika's question positively.
+    </td>
+    <td class="literary">
+        Hence this word "certainly" signifies the answer to that which had been asked: that [intended] end to suffering (sa duḥkhāntaḥ) is real (asti). This is the meaning.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">āha: kim parīkṣitāya śiṣyāya sa duḥkhāntaḥ pratijñātaḥ utāparīkṣitāyeti</td>
+    <td class="words" contenteditable="true">
+        • āha = he says (3rd sg. perf.)<br>
+        • kim = whether<br>
+        • parīkṣitāya = to an examined [disciple] (dat. sg.)<br>
+        • śiṣyāya = to a disciple (dat. sg.)<br>
+        • saḥ = that (nom. sg.)<br>
+        • duḥkhāntaḥ = end of suffering (nom. sg.)<br>
+        • pratijñātaḥ = is promised (nom. sg.)<br>
+        • uta = or<br>
+        • aparīkṣitāya = to an unexamined one (dat. sg.)<br>
+        • iti = thus
+    </td>
+    <td class="literal" contenteditable="true">
+        He asks: Is that end of suffering promised to an examined disciple or to an unexamined one?
+    </td>
+    <td class="meaning">
+        Questions whether the promise applies universally or only to qualified (parīkṣita - examined/tested) disciples.
+    </td>
+    <td class="literary">
+        Pupil: "'That [intended] end to suffering' - is this promised to a pupil who has been well examined, or to one who has not been well examined?"
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">ucyate: parīkṣitāya</td>
+    <td class="words" contenteditable="true">
+        • ucyate = it is said (3rd sg. pres. pass.)<br>
+        • parīkṣitāya = to an examined one (dat. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        It is said: To an examined one.
+    </td>
+    <td class="meaning">
+        Affirms qualification requirement: only to the examined/qualified disciple.
+    </td>
+    <td class="literary">
+        The answer is: to one who has been well examined.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">yasmād āha ata iti | atra ataḥśabdaḥ śiṣyaguṇavacane</td>
+    <td class="words" contenteditable="true">
+        • yasmāt = because<br>
+        • āha = he says (3rd sg. perf.)<br>
+        • ataḥ = from this/therefore<br>
+        • iti = thus<br>
+        • atra = here<br>
+        • ataḥ-śabdaḥ = the word 'ataḥ' (nom. sg.)<br>
+        • śiṣya-guṇa-vacane = in stating the disciple's qualities (loc. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Because he says 'ataḥ' - here the word 'ataḥ' indicates the stating of the disciple's qualities.
+    </td>
+    <td class="meaning">
+        The word ataḥ (therefore/from this) signals that what follows describes the required qualities (guṇa) of the disciple (śiṣya).
+    </td>
+    <td class="literary">
+        Because He spoke "therefore" (ataḥ). Here the word "therefore" implies (vacana) the [good] qualities of the pupil.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">yasmād ayam brahmāvartadeśajaḥ kulajaḥ paṭvindriyo vividiṣādisampannaḥ śiṣyaḥ</td>
+    <td class="words" contenteditable="true">
+        • yasmāt = because<br>
+        • ayam = this (nom. sg.)<br>
+        • brahmāvarta-deśa-jaḥ = born in the land of Brahmāvarta (nom. sg.)<br>
+        • kula-jaḥ = born in a good family (nom. sg.)<br>
+        • paṭu-indriyaḥ = having sharp senses (nom. sg.)<br>
+        • vividiṣā-ādi-sampannaḥ = endowed with desire for knowledge, etc. (nom. sg.)<br>
+        • śiṣyaḥ = disciple (nom. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Because this disciple is born in the land of Brahmāvarta, born in a good family, having sharp senses, and endowed with desire for knowledge and so forth.
+    </td>
+    <td class="meaning">
+        Lists Kuśika's qualifications: (1) geographic - from sacred Brahmāvarta region, (2) social - noble lineage (kulaja), (3) physical - keen senses (paṭvindriya), (4) spiritual - desire to know (vividiṣā).
+    </td>
+    <td class="literary">
+        Since this pupil comes from the land of Brahmāvarta, is born in a good family, with sound faculties, and is possessed of the desire to learn etc.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">pūrvam cātrārthato 'taḥśabdo draṣṭavyaḥ</td>
+    <td class="words" contenteditable="true">
+        • pūrvam = previously (adv.)<br>
+        • ca = and<br>
+        • atra = here<br>
+        • arthataḥ = in meaning (abl.)<br>
+        • ataḥ-śabdaḥ = the word 'ataḥ' (nom. sg.)<br>
+        • draṣṭavyaḥ = is to be seen/understood (nom. sg., fut. pass. part.)
+    </td>
+    <td class="literal" contenteditable="true">
+        And previously here the word 'ataḥ' is to be understood in its meaning.
+    </td>
+    <td class="meaning">
+        Technical note: the word ataḥ should be understood as logically preceding (pūrvam) the affirmation "atha" even though it appears after in the text - it establishes the grounds (based on disciple's qualifications) for the affirmative answer.
+    </td>
+    <td class="literary">
+        And regarding its point of reference (arthatas) the word "therefore" (atas) is to be taken as preceding [the pronouncement of "certainly" (atha)].
+    </td>
+</tr>
+
+<!-- SECTION 1: THE FUNDAMENTAL QUESTION (Original content begins here) -->
+<tr>
+    <td colspan="5" class="section-header">SECTION 1: THE FUNDAMENTAL QUESTION</td>
+</tr>
+
+<tr>
+    <td class="sanskrit">atha sa duḥkhāntaḥ kutaḥ prāpyate kena vābhyupāyeneti</td>
+    <td class="words" contenteditable="true">
+        • atha = now<br>
+        • sa = that (nom. sg.)<br>
+        • duḥkha-antaḥ = end of suffering (nom. sg.)<br>
+        • kutaḥ = from where<br>
+        • prāpyate = is attained (3rd sg. pres. pass.)<br>
+        • kena = by what (inst. sg.)<br>
+        • vā = or<br>
+        • abhyupāyena = by means (inst. sg.)<br>
+        • iti = thus
+    </td>
+    <td class="literal" contenteditable="true">
+        Now from where is that end of suffering attained, and by what means?
+    </td>
+    <td class="meaning">
+        The question introduces the central concern: What is the source and method for achieving liberation from suffering?
+    </td>
+    <td class="literary">
+        [Pupil asks:] "Now from where and by what means is that end of suffering attained?"
+    </td>
+</tr>
+
+<!-- SECTION 2: THE ANSWER - FROM PAŚUPATI -->
+<tr>
+    <td colspan="5" class="section-header">SECTION 2: THE SOURCE OF LIBERATION</td>
+</tr>
+
+<tr>
+    <td class="sanskrit">tad ucyate: paśupateḥ | prasādād iti vākyaśeṣaḥ</td>
+    <td class="words" contenteditable="true">
+        • tad = to that (nom. sg.)<br>
+        • ucyate = it is said (3rd sg. pres. pass.)<br>
+        • paśupateḥ = from Paśupati (abl. sg.)<br>
+        • prasādāt = from grace (abl. sg.)<br>
+        • iti = thus<br>
+        • vākya-śeṣaḥ = remainder of sentence (nom. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        To that it is said: from Paśupati. "From the grace" is the remainder of the sentence.
+    </td>
+    <td class="meaning">
+        The answer establishes that liberation comes from Paśupati, specifically from His grace (prasāda), which is understood but not explicitly stated in the sūtra.
+    </td>
+    <td class="literary">
+        The answer is: [it comes] from Paśupati. The implied completion is "from [His] grace."
+    </td>
+</tr>
+
+<!-- SECTION 3: DEFINITION OF PAŚUPATI -->
+<tr>
+    <td colspan="5" class="section-header">SECTION 3: WHO IS PAŚUPATI?</td>
+</tr>
+
+<tr>
+    <td class="sanskrit">atra paśūnām patiḥ paśupatiḥ</td>
+    <td class="words" contenteditable="true">
+        • atra = here<br>
+        • paśūnām = of bound souls/animals (gen. pl.)<br>
+        • patiḥ = lord (nom. sg.)<br>
+        • paśupatiḥ = Paśupati (nom. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Here, Paśupati is the lord of bound souls/animals.
+    </td>
+    <td class="meaning">
+        Defines Paśupati as the sovereign lord (pati) over all bound souls (paśu).
+    </td>
+    <td class="literary">
+        In this [teaching], Paśupati means "Lord" (pati) of "souls" (paśu).
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">atra paśavo nāma siddheśvaravarjam sarve cetanāvantaḥ</td>
+    <td class="words" contenteditable="true">
+        • atra = here<br>
+        • paśavaḥ = bound souls (nom. pl.)<br>
+        • nāma = namely<br>
+        • siddha-īśvara-varjam = excluding perfected lords (acc. sg.)<br>
+        • sarve = all (nom. pl.)<br>
+        • cetanā-vantaḥ = possessing consciousness (nom. pl.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Here, bound souls are all conscious beings, excluding perfected lords (siddhas and īśvaras).
+    </td>
+    <td class="meaning">
+        Defines paśu broadly as all sentient beings who possess consciousness, except those who have achieved perfection (siddhas) and divine lordship (īśvaras).
+    </td>
+    <td class="literary">
+        Here those who are called "souls" (paśu) are all conscious beings, excluding [only] the perfected ones (siddhas) and lords (īśvaras).
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">kāryakaraṇāñjanā nirañjanaś ca paśavaḥ</td>
+    <td class="words" contenteditable="true">
+        • kārya-karaṇa-añjanāḥ = colored by effects and instruments (nom. pl.)<br>
+        • nirañjanaḥ = uncolored/pure (nom. pl.)<br>
+        • ca = and<br>
+        • paśavaḥ = bound souls (nom. pl.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Bound souls are both those colored by effects and instruments, and the uncolored ones.
+    </td>
+    <td class="meaning">
+        Distinguishes two types of paśus: those still identified with physical bodies and senses (añjana = colored/stained), and those who have transcended these (nirañjana = unstained) but are still not fully liberated.
+    </td>
+    <td class="literary">
+        The "souls" include both those still associated with physical bodies and organs (the "colored" ones), and those who have withdrawn from these (the "uncolored" ones).
+    </td>
+</tr>
+
+<!-- SECTION 4: WHY ARE THEY PAŚU? -->
+<tr>
+    <td colspan="5" class="section-header">SECTION 4: THE NATURE OF BONDAGE</td>
+</tr>
+
+<tr>
+    <td class="sanskrit">āha: kim teṣām paśutvam iti</td>
+    <td class="words" contenteditable="true">
+        • āha = he asks (3rd sg. perf.)<br>
+        • kim = what (nom. sg.)<br>
+        • teṣām = of them (gen. pl.)<br>
+        • paśutvam = state of being paśu (nom. sg.)<br>
+        • iti = thus
+    </td>
+    <td class="literal" contenteditable="true">
+        He asks: What is the state of being bound souls for them?
+    </td>
+    <td class="meaning">
+        The student questions the essential characteristic that makes these beings "bound souls."
+    </td>
+    <td class="literary">
+        [Pupil asks:] "What makes them souls (paśu)?"
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">ucyate: anaiśvaryam bandhaḥ</td>
+    <td class="words" contenteditable="true">
+        • ucyate = it is said (3rd sg. pres. pass.)<br>
+        • anaiśvaryam = lack of sovereignty (nom. sg.)<br>
+        • bandhaḥ = bondage (nom. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        It is said: Lack of sovereignty is bondage.
+    </td>
+    <td class="meaning">
+        The fundamental characteristic of bondage is defined as anaiśvarya - the absence of sovereign independence or mastery.
+    </td>
+    <td class="literary">
+        The answer is: bondage, [that means] lack of sovereignty.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">kāraṇaśaktisamnirodhalakṣaṇam asvātantryam anaiśvaryam bandho 'nādiḥ</td>
+    <td class="words" contenteditable="true">
+        • kāraṇa-śakti-samnirodha-lakṣaṇam = characterized by suppression of causal power (nom. sg.)<br>
+        • asvātantryam = lack of independence (nom. sg.)<br>
+        • anaiśvaryam = lack of sovereignty (nom. sg.)<br>
+        • bandhaḥ = bondage (nom. sg.)<br>
+        • anādiḥ = beginningless (nom. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Lack of independence, lack of sovereignty, characterized by suppression of causal power - bondage is beginningless.
+    </td>
+    <td class="meaning">
+        Elaborates that bondage manifests as the obstruction of the soul's innate powers (kāraṇaśakti), resulting in dependency (asvātantrya). This state is anādi - without temporal beginning.
+    </td>
+    <td class="literary">
+        Lack of sovereignty or dependency is [a state] defined by impediments to the primordial powers (kāraṇaśakti), and is bondage, which is without beginning.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">bandhaguṇa ity upacaryate</td>
+    <td class="words" contenteditable="true">
+        • bandha-guṇa = quality of bondage (nom. sg.)<br>
+        • iti = thus<br>
+        • upacaryate = is designated metaphorically (3rd sg. pres. pass.)
+    </td>
+    <td class="literal" contenteditable="true">
+        It is metaphorically designated as a quality of bondage.
+    </td>
+    <td class="meaning">
+        The term "bondage quality" (bandhaguṇa) is used in an extended or metaphorical sense (upacāra), not literally.
+    </td>
+    <td class="literary">
+        The word is used here in a metaphorical sense.
+    </td>
+</tr>
+
+<!-- Continue with all remaining sections exactly as before... -->
+
+<!-- SECTION 5: TWO REASONS FOR BEING PAŚU -->
+<tr>
+    <td colspan="5" class="section-header">SECTION 5: SEEING AND BINDING - THE DUAL NATURE OF PAŚUTVA</td>
+</tr>
+
+<tr>
+    <td class="sanskrit">tat kathamlakṣaṇam iti cet | tad ucyate: paśyānāt pāśanāc ca paśavaḥ</td>
+    <td class="words" contenteditable="true">
+        • tat = that (nom. sg.)<br>
+        • katham-lakṣaṇam = how characterized (nom. sg.)<br>
+        • iti cet = if thus<br>
+        • tad ucyate = to that it is said<br>
+        • paśyānāt = from seeing (abl. sg.)<br>
+        • pāśanāt = from binding (abl. sg.)<br>
+        • ca = and<br>
+        • paśavaḥ = bound souls (nom. pl.)
+    </td>
+    <td class="literal" contenteditable="true">
+        If asked "How is that characterized?" - to that it is said: Bound souls [are so called] from seeing and from being bound.
+    </td>
+    <td class="meaning">
+        Provides the etymology and essential definition: paśu derives from two roots - paś (to see) and pāś (to bind), indicating both perception and limitation.
+    </td>
+    <td class="literary">
+        If [one asks]: "What is the nature of that [state]?", then it is answered: they are "souls" (paśu) on account of seeing (paśyana) and binding (pāśana).
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">tatra pāśā nāma kāryakaraṇākhyāḥ kalāḥ | tāś ca kalā upariṣṭād vakṣyāmaḥ</td>
+    <td class="words" contenteditable="true">
+        • tatra = there<br>
+        • pāśāḥ = bonds/fetters (nom. pl.)<br>
+        • nāma = namely<br>
+        • kārya-karaṇa-ākhyāḥ = called effects and instruments (nom. pl.)<br>
+        • kalāḥ = kalās, limiting powers/constituents (nom. pl.)<br>
+        • tāḥ ca = and those (nom. pl.)<br>
+        • kalāḥ = kalās (acc. pl.)<br>
+        • upariṣṭāt = later<br>
+        • vakṣyāmaḥ = we shall explain (1st pl. fut.)
+    </td>
+    <td class="literal" contenteditable="true">
+        There, the bonds (pāśa) are namely the kalās (limiting powers) called effects (kārya) and instruments (karaṇa). And we shall explain those kalās later.
+    </td>
+    <td class="meaning">
+        Identifies the pāśa (fetters/bonds) as the kalās - a crucial technical term in Śaiva philosophy. Kalā (with long ā) refers to the limiting powers, coverings, or sheaths that restrict the soul's omniscience and omnipotence. These kalās manifest as: (1) kārya - the physical body and gross effects, and (2) karaṇa - the sense organs and instruments of action. The Pāśupata system recognizes multiple kalās as the constituent elements of bondage. The commentary promises a fuller technical explanation of these kalās later in the text (upariṣṭāt vakṣyāmaḥ).
+    </td>
+    <td class="literary">
+        Here fetters (pāśa), surely, are the constituents (kalā) going by the names of physical body (kārya) and organs of sense and actions (karaṇa). And about these constituents we shall come to speak later.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">tābhiḥ pāśitā baddhāḥ saṃniruddhāḥ śabdādiviṣayaparavaśāś ca bhūtvāvatiṣṭhante</td>
+    <td class="words" contenteditable="true">
+        • tābhiḥ = by those (inst. pl.)<br>
+        • pāśitāḥ = bound (nom. pl., past pass. part.)<br>
+        • baddhāḥ = fettered (nom. pl., past pass. part.)<br>
+        • saṃniruddhāḥ = constrained (nom. pl., past pass. part.)<br>
+        • śabda-ādi-viṣaya-para-vaśāḥ = dependent on others regarding sense objects like sound (nom. pl.)<br>
+        • ca = and<br>
+        • bhūtvā = having become (absolutive)<br>
+        • avatiṣṭhante = they remain (3rd pl. pres.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Bound, fettered, and constrained by those [kalās], and having become dependent on others regarding sense objects like sound, they remain [in that state].
+    </td>
+    <td class="meaning">
+        Describes the actual condition of bondage: the soul is restricted by the kalās and becomes subject to (paravaśa) external sensory phenomena, remaining in this dependent state.
+    </td>
+    <td class="literary">
+        And when being fettered, that is being bound or limited by those [constituents], the [souls] exist in a state in which they are ruled by the objects of the senses such as sound etc.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">ity ato 'vagamyate asvātantryam anaiśvaryaṃ bandhaḥ</td>
+    <td class="words" contenteditable="true">
+        • iti = thus<br>
+        • ataḥ = from this<br>
+        • avagamyate = is understood (3rd sg. pres. pass.)<br>
+        • asvātantryam = lack of independence (nom. sg.)<br>
+        • anaiśvaryam = lack of sovereignty (nom. sg.)<br>
+        • bandhaḥ = bondage (nom. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Thus from this it is understood: lack of independence is lack of sovereignty, which is bondage.
+    </td>
+    <td class="meaning">
+        Concludes the reasoning: from the analysis of fettering and sensory dependence, one understands that bondage equals lack of sovereignty.
+    </td>
+    <td class="literary">
+        For this reason bondage is to be understood as being not sovereign or being not independent.
+    </td>
+</tr>
+
+<!-- SECTION 6: EVEN THE LIBERATED REMAIN PAŚU -->
+<tr>
+    <td colspan="5" class="section-header">SECTION 6: PAŚUTVA PERSISTS EVEN AFTER WITHDRAWAL</td>
+</tr>
+
+<tr>
+    <td class="sanskrit">kāryakaraṇarahitasya paśutvam nivartata iti cet | tad ucyate: [na]</td>
+    <td class="words" contenteditable="true">
+        • kārya-karaṇa-rahitasya = of one free from effect and instrument (gen. sg.)<br>
+        • paśutvam = state of being paśu (nom. sg.)<br>
+        • nivartate = ceases (3rd sg. pres.)<br>
+        • iti cet = if thus<br>
+        • tad ucyate = to that it is said<br>
+        • na = no
+    </td>
+    <td class="literal" contenteditable="true">
+        If [asked] "Does the state of being paśu cease for one free from effect and instrument?" - to that it is said: No.
+    </td>
+    <td class="meaning">
+        Addresses the question of whether transcending body and senses means ceasing to be paśu. The answer is negative.
+    </td>
+    <td class="literary">
+        If [one asks]: "One who has renounced his physical body and organs of sense and actions, does he cease to be a soul?", the answer to that is: no.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">saṃhṛtānam api punaḥ punaḥ saṃbandhagrahāṇāc chāstre</td>
+    <td class="words" contenteditable="true">
+        • saṃhṛtānām = of those withdrawn (gen. pl.)<br>
+        • api = even<br>
+        • punaḥ punaḥ = again and again<br>
+        • saṃbandha-grahaṇāt = from grasping connection (abl. sg.)<br>
+        • śāstre = in scripture (loc. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Because even for those withdrawn, scripture speaks of grasping connection again and again.
+    </td>
+    <td class="meaning">
+        Even yogis who have withdrawn from worldly engagement are repeatedly described in scriptures as having connections/relationships, indicating continued paśutva.
+    </td>
+    <td class="literary">
+        Because in the Śāstra there is spoken again and again of "ties" (sambandha), even of those who are withdrawn [within themselves].
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">kimcānyat: paśyānāc ca paśavaḥ</td>
+    <td class="words" contenteditable="true">
+        • kim ca anyat = and what else<br>
+        • paśyānāt = from seeing (abl. sg.)<br>
+        • ca = and<br>
+        • paśavaḥ = bound souls (nom. pl.)
+    </td>
+    <td class="literal" contenteditable="true">
+        And what else? From seeing, they are called paśus.
+    </td>
+    <td class="meaning">
+        Introduces the second reason (besides binding): the act of perception (paśyana) itself maintains paśutva.
+    </td>
+    <td class="literary">
+        Moreover, there is one thing more: they are souls also on account of seeing (paśyana).
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">yasmād vibhutve 'pi citsamavetatve 'pi ca sarīramātram eva paśyanty upalabhante ca na bahirdhātattvāni</td>
+    <td class="words" contenteditable="true">
+        • yasmāt = because<br>
+        • vibhutve api = even in omnipresence (loc. sg.)<br>
+        • cit-samavetatve api = even in union with consciousness (loc. sg.)<br>
+        • ca = and<br>
+        • sarīra-mātram = body alone (acc. sg.)<br>
+        • eva = indeed<br>
+        • paśyanti = they see (3rd pl. pres.)<br>
+        • upalabhante = they perceive (3rd pl. pres. mid.)<br>
+        • ca = and<br>
+        • na = not<br>
+        • bahirdhāta-tattvāni = external principles (acc. pl.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Because even in omnipresence and even in being united with consciousness, they see and perceive only the body, not the external principles.
+    </td>
+    <td class="meaning">
+        Even advanced yogis who have attained omnipresence (vibhutva) and identification with consciousness still perceive their subtle body (not external objects), maintaining the "seeing" aspect of paśutva.
+    </td>
+    <td class="literary">
+        Since, even in the state of omnipresence and omniscience, they do sense and perceive, be it only [inner] somatic, not external realities.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">kāryakaraṇarahitāś ca na kāryakaraṇam pratipadyante tyajanti vā</td>
+    <td class="words" contenteditable="true">
+        • kārya-karaṇa-rahitāḥ = free from effect and instrument (nom. pl.)<br>
+        • ca = and<br>
+        • na = not<br>
+        • kārya-karaṇam = effect and instrument (acc. sg.)<br>
+        • pratipadyante = attain (3rd pl. pres. mid.)<br>
+        • tyajanti = abandon (3rd pl. pres.)<br>
+        • vā = or
+    </td>
+    <td class="literal" contenteditable="true">
+        And those free from effect and instrument neither attain nor abandon effect and instrument.
+    </td>
+    <td class="meaning">
+        Advanced yogis maintain a neutral relationship with body/senses - neither engaging with them nor completely abandoning them.
+    </td>
+    <td class="literary">
+        And having renounced their physical bodies and organs of sense and action, they neither engross themselves in the psychosomatic complex, nor do they abandon it.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">dharmādharmaprakāśadeśakālacodanādyapekṣitatvāc ca</td>
+    <td class="words" contenteditable="true">
+        • dharma-adharma-prakāśa-deśa-kāla-codanā-ādi-apekṣita-tvāt = from dependence on dharma, adharma, manifestation, place, time, injunction, etc. (abl. sg.)<br>
+        • ca = and
+    </td>
+    <td class="literal" contenteditable="true">
+        And because of dependence on dharma, adharma, manifestation, place, time, injunction, and so on.
+    </td>
+    <td class="meaning">
+        Even liberated yogis remain dependent on (apekṣita) various cosmic factors: merit/demerit (dharma/adharma), manifestation (prakāśa), spatial-temporal coordinates (deśa-kāla), and divine ordinances (codanā).
+    </td>
+    <td class="literary">
+        And this is because they depend on (apekṣita) dharma and adharma, appearance and location, time, incentives and so on.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">ataḥ suṣṭhūktaṃ paśyānāt pāśanāc ca paśavaḥ</td>
+    <td class="words" contenteditable="true">
+        • ataḥ = therefore<br>
+        • su-uṣṭha-uktam = well said (nom. sg.)<br>
+        • paśyānāt = from seeing (abl. sg.)<br>
+        • pāśanāt = from binding (abl. sg.)<br>
+        • ca = and<br>
+        • paśavaḥ = bound souls (nom. pl.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Therefore it is well said: from seeing and from binding, they are paśus.
+    </td>
+    <td class="meaning">
+        Concludes the argument affirming the dual etymology and dual nature of paśutva.
+    </td>
+    <td class="literary">
+        Therefore the statement [above]: "They are 'souls' on account of seeing (paśyana) and binding (pāśana)", is well put.
+    </td>
+</tr>
+
+<!-- SECTION 7: SCRIPTURAL SUPPORT -->
+<tr>
+    <td colspan="5" class="section-header">SECTION 7: SCRIPTURAL CONFIRMATION</td>
+</tr>
+
+<tr>
+    <td class="sanskrit">yasmād uktam:<br><br>
+    sāṃkhyayogena ye muktāḥ sāṃkhyayogeśvaraś ca ye |<br>
+    brahmādayas tīryagantāḥ sarve te paśavaḥ smṛtāḥ ||</td>
+    <td class="words" contenteditable="true">
+        • yasmāt uktam = as it has been said<br>
+        • ye muktāḥ = those liberated (nom. pl.)<br>
+        • sāṃkhya-yogena = through Sāṃkhya-yoga (inst. sg.)<br>
+        • ca ye = and those who<br>
+        • sāṃkhya-yoga-īśvaraḥ = lords of Sāṃkhya-yoga (nom. pl.)<br>
+        • brahmādayaḥ = Brahmā and others (nom. pl.)<br>
+        • tīryagantāḥ = having crossed over (nom. pl.)<br>
+        • sarve te = all these (nom. pl.)<br>
+        • paśavaḥ smṛtāḥ = are considered paśus (nom. pl.)
+    </td>
+    <td class="literal" contenteditable="true">
+        As it has been said: Those who are liberated through Sāṃkhya-yoga, and those who are lords of Sāṃkhya-yoga, Brahmā and others who have crossed over - all these are considered paśus.
+    </td>
+    <td class="meaning">
+        Cites scriptural authority showing that even highly advanced beings - those liberated through Sāṃkhya-yoga, masters of yoga, and cosmic deities like Brahmā - are still classified as paśus, supporting the earlier argument.
+    </td>
+    <td class="literary">
+        Hence it has been said: "Those who have reached release (mukta) through sāṃkhyayoga and who are masters of sāṃkhyayoga, they are known as 'souls' (paśu); [this concerns] all, from Brahmā down to animals."
+    </td>
+</tr>
+
+<!-- SECTION 8: WHY PATI? -->
+<tr>
+    <td colspan="5" class="section-header">SECTION 8: THE NATURE OF THE LORD (PATI)</td>
+</tr>
+
+<tr>
+    <td class="sanskrit">patiḥ kasmāt</td>
+    <td class="words" contenteditable="true">
+        • patiḥ = Lord (nom. sg.)<br>
+        • kasmāt = why
+    </td>
+    <td class="literal" contenteditable="true">
+        Why is He called Lord?
+    </td>
+    <td class="meaning">
+        Transitions to examining the meaning of "pati" in Paśupati.
+    </td>
+    <td class="literary">
+        [Pupil:] "Why 'Lord' (pati)?"
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">āpnoti pāti ca tān paśūn iti ataḥ patir bhavati</td>
+    <td class="words" contenteditable="true">
+        • āpnoti = he obtains/reaches (3rd sg. pres.)<br>
+        • pāti = he protects (3rd sg. pres.)<br>
+        • ca = and<br>
+        • tān = those (acc. pl.)<br>
+        • paśūn = bound souls (acc. pl.)<br>
+        • iti = thus<br>
+        • ataḥ = therefore<br>
+        • patiḥ = Lord (nom. sg.)<br>
+        • bhavati = he becomes (3rd sg. pres.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Because He obtains and protects those paśus, therefore He becomes the Lord.
+    </td>
+    <td class="meaning">
+        Provides dual etymology of pati from two verbal roots: āp (to reach/pervade) and pā (to protect), indicating God's comprehensive relationship with souls.
+    </td>
+    <td class="literary">
+        [Answer:] He embraces (āpnoti) and protects (pāti) those souls, therefore He is Lord.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">tān kenāpnoti kena rakṣati</td>
+    <td class="words" contenteditable="true">
+        • tān = them (acc. pl.)<br>
+        • kena = by what (inst. sg.)<br>
+        • āpnoti = does he obtain (3rd sg. pres.)<br>
+        • kena = by what (inst. sg.)<br>
+        • rakṣati = does he protect (3rd sg. pres.)
+    </td>
+    <td class="literal" contenteditable="true">
+        By what does He obtain them, by what does He protect them?
+    </td>
+    <td class="meaning">
+        Questions the means or power by which God accomplishes these functions.
+    </td>
+    <td class="literary">
+        [Pupil:] "By what does He embrace, by what does He protect them?"
+    </td>
+</tr>
+
+<!-- SECTION 9: GOD'S POWERS -->
+<tr>
+    <td colspan="5" class="section-header">SECTION 9: THE THREE POWERS OF GOD</td>
+</tr>
+
+<tr>
+    <td class="sanskrit">āpnoti vibhuśaktyā</td>
+    <td class="words" contenteditable="true">
+        • āpnoti = he obtains (3rd sg. pres.)<br>
+        • vibhu-śaktyā = by omnipresent power (inst. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        He obtains by omnipresent power.
+    </td>
+    <td class="meaning">
+        First power: vibhuśakti - the power of all-pervasiveness or omnipresence.
+    </td>
+    <td class="literary">
+        He embraces by virtue of His power of omnipresence (vibhuśakti).
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">yasmāt kutrāpi śaktim asyānantām nātivartante</td>
+    <td class="words" contenteditable="true">
+        • yasmāt = because<br>
+        • kutra api = anywhere<br>
+        • śaktim = power (acc. sg.)<br>
+        • asya = his (gen. sg.)<br>
+        • anantām = unlimited (acc. sg.)<br>
+        • na ativartante = they do not transcend (3rd pl. pres. mid.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Because nowhere do they transcend His unlimited power.
+    </td>
+    <td class="meaning">
+        Explains vibhuśakti: God's power is infinite (ananta) and cannot be exceeded by souls anywhere in existence.
+    </td>
+    <td class="literary">
+        Since [the souls], wherever they are, are not beyond His power, which is infinite.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">vipratvāc cāsyānantā jñānaśaktiḥ aparimitā</td>
+    <td class="words" contenteditable="true">
+        • vipratvāt = from being all-knowing (abl. sg.)<br>
+        • ca = and<br>
+        • asya = his (gen. sg.)<br>
+        • anantā = unlimited (nom. sg.)<br>
+        • jñāna-śaktiḥ = knowledge-power (nom. sg.)<br>
+        • aparimitā = boundless (nom. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        And from being all-knowing, His unlimited knowledge-power is boundless.
+    </td>
+    <td class="meaning">
+        Second power: jñānaśakti - the power of omniscience, which derives from His vipratva (state of being the supreme knower).
+    </td>
+    <td class="literary">
+        And His infinite power to know (jñānaśakti) is unlimited owing to His 'omniscience' (vipratva).
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">tayā aparimitayā aparimitān eva pratyakṣān paśūn āpnotīti patiḥ</td>
+    <td class="words" contenteditable="true">
+        • tayā = by that (inst. sg.)<br>
+        • aparimitayā = boundless (inst. sg.)<br>
+        • aparimitān = the boundless (acc. pl.)<br>
+        • eva = indeed<br>
+        • pratyakṣān = directly visible (acc. pl.)<br>
+        • paśūn = paśus (acc. pl.)<br>
+        • āpnoti = he obtains (3rd sg. pres.)<br>
+        • iti = thus<br>
+        • patiḥ = Lord (nom. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        By that boundless [power], He obtains the boundless, directly visible paśus - thus He is the Lord.
+    </td>
+    <td class="meaning">
+        Through jñānaśakti, God directly perceives (pratyakṣa) all countless souls, thus "reaching" or "embracing" them - fulfilling the meaning of āpnoti.
+    </td>
+    <td class="literary">
+        By that unlimited [power to know] the Lord is said "to embrace" the souls, [since] they are [all] directly visible [to Him], innumerable as they may be.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">tathā pālayatīti prabhuśaktiḥ</td>
+    <td class="words" contenteditable="true">
+        • tathā = likewise<br>
+        • pālayati = he protects (3rd sg. pres.)<br>
+        • iti = thus<br>
+        • prabhu-śaktiḥ = power of mastery (nom. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Likewise, "He protects" - this is the power of mastery.
+    </td>
+    <td class="meaning">
+        Third power: prabhuśakti - the power of sovereign mastery or lordship, which enables protection.
+    </td>
+    <td class="literary">
+        And just so "he protects" implies [His] omnipotence (prabhuśakti).
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">kasmāt</td>
+    <td class="words" contenteditable="true">
+        • kasmāt = why
+    </td>
+    <td class="literal" contenteditable="true">
+        Why?
+    </td>
+    <td class="meaning">
+        Prompts explanation of how prabhuśakti manifests.
+    </td>
+    <td class="literary">
+        [Pupil:] "How?"
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">tacchandāt teṣāṃ pravṛttir nivṛttiḥ sthitir iṣṭāniṣṭasthānāśarīrendriyaviṣayādiprāptir bhavati</td>
+    <td class="words" contenteditable="true">
+        • tat-chandāt = from His will (abl. sg.)<br>
+        • teṣām = their (gen. pl.)<br>
+        • pravṛttiḥ = activity (nom. sg.)<br>
+        • nivṛttiḥ = cessation (nom. sg.)<br>
+        • sthitiḥ = stability (nom. sg.)<br>
+        • iṣṭa-aniṣṭa-sthāna-śarīra-indriya-viṣaya-ādi-prāptiḥ = attainment of desired/undesired places, bodies, senses, objects, etc. (nom. sg.)<br>
+        • bhavati = occurs (3rd sg. pres.)
+    </td>
+    <td class="literal" contenteditable="true">
+        From His will comes their activity, cessation, stability, and the attainment of desired and undesired places, bodies, senses, objects, and so on.
+    </td>
+    <td class="meaning">
+        Explains prabhuśakti: God's sovereign will (chanda) governs all aspects of souls' existence - their movements (pravṛtti), cessations (nivṛtti), states (sthiti), and all experiences whether pleasant or unpleasant.
+    </td>
+    <td class="literary">
+        Active manifestation, cessation and continuity, as well as desired and undesired stations of life, bodies, senses and their objects, et cetera, [all this] happens to those [souls] according to His will.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">tatparidṛṣṭānāṃ tatpracoditānāṃ cety arthaḥ</td>
+    <td class="words" contenteditable="true">
+        • tat-paridṛṣṭānām = of those seen by Him (gen. pl.)<br>
+        • tat-pracoditānām = of those impelled by Him (gen. pl.)<br>
+        • ca = and<br>
+        • iti = thus<br>
+        • arthaḥ = is the meaning (nom. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        This means: of those seen by Him and impelled by Him.
+    </td>
+    <td class="meaning">
+        Clarifies that souls are under God's "supervision" (paridṛṣṭa - thoroughly seen) and "impulsion" (pracodita - driven forward).
+    </td>
+    <td class="literary">
+        This means: [these souls] are under His supervision and impelled by Him.
+    </td>
+</tr>
+
+<!-- SECTION 10: GRACE -->
+<tr>
+    <td colspan="5" class="section-header">SECTION 10: THE CONCEPT OF GRACE (PRASĀDA)</td>
+</tr>
+
+<tr>
+    <td class="sanskrit">evaṃ paśupater iti kāryakaraṇayoḥ prasādasya coddeśaḥ</td>
+    <td class="words" contenteditable="true">
+        • evam = thus<br>
+        • paśu-pateḥ = of Paśupati (gen. sg.)<br>
+        • iti = thus<br>
+        • kārya-karaṇayoḥ = of effect and instrument (gen. dual)<br>
+        • prasādasya = of grace (gen. sg.)<br>
+        • ca = and<br>
+        • uddeśaḥ = designation (nom. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Thus, this is the designation of Paśupati's grace regarding effect and instrument.
+    </td>
+    <td class="meaning">
+        Concludes that the phrase "of Paśupati" in the sūtra indicates both the relationship of Creator to creation (kārya-karaṇa) and the concept of divine grace.
+    </td>
+    <td class="literary">
+        In this way "of Paśupati" [in the Sūtra] points to the creation and the Creator, and [His] grace.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">tasmāt prasādāt sa duḥkhāntaḥ prāpyate</td>
+    <td class="words" contenteditable="true">
+        • tasmāt = from that (abl. sg.)<br>
+        • prasādāt = from grace (abl. sg.)<br>
+        • saḥ = that (nom. sg.)<br>
+        • duḥkha-antaḥ = end of suffering (nom. sg.)<br>
+        • prāpyate = is attained (3rd sg. pres. pass.)
+    </td>
+    <td class="literal" contenteditable="true">
+        From that grace, the end of suffering is attained.
+    </td>
+    <td class="meaning">
+        Returns to the original question: liberation is attained from God's grace (prasāda).
+    </td>
+    <td class="literary">
+        Thanks to His grace that [intended] end to suffering comes about.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">na tu jñānavairāgyadharmaiśvaryatyāgamātrād ity arthaḥ</td>
+    <td class="words" contenteditable="true">
+        • na tu = but not<br>
+        • jñāna-vairāgya-dharma-aiśvarya-tyāga-mātrāt = from knowledge, dispassion, dharma, lordship, renunciation alone (abl. sg.)<br>
+        • iti = thus<br>
+        • arthaḥ = is the meaning (nom. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        This means: not merely from knowledge, dispassion, dharma, lordship, and renunciation alone.
+    </td>
+    <td class="meaning">
+        Emphasizes that while these five qualities (knowledge, dispassion, merit, power, and renunciation) are necessary, they are insufficient without divine grace.
+    </td>
+    <td class="literary">
+        But not by knowledge, detachment, merit, sovereignty, and renunciation alone. This is the meaning.
+    </td>
+</tr>
+
+<!-- SECTION 11: WHEN DOES GOD BESTOW GRACE? -->
+<tr>
+    <td colspan="5" class="section-header">SECTION 11: THE CONDITIONS FOR RECEIVING GRACE</td>
+</tr>
+
+<tr>
+    <td class="sanskrit">āha: kutrasthasya kadā kīdṛśyasya vā sa bhagavān prasīdatīti</td>
+    <td class="words" contenteditable="true">
+        • āha = he asks (3rd sg. perf.)<br>
+        • kutra-sthasya = of one in what state (gen. sg.)<br>
+        • kadā = when<br>
+        • kīdṛśyasya = of what kind (gen. sg.)<br>
+        • vā = or<br>
+        • saḥ bhagavān = that Blessed One (nom. sg.)<br>
+        • prasīdati = becomes gracious (3rd sg. pres.)<br>
+        • iti = thus
+    </td>
+    <td class="literal" contenteditable="true">
+        He asks: To one in what state, at what time, or of what kind does the Blessed One become gracious?
+    </td>
+    <td class="meaning">
+        Questions the conditions for receiving grace: what spiritual stage (kutrastha), what timing (kadā), or what qualities (kīdṛśa) are required?
+    </td>
+    <td class="literary">
+        Pupil: "When does the Lord bestow grace [and to whom]: (1) at which stage [of the practice] is he, or (2) how is the condition of him?"
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">ucyate: vadānena tu tat prāptaṃ bhavati</td>
+    <td class="words" contenteditable="true">
+        • ucyate = it is said (3rd sg. pres. pass.)<br>
+        • vadānena = by speaking (inst. sg.)<br>
+        • tu = but<br>
+        • tat = that (nom. sg.)<br>
+        • prāptam = attained (nom. sg.)<br>
+        • bhavati = it becomes (3rd sg. pres.)
+    </td>
+    <td class="literal" contenteditable="true">
+        It is said: But by speaking, that is attained.
+    </td>
+    <td class="meaning">
+        The answer appears cryptic but suggests that through proper articulation or teaching, the condition is reached. (Note: vadānena is textually problematic)
+    </td>
+    <td class="literary">
+        The answer is: when by him that has been reached, but [not otherwise].
+    </td>
+</tr>
+
+<!-- SECTION 12: WHAT IS THAT? PĀŚUPATA -->
+<tr>
+    <td colspan="5" class="section-header">SECTION 12: THE PĀŚUPATA SYSTEM</td>
+</tr>
+
+<tr>
+    <td class="sanskrit">āha: kiṃ tad iti</td>
+    <td class="words" contenteditable="true">
+        • āha = he asks (3rd sg. perf.)<br>
+        • kim = what (nom. sg.)<br>
+        • tad = that (nom. sg.)<br>
+        • iti = thus
+    </td>
+    <td class="literal" contenteditable="true">
+        He asks: What is that?
+    </td>
+    <td class="meaning">
+        The student seeks clarification of what must be attained.
+    </td>
+    <td class="literary">
+        Pupil: "What is 'that'?"
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">ucyate: paśupatam</td>
+    <td class="words" contenteditable="true">
+        • ucyate = it is said (3rd sg. pres. pass.)<br>
+        • paśu-patam = the state relating to Paśupati (acc. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        It is said: The state relating to Paśupati [= Pāśupata].
+    </td>
+    <td class="meaning">
+        The answer introduces the technical term pāśupata - the condition or system associated with Paśupati.
+    </td>
+    <td class="literary">
+        It is said [in the Sūtra]: "Pāśupata".
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">atra paśupatinoktaṃ parigṛhītaṃ paśupatim adhikṛtya cārabhyata iti pāśupatam</td>
+    <td class="words" contenteditable="true">
+        • atra = here<br>
+        • paśupatinoktam = spoken by Paśupati (nom. sg.)<br>
+        • parigṛhītam = accepted/grasped (nom. sg.)<br>
+        • paśupatim adhikṛtya = with reference to Paśupati (acc. sg. + absolutive)<br>
+        • ca = and<br>
+        • ārabhyate = is begun (3rd sg. pres. pass.)<br>
+        • iti = thus<br>
+        • pāśupatam = Pāśupata (nom. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Here, what is proclaimed by Paśupati, accepted with reference to Paśupati, and begun - this is called Pāśupata.
+    </td>
+    <td class="meaning">
+        Defines pāśupata as threefold: (1) teaching revealed by Paśupati, (2) accepted/understood in relation to Him, (3) practiced/initiated. This establishes it as a complete religious system.
+    </td>
+    <td class="literary">
+        "Pāśupatam" refers to [the stage] when, after having been admitted (adhikṛtya) to Paśupati, that which is spoken by Paśupati here [in the Śāstra] has been embraced and is being implemented.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">yathā vaiṣṇavaṃ mānaṣam iti</td>
+    <td class="words" contenteditable="true">
+        • yathā = just as<br>
+        • vaiṣṇavam = Vaiṣṇava (nom. sg.)<br>
+        • mānaṣam = Mānava/human (nom. sg.)<br>
+        • iti = thus
+    </td>
+    <td class="literal" contenteditable="true">
+        Just as [one speaks of] Vaiṣṇava or Mānava [systems].
+    </td>
+    <td class="meaning">
+        Provides analogies: just as "Vaiṣṇava" refers to the Viṣṇu-related tradition and "Mānava" to the Manu-dharmaśāstra tradition, so "Pāśupata" designates the Paśupati tradition.
+    </td>
+    <td class="literary">
+        Similar to the usage of "vaiṣṇava" or "mānasa."
+    </td>
+</tr>
+
+<!-- SECTION 13: YOGA - UNION WITH GOD -->
+<tr>
+    <td colspan="5" class="section-header">SECTION 13: YOGA - THE UNION OF SELF AND GOD</td>
+</tr>
+
+<tr>
+    <td class="sanskrit">[āha:] kiṃ tad iti</td>
+    <td class="words" contenteditable="true">
+        • āha = he asks (3rd sg. perf.)<br>
+        • kim = what (nom. sg.)<br>
+        • tad = that (nom. sg.)<br>
+        • iti = thus
+    </td>
+    <td class="literal" contenteditable="true">
+        [He asks:] What is that?
+    </td>
+    <td class="meaning">
+        Continues the questioning - what else must be attained?
+    </td>
+    <td class="literary">
+        Pupil: "What [else] is 'that'?"
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">ucyate: yogam</td>
+    <td class="words" contenteditable="true">
+        • ucyate = it is said (3rd sg. pres. pass.)<br>
+        • yogam = yoga (acc. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        It is said: Yoga.
+    </td>
+    <td class="meaning">
+        The second requirement: yoga.
+    </td>
+    <td class="literary">
+        It is said: "union" [yoga].
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">atrātmeśvarasaṃyogo yogaḥ</td>
+    <td class="words" contenteditable="true">
+        • atra = here<br>
+        • ātma-īśvara-saṃyogaḥ = union of self and Lord (nom. sg.)<br>
+        • yogaḥ = yoga (nom. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Here, yoga is the union of the self and the Lord.
+    </td>
+    <td class="meaning">
+        Defines yoga specifically as saṃyoga (conjunction/union) between the individual soul (ātman) and God (Īśvara).
+    </td>
+    <td class="literary">
+        "Yoga" [in the Sūtra refers to the condition in which] there is unification (saṃyoga) of the self/oneself (ātman) and God.
+    </td>
+</tr>
+
+<!-- SECTION 14: IS YOGA ONE-SIDED OR TWO-SIDED? -->
+<tr>
+    <td colspan="5" class="section-header">SECTION 14: THE NATURE OF UNION - HUMAN EFFORT OR DIVINE-HUMAN COOPERATION?</td>
+</tr>
+
+<tr>
+    <td class="sanskrit">sa punaḥ puruṣasyādhyayanādhyānādīnaimittkatvād anyatarakarmajaḥ sthānuśyenavat</td>
+    <td class="words" contenteditable="true">
+        • saḥ = that [yoga] (nom. sg.)<br>
+        • punaḥ = again<br>
+        • puruṣasya = of the person (gen. sg.)<br>
+        • adhyayana-adhyāna-ādi-naimittka-tvāt = from being caused by study, meditation, etc. (abl. sg.)<br>
+        • anyatara-karma-jaḥ = born from one [of two] actions (nom. sg.)<br>
+        • sthāṇu-śyena-vat = like Sthāṇu and Śyena
+    </td>
+    <td class="literal" contenteditable="true">
+        That [yoga] again, because it is caused by the person's study, meditation and so on, is born from one [of two] actions, like Sthāṇu and Śyena.
+    </td>
+    <td class="meaning">
+        First view: yoga results from human effort alone (study, meditation, etc.), like certain Vedic sacrifices (Sthāṇu, Śyena) that require action from only one party.
+    </td>
+    <td class="literary">
+        That [union] again, [according to some], comes about by the one-sided act of a human being - comparable to the case of the falcon and the post - because it is effected by study, meditation, and the like.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">codanādhyayanādīvacanān meṣavad ubhayakarmajaḥ</td>
+    <td class="words" contenteditable="true">
+        • codanā-adhyayana-ādi-vacanāt = from statements about injunction, study, etc. (abl. sg.)<br>
+        • meṣa-vat = like a ram<br>
+        • ubhaya-karma-jaḥ = born from both actions (nom. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        From statements about injunction, study, and so on, [it is understood that yoga is] born from both actions, like a ram.
+    </td>
+    <td class="meaning">
+        Counter-view: Since scripture mentions both divine impulsion (codanā) and human practices (adhyayana), yoga requires cooperation from both God and human - like a ram born from two parents (ubhaya).
+    </td>
+    <td class="literary">
+        [Others say] it comes about by the act of two - as in the case of [two fighting] rams - because [the Śāstra] speaks of impelling (codana) as well as study etc.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">yasmāt sati vibhutve anadhikārakṛtatvād viyogasya</td>
+    <td class="words" contenteditable="true">
+        • yasmāt = because<br>
+        • sati vibhutve = even when omnipresence exists (loc. sg.)<br>
+        • anadhikāra-kṛta-tvāt = from the state of not being effected by [one's own] authority (abl. sg.)<br>
+        • viyogasya = of separation (gen. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Because even when omnipresence exists, separation is not effected by [one's own] authority.
+    </td>
+    <td class="meaning">
+        Despite God's omnipresence (vibhutva), the soul's separation (viyoga) from God is not caused by lack of divine qualification (adhikāra) but by the soul's own lack of readiness.
+    </td>
+    <td class="literary">
+        Since, in view of [His] omnipresence (vibhutva), [the state] of one who is without union is caused by the fact that he does not [yet] meet the qualification/empowerment (adhikāra).
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">viyuktasyaiva ca saṃyoga upadiśyate</td>
+    <td class="words" contenteditable="true">
+        • viyuktasya = of the separated one (gen. sg.)<br>
+        • eva = indeed<br>
+        • ca = and<br>
+        • saṃyogaḥ = union (nom. sg.)<br>
+        • upadiśyate = is taught (3rd sg. pres. pass.)
+    </td>
+    <td class="literal" contenteditable="true">
+        And union is taught only for one who is separated.
+    </td>
+    <td class="meaning">
+        The teaching of union (saṃyoga) presupposes separation (viyoga) - one cannot unite with what one is already joined to.
+    </td>
+    <td class="literary">
+        And to one who is disunited (viyukta), unification (saṃyoga) is taught.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">viṣayaraktaviraktavat kriyāyoge</td>
+    <td class="words" contenteditable="true">
+        • viṣaya-rakta-virakta-vat = like one attached and detached from sense objects<br>
+        • kriyā-yoge = in action-yoga (loc. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Like one who is attached to and detached from sense objects in action-yoga.
+    </td>
+    <td class="meaning">
+        In kriyāyoga (yoga through action), one can become attached (rakta) or detached (virakta) from sensory objects - union and separation are dynamic states.
+    </td>
+    <td class="literary">
+        In the sense of "union [yoga] in/through activity", kriyāyoga - like one may become attached or detached from a visual object.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">iha tu samādhilakṣaṇe yoge saṃniyama iti</td>
+    <td class="words" contenteditable="true">
+        • iha = here<br>
+        • tu = but<br>
+        • samādhi-lakṣaṇe yoge = in yoga characterized by samādhi (loc. sg.)<br>
+        • saṃniyamaḥ = restraint/discipline (nom. sg.)<br>
+        • iti = thus
+    </td>
+    <td class="literal" contenteditable="true">
+        But here, in the yoga characterized by samādhi, it is [called] restraint.
+    </td>
+    <td class="meaning">
+        In the Pāśupata system specifically, yoga is defined by samādhi (meditative absorption), and the prefix saṃ- in saṃyoga is understood as indicating saṃniyama (disciplined restraint/observance).
+    </td>
+    <td class="literary">
+        However, in our system (iha), because yoga is characterized by joining together (samādhi), it means that the particular disciplinary rule of conduct (niyama) is [defined by joining] "together" (sam).
+    </td>
+</tr>
+
+<!-- SECTION 15: IS KNOWLEDGE ALONE SUFFICIENT? -->
+<tr>
+    <td colspan="5" class="section-header">SECTION 15: THE NECESSITY OF METHOD (VIDHI)</td>
+</tr>
+
+<tr>
+    <td class="sanskrit">āha: kiṃ parijñānamātrad eva tadyogaḥ prāpyate</td>
+    <td class="words" contenteditable="true">
+        • āha = he asks (3rd sg. perf.)<br>
+        • kim = what (interrogative)<br>
+        • parijñāna-mātrāt = from mere complete knowledge (abl. sg.)<br>
+        • eva = indeed<br>
+        • tad-yogaḥ = that yoga (nom. sg.)<br>
+        • prāpyate = is attained (3rd sg. pres. pass.)
+    </td>
+    <td class="literal" contenteditable="true">
+        He asks: Is that yoga attained from mere complete knowledge alone?
+    </td>
+    <td class="meaning">
+        Questions whether intellectual understanding (parijñāna) alone is sufficient to achieve yoga.
+    </td>
+    <td class="literary">
+        Pupil: "Is that yoga attained from mere complete knowledge alone?"
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">ucyate: [na]</td>
+    <td class="words" contenteditable="true">
+        • ucyate = it is said (3rd sg. pres. pass.)<br>
+        • na = no
+    </td>
+    <td class="literal" contenteditable="true">
+        It is said: No.
+    </td>
+    <td class="meaning">
+        Negates the idea that knowledge alone suffices.
+    </td>
+    <td class="literary">
+        [Answer:] No.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">yasmād āha: tatprāptau vidhiṃ vyākhyāsyāmaḥ</td>
+    <td class="words" contenteditable="true">
+        • yasmāt = because<br>
+        • āha = he says (3rd sg. perf.)<br>
+        • tat-prāptau = for attaining that (loc. sg.)<br>
+        • vidhim = method (acc. sg.)<br>
+        • vyākhyāsyāmaḥ = we shall explain (1st pl. fut.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Because he says: "We shall explain the method for attaining that."
+    </td>
+    <td class="meaning">
+        Cites the sūtra itself as evidence: the text promises to explain a vidhi (method/practice), proving that knowledge alone is insufficient.
+    </td>
+    <td class="literary">
+        Because [the Sūtra] says: "For attaining that [yoga], we shall explain the method (vidhi)."
+    </td>
+</tr>
+
+<!-- SECTION 16: WHAT IS VIDHI (METHOD)? -->
+<tr>
+    <td colspan="5" class="section-header">SECTION 16: GRAMMATICAL AND TECHNICAL ANALYSIS OF VIDHI</td>
+</tr>
+
+<tr>
+    <td class="sanskrit">atra yogasya vidhiḥ yogavidhir iti ṣaṣṭhītatpuruṣasamāsaḥ</td>
+    <td class="words" contenteditable="true">
+        • atra = here<br>
+        • yogasya = of yoga (gen. sg.)<br>
+        • vidhiḥ = method (nom. sg.)<br>
+        • yoga-vidhiḥ = yoga-method (nom. sg.)<br>
+        • iti = thus<br>
+        • ṣaṣṭhī-tatpuruṣa-samāsaḥ = genitive tatpuruṣa compound (nom. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Here, "the method of yoga" (yogavidhi) is [explained as] a genitive tatpuruṣa compound.
+    </td>
+    <td class="meaning">
+        Grammatical analysis: "yogavidhi" is a ṣaṣṭhītatpuruṣa (genitive determinative compound) meaning "method belonging to yoga" or "method for [attaining] yoga."
+    </td>
+    <td class="literary">
+        Here "the method of yoga" (yogavidhi) is [to be analyzed as] a genitive tatpuruṣa compound.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">atra sūkṣmasthūlasabahyābhyantarasalakṣaṇavilakṣaṇakriyāsu vidhisaṃjñā</td>
+    <td class="words" contenteditable="true">
+        • atra = here<br>
+        • sūkṣma-sthūla-sabahya-ābhyantara-sa-lakṣaṇa-vilakṣaṇa-kriyāsu = in actions that are subtle, gross, external, internal, characterized, uncharacterized (loc. pl.)<br>
+        • vidhi-saṃjñā = the designation "method" (nom. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Here, the designation "method" [refers to] actions that are subtle, gross, external, internal, characterized and uncharacterized.
+    </td>
+    <td class="meaning">
+        Defines the scope of vidhi: it encompasses all types of practices - subtle/gross (sūkṣma/sthūla), external/internal (bahya/ābhyantara), with/without observable characteristics (salakṣaṇa/vilakṣaṇa).
+    </td>
+    <td class="literary">
+        Here, in actions that are subtle, gross, external, internal, with characteristics and without characteristics, is the designation "method."
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">yajñavidhivan, na tu senāvanādivat</td>
+    <td class="words" contenteditable="true">
+        • yajña-vidhi-vat = like the method of sacrifice<br>
+        • na tu = but not<br>
+        • senā-vana-ādi-vat = like army, forest, etc.
+    </td>
+    <td class="literal" contenteditable="true">
+        Like the method of sacrifice, not like [mere collections such as] army, forest, and so on.
+    </td>
+    <td class="meaning">
+        Distinguishes vidhi from mere aggregates: "vidhi" denotes an organized, purposeful system (like yajñavidhi - sacrificial procedure) not a random collection (like senā/vana - army/forest).
+    </td>
+    <td class="literary">
+        Like the method of sacrifice (yajñavidhi), not like [mere collections such as] army, forest, and so on.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">kasmāt</td>
+    <td class="words" contenteditable="true">
+        • kasmāt = why
+    </td>
+    <td class="literal" contenteditable="true">
+        Why?
+    </td>
+    <td class="meaning">
+        Prompts explanation of the distinction.
+    </td>
+    <td class="literary">
+        Why?
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">kriyāṇāṃ kṣaṇikānāṃ samudayasambhavāt</td>
+    <td class="words" contenteditable="true">
+        • kriyāṇām = of actions (gen. pl.)<br>
+        • kṣaṇikānām = momentary (gen. pl.)<br>
+        • samudaya-sambhavāt = from the possibility of aggregation (abl. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Because of the possibility of aggregating momentary actions.
+    </td>
+    <td class="meaning">
+        Actions (kriyā) are momentary (kṣaṇika), but they can form an aggregate (samudaya) - a coherent sequence rather than random collection.
+    </td>
+    <td class="literary">
+        Because of the possibility of aggregating momentary actions.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">yady evaṃ vidhiḥ kasmāt</td>
+    <td class="words" contenteditable="true">
+        • yadi = if<br>
+        • evam = so<br>
+        • vidhiḥ = method (nom. sg.)<br>
+        • kasmāt = why
+    </td>
+    <td class="literal" contenteditable="true">
+        If so, why [is it called] "method"?
+    </td>
+    <td class="meaning">
+        If it's just an aggregate of actions, why use the special term "vidhi"?
+    </td>
+    <td class="literary">
+        If so, why [is it called] "method" (vidhi)?
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">vidhāyakatvāt vidhiḥ</td>
+    <td class="words" contenteditable="true">
+        • vidhāyaka-tvāt = from being an establisher (abl. sg.)<br>
+        • vidhiḥ = method (nom. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        [It is called] "method" because it establishes.
+    </td>
+    <td class="meaning">
+        Etymology of vidhi: from vidhāyaka (that which establishes/institutes) - it actively brings about or establishes the goal.
+    </td>
+    <td class="literary">
+        [It is called] "method" because it establishes (vidhāyaka).
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">upāyopeyabhāvāc ca</td>
+    <td class="words" contenteditable="true">
+        • upāya-upeya-bhāvāt = from the relationship of means and end (abl. sg.)<br>
+        • ca = and
+    </td>
+    <td class="literal" contenteditable="true">
+        And because of the relationship of means and end.
+    </td>
+    <td class="meaning">
+        Vidhi has the upāya-upeya relationship: it is the means (upāya) to an end (upeya), establishing purposeful teleology.
+    </td>
+    <td class="literary">
+        And because of the state of being means (upāya) and end (upeya).
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">vidhim iti karma</td>
+    <td class="words" contenteditable="true">
+        • vidhim = method (acc. sg.)<br>
+        • iti = thus<br>
+        • karma = object [grammatical] (nom. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        "Method" [in the phrase] is the [grammatical] object [of the verb "we shall explain"].
+    </td>
+    <td class="meaning">
+        Final grammatical note: in the phrase "vidhiṃ vyākhyāsyāmaḥ" (we shall explain the method), vidhim functions as the karma (direct object) of the verb.
+    </td>
+    <td class="literary">
+        "Method" (vidhim) [in the phrase] is the object [of the verb "we shall explain"].
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">evaṃ sa duḥkhāntaḥ kāryaṃ karaṇaṃ yogo vidhir iti pañcaiva padārthāḥ samāsata uddiṣṭāḥ</td>
+    <td class="words" contenteditable="true">
+        • evam = thus<br>
+        • saḥ = that (nom. sg.)<br>
+        • duḥkha-antaḥ = end of suffering (nom. sg.)<br>
+        • kāryam = effect/product (nom. sg.)<br>
+        • karaṇam = instrument (nom. sg.)<br>
+        • yogaḥ = union (nom. sg.)<br>
+        • vidhiḥ = method (nom. sg.)<br>
+        • iti = thus<br>
+        • pañca = five (num.)<br>
+        • eva = indeed<br>
+        • padārthāḥ = categories (nom. pl.)<br>
+        • samāsataḥ = in summary (adv.)<br>
+        • uddiṣṭāḥ = have been indicated (past participle, nom. pl.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Thus these five categories - that end of suffering, effect, instrument, union, and method - have been indicated in summary.
+    </td>
+    <td class="meaning">
+        Summarizes the five fundamental categories (padārtha) enumerated in the teaching: (1) duḥkhānta - cessation of suffering/liberation, (2) kārya - effects/products, (3) karaṇa - instruments/organs, (4) yoga - union with the Lord, (5) vidhi - the method/practice. These are presented briefly (samāsataḥ) before detailed explanation.
+    </td>
+    <td class="literary">
+        Thus, these five categories have been indicated in summary: that end of suffering, effect, instrument, union, and method.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">te vyākhyeyāḥ</td>
+    <td class="words" contenteditable="true">
+        • te = those (nom. pl.)<br>
+        • vyākhyeyāḥ = are to be explained (gerundive, nom. pl.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Those are to be explained.
+    </td>
+    <td class="meaning">
+        States the necessity of detailed exposition - the five categories require full explanation (vyākhyā).
+    </td>
+    <td class="literary">
+        These are to be explained.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">vyākhyānam eteṣāṃ vistaravibhāgaviśeṣopasaṃhāranigamanāni</td>
+    <td class="words" contenteditable="true">
+        • vyākhyānam = explanation (nom. sg.)<br>
+        • eteṣām = of these (gen. pl.)<br>
+        • vistara = detailed description<br>
+        • vibhāga = analysis/division<br>
+        • viśeṣa = differentiation/particularity<br>
+        • upasaṃhāra = synthesis/summary<br>
+        • nigamana = conclusion<br>
+        • -āni = plural neuter ending
+    </td>
+    <td class="literal" contenteditable="true">
+        The explanation of these [involves] detailed description, analysis, differentiation, synthesis, and conclusion.
+    </td>
+    <td class="meaning">
+        Outlines the five-fold methodology of explanation (vyākhyāna): (1) vistara - extensive elaboration, (2) vibhāga - analytical division, (3) viśeṣa - specific differentiation, (4) upasaṃhāra - synthetic summation, (5) nigamana - conclusive determination. This establishes the hermeneutical framework.
+    </td>
+    <td class="literary">
+        Their explanation (vyākhyāna) [involves] detailed description (vistara), analysis (vibhāga), differentiation (viśeṣa), synthesis (upasaṃhāra), and conclusion (nigamana).
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">tasmād anyad vyākhyeyam anyad vyākhyānam</td>
+    <td class="words" contenteditable="true">
+        • tasmāt = therefore (abl.)<br>
+        • anyad = one/different (nom. sg. neut.)<br>
+        • vyākhyeyam = that which is to be explained (gerundive, nom. sg.)<br>
+        • anyad = another/different (nom. sg. neut.)<br>
+        • vyākhyānam = explanation (nom. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Therefore, that which is to be explained is one thing, the explanation is another.
+    </td>
+    <td class="meaning">
+        Establishes the distinction between object of explanation (vyākhyeya - the five categories) and the act of explaining (vyākhyāna - the methodology).
+    </td>
+    <td class="literary">
+        Therefore, that which is to be explained (scil. the five categories) is one thing, the explanation (itself) another.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">yasmād āha "vyākhyāsyāmaḥ"</td>
+    <td class="words" contenteditable="true">
+        • yasmāt = because (conjunction)<br>
+        • āha = he says (3rd sg. perf.)<br>
+        • vyākhyāsyāmaḥ = we shall explain (1st pl. fut.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Because he says: "We shall explain."
+    </td>
+    <td class="meaning">
+        Cites the sūtra text as evidence for the promise of detailed explanation to come.
+    </td>
+    <td class="literary">
+        Hence He says: "We shall explain" (vyākhyāsyāmaḥ).
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">atra vir vistare vibhāge viśeṣe ca bhavati</td>
+    <td class="words" contenteditable="true">
+        • atra = here (adv.)<br>
+        • viḥ = the prefix 'vi'<br>
+        • vistare = in detailed description (loc. sg.)<br>
+        • vibhāge = in analysis (loc. sg.)<br>
+        • viśeṣe = in differentiation (loc. sg.)<br>
+        • ca = and<br>
+        • bhavati = occurs/is found (3rd sg. pres.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Here, [the prefix] 'vi' occurs in detailed description, analysis, and differentiation.
+    </td>
+    <td class="meaning">
+        Etymological analysis: the prefix vi- in vyākhyāsyāmaḥ (we shall explain) indicates three aspects of explanation - vistara, vibhāga, and viśeṣa - all sharing the intensifying prefix.
+    </td>
+    <td class="literary">
+        [The preposition] 'vi' in the Sūtra (in vy-ā-khyāsyāmaḥ) points to detailed description, analysis, and differentiation.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">tatra vistara iti pratyakṣānumānāptavacanaṃ iti pramāṇāny abhidhīyante</td>
+    <td class="words" contenteditable="true">
+        • tatra = therein (adv.)<br>
+        • vistaraḥ = detailed description (nom. sg.)<br>
+        • iti = thus<br>
+        • pratyakṣa = perception (nom. sg.)<br>
+        • anumāna = inference (nom. sg.)<br>
+        • āpta-vacanam = testimony/revelation (nom. sg.)<br>
+        • iti = thus<br>
+        • pramāṇāni = valid means of knowledge (nom. pl.)<br>
+        • abhidhīyante = are designated (3rd pl. pres. pass.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Therein, by 'detailed description' the valid means of knowledge are designated, namely: perception, inference, and testimony.
+    </td>
+    <td class="meaning">
+        Explains vistara (detailed description) as reference to the three pramāṇas (valid means of knowledge): pratyakṣa (direct perception), anumāna (inferential reasoning), āptavacana (authoritative testimony/scripture).
+    </td>
+    <td class="literary">
+        By 'detailed description' here the valid ways of cognition (pramāṇa) are indicated, viz. perception, reasoning, and revelation.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">tatra pratyakṣaṃ dvividham: indriyapratyakṣam ātmapratyakṣaṃ ca</td>
+    <td class="words" contenteditable="true">
+        • tatra = therein (adv.)<br>
+        • pratyakṣam = perception (nom. sg.)<br>
+        • dvividham = twofold (nom. sg.)<br>
+        • indriya-pratyakṣam = sensory perception (nom. sg.)<br>
+        • ātma-pratyakṣam = inner/self-perception (nom. sg.)<br>
+        • ca = and
+    </td>
+    <td class="literal" contenteditable="true">
+        Therein, perception is twofold: sensory perception and inner perception.
+    </td>
+    <td class="meaning">
+        Subdivides pratyakṣa into two types: (1) indriyapratyakṣa - perception through the external sense organs, (2) ātmapratyakṣa - direct inner perception/introspection of the self.
+    </td>
+    <td class="literary">
+        Perception (pratyakṣa) here is of two kinds: sensory perception (indriya) and inner perception (ātman).
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">indriyapratyakṣaṃ vyākhyānatapomūtrapuriṣamāṃsalavaṇaprāṇayāmaiḥ siddham</td>
+    <td class="words" contenteditable="true">
+        • indriya-pratyakṣam = sensory perception (nom. sg.)<br>
+        • vyākhyāna = explanation (inst. sg.)<br>
+        • tapas = ascetic practice (inst. sg.)<br>
+        • mūtra-puriṣa = urine and feces (inst. pl.)<br>
+        • māṃsa-lavaṇa = meat and salt (inst. pl.)<br>
+        • prāṇa-yāma = breath control (inst. pl.)<br>
+        • -aiḥ = instrumental ending<br>
+        • siddham = is proven/established (nom. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Sensory perception is proven by [the sūtra references to] explanation, ascetic practice, urine and feces, meat and salt, and breath control.
+    </td>
+    <td class="meaning">
+        Establishes the reality of indriyapratyakṣa through scriptural citations: vyākhyāna (PS 1.1), tapas (PS 2.16), mūtra-puriṣa (PS 1.12 - bodily excretions perceived), māṃsa-lavaṇa (PS 5.16 - food items perceived), prāṇāyāma (PS 1.16 - breath perceived and controlled).
+    </td>
+    <td class="literary">
+        [The reality of] sensory perception is proven (siddha) by 'explanation' (PS 1.1), 'ascetic practice' (PS 2.16), 'urine and feces' (PS 1.12), 'meat and salt' (PS 5.16) and 'breath control' (PS 1.16).
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">ātmapratyakṣaṃ tadupahārakṛtsnatapoduhkhāntādivacanāt siddham</td>
+    <td class="words" contenteditable="true">
+        • ātma-pratyakṣam = inner perception (nom. sg.)<br>
+        • tad-upahāra = offering to Him (compound)<br>
+        • kṛtsna-tapas = complete asceticism (compound)<br>
+        • duḥkha-anta = end of suffering (compound)<br>
+        • ādi = etc.<br>
+        • vacanāt = from the statement (abl. sg.)<br>
+        • siddham = is proven (nom. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Inner perception is proven from the statements about offering to Him, complete asceticism, end of suffering, etc.
+    </td>
+    <td class="meaning">
+        Establishes ātmapratyakṣa through sūtra references to inner states: tadupahāra (PS 1.8 - offering to the Lord, requires inner awareness), kṛtsnatapas (PS 3.19 - complete ascetic focus), duḥkhānta (PS 5.40 - recognition of suffering's end). These require introspective self-perception.
+    </td>
+    <td class="literary">
+        [The reality of] inner perception is proven by the Sūtra sayings: 'offering' to Him (PS 1.8), 'complete asceticism' (PS 3.19), 'the end to sufferings' (PS 5.40) etc.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">yathā prasthena mito vrīhiḥ prasthaḥ</td>
+    <td class="words" contenteditable="true">
+        • yathā = just as (adv.)<br>
+        • prasthena = by a prastha/measure (inst. sg.)<br>
+        • mitaḥ = measured (past participle, nom. sg.)<br>
+        • vrīhiḥ = rice (nom. sg.)<br>
+        • prasthaḥ = is a prastha/pound (nom. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Just as rice measured by the pound [measure] is [called] a pound.
+    </td>
+    <td class="meaning">
+        Analogy: just as rice takes its measure-name from the measuring instrument (prastha), so perception is validated by what it measures/reveals. The pramāṇa (means of knowledge) establishes the prameya (object of knowledge).
+    </td>
+    <td class="literary">
+        Just as rice measured by the pound establishes a pound.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">paramārthatas tv [indriyapratyakṣam] indriyārthasambhandhavyañjakasāmagryaṃ dharmādharmaprakāśadeśakālacodanādyanugṛhītaṃ sat pramāṇam utpadyate</td>
+    <td class="words" contenteditable="true">
+        • paramārthataḥ = ultimately/in reality (adv.)<br>
+        • tu = but/however<br>
+        • indriya-artha-sambandha = connection between sense and object<br>
+        • vyañjaka = manifesting (nom. sg.)<br>
+        • sāmagryam = aggregate (nom. sg.)<br>
+        • dharma-adharma = merit and demerit<br>
+        • prakāśa = light<br>
+        • deśa = space<br>
+        • kāla = time<br>
+        • codana = stimulus<br>
+        • ādi = etc.<br>
+        • anugṛhītam = sustained/supported (past participle)<br>
+        • sat = being (present participle)<br>
+        • pramāṇam = valid means (nom. sg.)<br>
+        • utpadyate = arises (3rd sg. pres. middle)
+    </td>
+    <td class="literal" contenteditable="true">
+        But ultimately, [sensory perception] is an aggregate that manifests the connection between sense organ and object, and when sustained by dharma, adharma, light, space, time, stimulus, etc., it arises as a valid means of knowledge.
+    </td>
+    <td class="meaning">
+        Technical definition of indriyapratyakṣa: it is a sāmagrī (aggregate/complex) that vyañjaka (manifests) the indriyārtha-sambandha (contact between sense faculty and sense object). This perception functions as valid pramāṇa only when supported (anugṛhīta) by auxiliary conditions: dharma/adharma (karmic merit/demerit), prakāśa (illumination), deśa (spatial proximity), kāla (temporal simultaneity), codanā (attentional stimulus), etc.
+    </td>
+    <td class="literary">
+        The true meaning, however, is that sensory perception is an aggregate that makes manifest the connection between sense organ and object and operates properly as a valid way of cognition when it is sustained (anugṛhīta) by dharma and adharma, light, space, time, stimuli (codanā), etc.
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">ātmapratyakṣaṃ tu cittātmāntaḥkaraṇasambandhasāmagryam</td>
+    <td class="words" contenteditable="true">
+        • ātma-pratyakṣam = inner perception (nom. sg.)<br>
+        • tu = but/however<br>
+        • citta-ātman = conscious self/subject<br>
+        • antaḥkaraṇa = inner organ/mind<br>
+        • sambandha = connection<br>
+        • sāmagryam = aggregate (nom. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        But inner perception is an aggregate [that manifests] the connection [between] the conscious self and the inner organ.
+    </td>
+    <td class="meaning">
+        Technical definition of ātmapratyakṣa: unlike external perception (sense-object contact), inner perception is a sāmagrī manifesting cittātman-antaḥkaraṇa-sambandha - the connection between the conscious subject (cittātman) and the internal mental organ (antaḥkaraṇa/manas). This enables introspection and self-awareness.
+    </td>
+    <td class="literary">
+        Inner perception on the other hand is an aggregate that connects the subject (cittātman) and the inner organ (i.e. mind).
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">anumānam api pratyakṣapūrvakaṃ cittātmāntaḥkaraṇasambandhasāmagryaṃ ca dharmādharmaprakāśadeśakālacodanādi-</td>
+    <td class="words" contenteditable="true">
+        • anumānam = inference (nom. sg.)<br>
+        • api = also<br>
+        • pratyakṣa-pūrvakam = preceded by perception (nom. sg.)<br>
+        • citta-ātman = conscious subject<br>
+        • antaḥkaraṇa = inner organ<br>
+        • sambandha = connection<br>
+        • sāmagryam = aggregate (nom. sg.)<br>
+        • ca = and<br>
+        • dharma-adharma-prakāśa-deśa-kāla-codana-ādi = dharma, adharma, light, space, time, stimulus, etc. (compound, incomplete)
+    </td>
+    <td class="literal" contenteditable="true">
+        Inference also, preceded by perception, is an aggregate [manifesting] the connection [between] the conscious self and the inner organ, and [sustained by] dharma, adharma, light, space, time, stimulus, etc...
+    </td>
+    <td class="meaning">
+        Technical definition of anumāna (inference): (1) it is pratyakṣapūrvaka - dependent upon and following from prior perception, (2) like inner perception, it operates through cittātman-antaḥkaraṇa connection, (3) it requires the same auxiliary conditions as sensory perception (dharma/adharma, light, space, time, stimuli, etc.). [Sentence appears incomplete in source text.]
+    </td>
+    <td class="literary">
+        Reasoning (anumāna) then—preceded by perception and being also an aggregate that connects the subject and the inner organ—is prompted by the recollection (smṛti) [sustained by] dharma and adharma, light, space, time, stimuli, etc.
+    </td>
+</tr>
+
+</tbody>
+</table>
+
+<p style="text-align: center; font-style: italic; margin-top: 30px; color: #8B4513;">
+Complete Document - All Sentences Analyzed with Introductory Section
+</p>
+
+</body>
+</html>
