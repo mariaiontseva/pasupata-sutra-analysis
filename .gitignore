@@ -10,3 +10,19 @@
 # Backup files
 *~
 *.backup
+
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Database files (don't commit local databases)
+database/*.db
+database/*.db-journal
+database/*.db-shm
+database/*.db-wal
+
+# Migration backups
+backups/
