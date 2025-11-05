@@ -59,6 +59,40 @@
             from { opacity: 0; }
             to { opacity: 1; }
         }
+        .sub-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #F5F5DC;
+            border-radius: 5px;
+        }
+        .sub-tab {
+            padding: 10px 25px;
+            background-color: #D2B48C;
+            color: #000;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .sub-tab:hover {
+            background-color: #C1A57B;
+            border-color: #8B4513;
+        }
+        .sub-tab.active {
+            background-color: #8B4513;
+            color: white;
+            border-color: #654321;
+        }
+        .sub-content {
+            display: none;
+        }
+        .sub-content.active {
+            display: block;
+        }
         h1 {
             text-align: center;
             color: #8B4513;
@@ -397,6 +431,7 @@
 <div class="tabs">
     <div class="tab active" onclick="switchTab('pasupata')">Pāśupatasūtra</div>
     <div class="tab" onclick="switchTab('vivekamartanda')">Vivekamartanda</div>
+    <div class="tab" onclick="switchTab('upanisads')">Upaniṣads</div>
 </div>
 
 <div id="setupBanner" class="setup-banner" style="display: none;">
@@ -5462,6 +5497,697 @@ vicāraṇā = inquiry (nom.)</td>
 
 </div>
 <!-- End Vivekamartanda Tab -->
+
+<!-- Upaniṣads Tab Content -->
+<div id="upanisads" class="tab-content">
+    <h1>Upaniṣads - Scholarly Analysis</h1>
+    <p style="text-align: center; font-style: italic; margin-bottom: 20px;">
+        Selected passages with detailed linguistic and philosophical analysis
+    </p>
+
+    <!-- Sub-tabs for different Upaniṣads -->
+    <div class="sub-tabs">
+        <div class="sub-tab active" onclick="switchSubTab('bau')">Bṛhadāraṇyaka Upaniṣad</div>
+        <div class="sub-tab" onclick="switchSubTab('svetasvatara')">Śvetāśvatara Upaniṣad</div>
+    </div>
+
+    <!-- BAU Content -->
+    <div id="bau" class="sub-content active">
+        <h2>Bṛhadāraṇyaka Upaniṣad 1.5.2-3</h2>
+        <p style="text-align: center; font-style: italic; margin-bottom: 30px;">
+            With Śaṅkara's Commentary (Bhāṣya) - The Seven Foods
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 18%;">Sanskrit Text</th>
+                    <th style="width: 25%;">Word-by-Word Analysis</th>
+                    <th style="width: 22%;">Literal Translation</th>
+                    <th style="width: 20%;">Grammar/Commentary</th>
+                    <th style="width: 15%;">Key Terms</th>
+                </tr>
+            </thead>
+            <tbody>
+
+<!-- Verse 1.5.2 Opening -->
+<tr>
+    <td colspan="5" class="section-header">BṚHADĀRAṆYAKA 1.5.2 - THE SEVEN FOODS</td>
+</tr>
+
+<tr>
+    <td class="sanskrit">yat saptānnāni medhayā<br>tapasā janayat pitā</td>
+    <td class="words" contenteditable="true">
+        • yat = that which (rel. pron.)<br>
+        • sapta = seven (num.)<br>
+        • annāni = foods (nom. pl. n.)<br>
+        • medhayā = through wisdom/meditation (inst. sg. f.)<br>
+        • tapasā = through austerity (inst. sg. n.)<br>
+        • janayat = created, generated (3rd sg. impf.)<br>
+        • pitā = father (nom. sg. m.)
+    </td>
+    <td class="literal" contenteditable="true">
+        That [regarding] the seven foods which the Father created through wisdom and austerity.
+    </td>
+    <td class="meaning">
+        Opening of Upaniṣadic verse. The Father (Prajāpati) creates through two means: medhā (wisdom/meditation) and tapas (austerity/heat). Seven foods represent cosmic sustenance.
+    </td>
+    <td class="jims">
+        <strong>medhā</strong> = wisdom, meditation, mental power<br>
+        <strong>tapas</strong> = austerity, heat, creative power<br>
+        <strong>anna</strong> = food, sustenance
+    </td>
+</tr>
+
+<!-- Śaṅkara's Commentary Line 1 -->
+<tr>
+    <td class="sanskrit">'yat saptānnāni medhayā tapasā janayat pitā' iti</td>
+    <td class="words" contenteditable="true">
+        • yat...iti = quotation marker "that..."<br>
+        • Reference to the verse being commented upon
+    </td>
+    <td class="literal" contenteditable="true">
+        [Regarding the verse] "That the Father created seven foods through wisdom and austerity"
+    </td>
+    <td class="meaning">
+        Śaṅkara begins commentary by quoting the verse. Standard bhāṣya format.
+    </td>
+    <td class="jims">
+        <strong>Bhāṣya structure:</strong> Quote verse, then explain
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">medhayā hi tapasā janayat pitā</td>
+    <td class="words" contenteditable="true">
+        • medhayā = through meditation (inst. sg. f.)<br>
+        • hi = indeed, for (particle)<br>
+        • tapasā = through austerity (inst. sg. n.)<br>
+        • janayat = created (3rd sg. impf.)<br>
+        • pitā = father (nom. sg. m.)
+    </td>
+    <td class="literal" contenteditable="true">
+        For indeed the Father created [them] through meditation and austerity.
+    </td>
+    <td class="meaning">
+        Śaṅkara emphasizes the dual means of creation: meditative wisdom (medhā) and ascetic power (tapas). The particle 'hi' adds emphasis.
+    </td>
+    <td class="jims">
+        <strong>hi</strong> = emphatic particle<br>
+        <strong>Dual instrumentals:</strong> both means necessary
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">eka eva asya paramānnam abhavat</td>
+    <td class="words" contenteditable="true">
+        • eka = one (nom. sg. n.)<br>
+        • eva = only, indeed (particle)<br>
+        • asya = of this/his (gen. sg.)<br>
+        • parama-annam = supreme food (nom. sg. n.)<br>
+        • abhavat = became (3rd sg. impf. from √bhū)
+    </td>
+    <td class="literal" contenteditable="true">
+        One indeed became his supreme food.
+    </td>
+    <td class="meaning">
+        Of the seven foods, one is supreme (parama). This sets up hierarchy among the foods. The verb √bhū indicates becoming/transformation.
+    </td>
+    <td class="jims">
+        <strong>parama</strong> = supreme, highest<br>
+        <strong>√bhū</strong> = to become, to be<br>
+        <strong>eva</strong> = emphatic "indeed"
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">tad devebhya upānayat</td>
+    <td class="words" contenteditable="true">
+        • tad = that (acc. sg. n.)<br>
+        • devebhyaḥ = for the gods (dat. pl. m.)<br>
+        • upānayat = brought near, offered (3rd sg. impf. from upa-√nī)
+    </td>
+    <td class="literal" contenteditable="true">
+        That [food] he offered to the gods.
+    </td>
+    <td class="meaning">
+        The supreme food is given to the devas. The prefix upa- with √nī means "to bring to/offer". Dative case shows beneficiary.
+    </td>
+    <td class="jims">
+        <strong>upa-√nī</strong> = to bring near, offer<br>
+        <strong>deva</strong> = god, deity<br>
+        <strong>Dative:</strong> for whom
+    </td>
+</tr>
+
+<!-- Additional Commentary -->
+<tr>
+    <td colspan="5" class="section-header">ŚAṄKARA'S EXPLANATION OF THE SEVEN FOODS</td>
+</tr>
+
+<tr>
+    <td class="sanskrit">tāni khalu saptānnāni</td>
+    <td class="words" contenteditable="true">
+        • tāni = those (nom. pl. n.)<br>
+        • khalu = indeed, truly (particle)<br>
+        • sapta = seven (num.)<br>
+        • annāni = foods (nom. pl. n.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Those seven foods, indeed.
+    </td>
+    <td class="meaning">
+        Śaṅkara prepares to enumerate. Particle 'khalu' adds certainty/emphasis to the enumeration that follows.
+    </td>
+    <td class="jims">
+        <strong>khalu</strong> = emphatic particle<br>
+        Introduces enumeration
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">trīṇy asya svāni abhavan</td>
+    <td class="words" contenteditable="true">
+        • trīṇi = three (nom. pl. n.)<br>
+        • asya = of this/his (gen. sg.)<br>
+        • svāni = own, belonging to self (nom. pl. n.)<br>
+        • abhavan = became (3rd pl. impf. from √bhū)
+    </td>
+    <td class="literal" contenteditable="true">
+        Three became his own.
+    </td>
+    <td class="meaning">
+        First division: three foods are "svāni" (self-belonging). This indicates foods retained by Prajāpati himself, not distributed.
+    </td>
+    <td class="jims">
+        <strong>sva</strong> = own, self-belonging<br>
+        <strong>trī</strong> = three<br>
+        First group of foods
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">trīṇi paśubhya upānayat</td>
+    <td class="words" contenteditable="true">
+        • trīṇi = three (acc. pl. n.)<br>
+        • paśubhyaḥ = for the animals (dat. pl. m.)<br>
+        • upānayat = offered, brought (3rd sg. impf.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Three he offered to the animals.
+    </td>
+    <td class="meaning">
+        Second division: three foods given to animals (paśu). This shows cosmic distribution - gods, self, and animals each receive sustenance.
+    </td>
+    <td class="jims">
+        <strong>paśu</strong> = animal, beast, cattle<br>
+        <strong>Distribution:</strong> 1+3+3=7
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">ekam eva devebhya upānayat</td>
+    <td class="words" contenteditable="true">
+        • ekam = one (acc. sg. n.)<br>
+        • eva = only, indeed<br>
+        • devebhyaḥ = for the gods (dat. pl.)<br>
+        • upānayat = offered (3rd sg. impf.)
+    </td>
+    <td class="literal" contenteditable="true">
+        One indeed he offered to the gods.
+    </td>
+    <td class="meaning">
+        Third division: one supreme food for the gods. This is the "paramānnam" mentioned earlier. The hierarchy is clear: gods receive the supreme food.
+    </td>
+    <td class="jims">
+        <strong>parama-anna</strong> = supreme food<br>
+        <strong>Hierarchy:</strong> Gods highest
+    </td>
+</tr>
+
+<!-- Verse 1.5.3 -->
+<tr>
+    <td colspan="5" class="section-header">BṚHADĀRAṆYAKA 1.5.3 - IDENTIFICATION OF THE FOODS</td>
+</tr>
+
+<tr>
+    <td class="sanskrit">tasyaitat śiro yad dyauḥ</td>
+    <td class="words" contenteditable="true">
+        • tasya = of that (gen. sg.)<br>
+        • etat = this (nom. sg. n.)<br>
+        • śiraḥ = head (nom. sg. n.)<br>
+        • yat = which (rel. pron.)<br>
+        • dyauḥ = heaven, sky (nom. sg. f.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Of that, this is the head, which is heaven.
+    </td>
+    <td class="meaning">
+        Begins identification of Prajāpati's body parts with cosmic elements. Head (śiras) = heaven (dyaus). Upaniṣadic correlation (bandhu) between microcosm and macrocosm.
+    </td>
+    <td class="jims">
+        <strong>śiras</strong> = head<br>
+        <strong>dyaus</strong> = heaven, sky<br>
+        <strong>Bandhu:</strong> cosmic correlation
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">idam eva paramānnam abhavat</td>
+    <td class="words" contenteditable="true">
+        • idam = this (nom. sg. n.)<br>
+        • eva = indeed (particle)<br>
+        • parama-annam = supreme food<br>
+        • abhavat = became (3rd sg. impf.)
+    </td>
+    <td class="literal" contenteditable="true">
+        This indeed became the supreme food.
+    </td>
+    <td class="meaning">
+        Heaven/head identified as the supreme food (paramānnam) given to the gods. Links cosmic anatomy to the food distribution.
+    </td>
+    <td class="jims">
+        <strong>Identification:</strong> Heaven = supreme food<br>
+        Given to gods
+    </td>
+</tr>
+
+            </tbody>
+        </table>
+
+        <p style="text-align: center; font-style: italic; margin-top: 30px; color: #888;">
+            ✓ BAU 1.5.2-3 with Śaṅkara's Commentary<br>
+            Focus: The Seven Foods of Prajāpati and Cosmic Distribution
+        </p>
+    </div>
+    <!-- End BAU Content -->
+
+    <!-- Śvetāśvatara Content -->
+    <div id="svetasvatara" class="sub-content">
+        <h2>Śvetāśvatara Upaniṣad - Chapter 1</h2>
+        <p style="text-align: center; font-style: italic; margin-bottom: 30px;">
+            Verses 1.1-12 - Philosophical Inquiry into Brahman
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 18%;">Sanskrit Text</th>
+                    <th style="width: 25%;">Word-by-Word Analysis</th>
+                    <th style="width: 22%;">Literal Translation</th>
+                    <th style="width: 20%;">Grammar Notes</th>
+                    <th style="width: 15%;">Key Terms</th>
+                </tr>
+            </thead>
+            <tbody>
+
+<!-- Verse 1.1 -->
+<tr>
+    <td colspan="5" class="section-header">OPENING QUESTIONS ON BRAHMAN</td>
+</tr>
+
+<!-- Comment: Verse 1.1 -->
+<tr>
+    <td class="sanskrit">oṃ<br>brahmavādino vadanti</td>
+    <td class="words" contenteditable="true">
+        • oṃ = sacred syllable<br>
+        • brahma-vādinaḥ = Brahman-speakers, knowers of Brahman (nom. pl. m.)<br>
+        • vadanti = they say, speak (3rd pl. pres. from √vad)
+    </td>
+    <td class="literal" contenteditable="true">
+        Om. The knowers of Brahman say...
+    </td>
+    <td class="meaning">
+        Opens with sacred syllable Om. Compound brahma-vādin = "one who speaks of Brahman". Present tense verb indicates ongoing philosophical discourse.
+    </td>
+    <td class="jims">
+        <strong>√vad</strong> = to speak<br>
+        <strong>-in</strong> suffix = one who does<br>
+        <strong>oṃ</strong> = sacred syllable
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">kiṃ kāraṇaṃ brahma</td>
+    <td class="words" contenteditable="true">
+        • kim = what? (interr. pron. nom. sg. n.)<br>
+        • kāraṇam = cause (nom. sg. n.)<br>
+        • brahma = Brahman (nom. sg. n.)
+    </td>
+    <td class="literal" contenteditable="true">
+        What is the cause? [What is] Brahman?
+    </td>
+    <td class="meaning">
+        First philosophical question: identity of ultimate cause. "Brahman" in apposition to "kāraṇam" - asking about the nature of the ultimate cause/Brahman.
+    </td>
+    <td class="jims">
+        <strong>kāraṇa</strong> = cause, reason<br>
+        <strong>brahman</strong> = ultimate reality<br>
+        <strong>Question 1</strong>
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">kutaḥ sma jātāḥ</td>
+    <td class="words" contenteditable="true">
+        • kutaḥ = from where? whence? (adv.)<br>
+        • sma = particle (past emphasis)<br>
+        • jātāḥ = born (nom. pl. m., past pass. part. from √jan)
+    </td>
+    <td class="literal" contenteditable="true">
+        From where were [we] born?
+    </td>
+    <td class="meaning">
+        Second question: origin. Particle 'sma' adds past tense force. Past participle jāta from √jan "to be born". Implicit subject "we" (the questioners).
+    </td>
+    <td class="jims">
+        <strong>√jan</strong> = to be born<br>
+        <strong>sma</strong> = past particle<br>
+        <strong>Question 2</strong>
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">jīvāmaḥ</td>
+    <td class="words" contenteditable="true">
+        • jīvāmaḥ = we live (1st pl. pres. from √jīv)
+    </td>
+    <td class="literal" contenteditable="true">
+        [By what] do we live?
+    </td>
+    <td class="meaning">
+        Third question: means of sustenance. Simple present tense verb. Instrumental cause implied but not stated - "by what means do we live?"
+    </td>
+    <td class="jims">
+        <strong>√jīv</strong> = to live<br>
+        <strong>Question 3</strong>
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">kva ca ayante<br>sukhaduḥkhe bhavān</td>
+    <td class="words" contenteditable="true">
+        • kva = where? (adv.)<br>
+        • ca = and<br>
+        • ayante = established, resting (nom. pl. from ā-√i)<br>
+        • sukha-duḥkhe = pleasure and pain (nom. dual n.)<br>
+        • bhavān = beings (voc. pl. m.)
+    </td>
+    <td class="literal" contenteditable="true">
+        And where, O beings, are pleasure and pain established?
+    </td>
+    <td class="meaning">
+        Fourth question: locus of experience. Dual compound sukha-duḥkha shows paired opposites. Vocative bhavān addresses the philosophical community. √i with ā- prefix = "to rest upon, be established in".
+    </td>
+    <td class="jims">
+        <strong>sukha</strong> = pleasure, happiness<br>
+        <strong>duḥkha</strong> = pain, suffering<br>
+        <strong>Dual:</strong> paired opposites<br>
+        <strong>Question 4</strong>
+    </td>
+</tr>
+
+<!-- Verse 1.2 -->
+<tr>
+    <td colspan="5" class="section-header">VERSE 1.2 - ANALYSIS OF PROPOSED CAUSES</td>
+</tr>
+
+<!-- Comment: Verse 1.2 -->
+<tr>
+    <td class="sanskrit">kālaḥ svabhāvo niyatiḥ<br>yadṛcchā</td>
+    <td class="words" contenteditable="true">
+        • kālaḥ = time (nom. sg. m.)<br>
+        • svabhāvaḥ = inherent nature (nom. sg. m.)<br>
+        • niyatiḥ = necessity, fate (nom. sg. f.)<br>
+        • yadṛcchā = chance, accident (nom. sg. f.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Time, inherent nature, necessity, chance...
+    </td>
+    <td class="meaning">
+        Lists rival philosophical theories of causation. Each represents a different school: Time (Kālavāda), Nature (Svabhāvavāda), Fate (Niyativāda), Chance (Yadṛcchāvāda).
+    </td>
+    <td class="jims">
+        <strong>kāla</strong> = time<br>
+        <strong>svabhāva</strong> = own-nature<br>
+        <strong>niyati</strong> = necessity<br>
+        <strong>yadṛcchā</strong> = chance
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">bhūtāni yoniḥ puruṣa iti</td>
+    <td class="words" contenteditable="true">
+        • bhūtāni = elements (nom. pl. n.)<br>
+        • yoniḥ = womb, source (nom. sg. f.)<br>
+        • puruṣaḥ = person, spirit (nom. sg. m.)<br>
+        • iti = thus (quotative)
+    </td>
+    <td class="literal" contenteditable="true">
+        ...elements, the womb [Prakṛti], the person - thus [say some].
+    </td>
+    <td class="meaning">
+        More theories: Bhūtavāda (elements), Yoni (Sāṃkhya's Prakṛti/material cause), Puruṣa (conscious principle). The 'iti' marks these as views to be examined.
+    </td>
+    <td class="jims">
+        <strong>bhūta</strong> = element<br>
+        <strong>yoni</strong> = womb, source<br>
+        <strong>puruṣa</strong> = person, spirit<br>
+        <strong>Six theories listed</strong>
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">cintyam etad api ca<br>ātmasaṃyogānanda-<br>hetutve</td>
+    <td class="words" contenteditable="true">
+        • cintyam = to be thought about (gerundive from √cit)<br>
+        • etat = this (nom. sg. n.)<br>
+        • api ca = moreover, also<br>
+        • ātma-saṃyoga = conjunction with the Self<br>
+        • ānanda-hetutve = in being the cause of bliss (loc. sg.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Moreover, this should be contemplated: [these] in being the cause of the bliss that comes from conjunction with the Self.
+    </td>
+    <td class="meaning">
+        Gerundive cintyam = "must be thought about" (obligation). Question: can these theories explain spiritual bliss (ānanda) from Self-realization? Locative absolute construction.
+    </td>
+    <td class="jims">
+        <strong>√cit</strong> = to think, perceive<br>
+        <strong>saṃyoga</strong> = conjunction<br>
+        <strong>ānanda</strong> = bliss<br>
+        <strong>hetu</strong> = cause
+    </td>
+</tr>
+
+<!-- Verse 1.3 -->
+<tr>
+    <td colspan="5" class="section-header">VERSE 1.3 - THE YOGIC METHOD</td>
+</tr>
+
+<!-- Comment: Verse 1.3 -->
+<tr>
+    <td class="sanskrit">te dhyānayogānugatāḥ</td>
+    <td class="words" contenteditable="true">
+        • te = they (nom. pl. m.)<br>
+        • dhyāna-yoga-anugatāḥ = devoted to meditation-yoga (nom. pl. m., past part.)<br>
+        • anu-√gam = to follow, be devoted to
+    </td>
+    <td class="literal" contenteditable="true">
+        They, devoted to the yoga of meditation...
+    </td>
+    <td class="meaning">
+        Introduces the yogins as protagonists. Compound dhyāna-yoga = meditative union. Past participle anugata from anu-√gam "to follow after" = devoted practitioners.
+    </td>
+    <td class="jims">
+        <strong>dhyāna</strong> = meditation<br>
+        <strong>yoga</strong> = union, practice<br>
+        <strong>anu-√gam</strong> = to follow
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">devaātmaśaktiṃ<br>svaguṇair nigūḍhām</td>
+    <td class="words" contenteditable="true">
+        • deva-ātma-śaktim = the divine Self-power (acc. sg. f.)<br>
+        • sva-guṇaiḥ = by its own qualities (inst. pl.)<br>
+        • nigūḍhām = hidden, concealed (acc. sg. f., past part. from ni-√guh)
+    </td>
+    <td class="literal" contenteditable="true">
+        [They perceived] the divine Self-power hidden by its own qualities.
+    </td>
+    <td class="meaning">
+        Object of perception: God's Self-power (Śakti). Past participle nigūḍhā = "concealed". The divine power is hidden by its own guṇas (qualities/modes of prakṛti). Instrumental shows means of concealment.
+    </td>
+    <td class="jims">
+        <strong>deva</strong> = divine<br>
+        <strong>ātma-śakti</strong> = Self-power<br>
+        <strong>guṇa</strong> = quality, mode<br>
+        <strong>ni-√guh</strong> = to conceal
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">apaśyan</td>
+    <td class="words" contenteditable="true">
+        • apaśyan = they saw, perceived (3rd pl. impf. from √paś)
+    </td>
+    <td class="literal" contenteditable="true">
+        ...they perceived.
+    </td>
+    <td class="meaning">
+        Main verb. Augmented past tense (ā-paśyan) indicates completed vision/realization. Root √paś = "to see" - direct mystical perception, not intellectual understanding.
+    </td>
+    <td class="jims">
+        <strong>√paś</strong> = to see, perceive<br>
+        <strong>Direct vision</strong> through yoga
+    </td>
+</tr>
+
+<!-- Verse 1.4 -->
+<tr>
+    <td colspan="5" class="section-header">VERSE 1.4 - THE ONE CONTROLLER</td>
+</tr>
+
+<!-- Comment: Verse 1.4 -->
+<tr>
+    <td class="sanskrit">yaḥ kāraṇāni<br>nikhilāni tāni<br>kālātmayuktāny<br>adhitiṣṭhatyekaḥ</td>
+    <td class="words" contenteditable="true">
+        • yaḥ = who (rel. pron. nom. sg. m.)<br>
+        • kāraṇāni = causes (acc. pl. n.)<br>
+        • nikhilāni = all (acc. pl. n.)<br>
+        • tāni = those (acc. pl. n.)<br>
+        • kāla-ātma-yuktāni = connected with time and self<br>
+        • adhitiṣṭhati = rules over (3rd sg. pres. from adhi-√sthā)<br>
+        • ekaḥ = one (nom. sg. m.)
+    </td>
+    <td class="literal" contenteditable="true">
+        The One who rules over all those causes which are connected with time and self...
+    </td>
+    <td class="meaning">
+        Relative clause describing the Supreme. The verb adhi-√sthā = "to stand over, rule, govern". The One transcends and controls all the causes mentioned in verse 2 (time, nature, etc.). Compound kāla-ātma-yukta links time and consciousness.
+    </td>
+    <td class="jims">
+        <strong>adhi-√sthā</strong> = to rule over<br>
+        <strong>nikhila</strong> = all, entire<br>
+        <strong>yukta</strong> = connected, joined<br>
+        <strong>Supreme ruler</strong>
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">tenedam īśitaṃ jagat</td>
+    <td class="words" contenteditable="true">
+        • tena = by him (inst. sg. m.)<br>
+        • idam = this (nom. sg. n.)<br>
+        • īśitam = ruled, governed (nom. sg. n., past part. from √īś)<br>
+        • jagat = world, universe (nom. sg. n.)
+    </td>
+    <td class="literal" contenteditable="true">
+        By Him this world is ruled.
+    </td>
+    <td class="meaning">
+        Instrumental tena shows agency - "by Him". Past participle īśita from √īś "to rule, be lord of". The entire jagat (moving world) is governed by this One.
+    </td>
+    <td class="jims">
+        <strong>√īś</strong> = to rule, be lord<br>
+        <strong>jagat</strong> = world (lit. "moving")<br>
+        <strong>Divine governance</strong>
+    </td>
+</tr>
+
+<!-- Verse 1.5 -->
+<tr>
+    <td colspan="5" class="section-header">VERSE 1.5 - THE ETERNAL RULER</td>
+</tr>
+
+<!-- Comment: Verse 1.5 -->
+<tr>
+    <td class="sanskrit">yaḥ prajāpatiś<br>carācarasya</td>
+    <td class="words" contenteditable="true">
+        • yaḥ = who (rel. pron.)<br>
+        • prajāpatiḥ = lord of creatures (nom. sg. m.)<br>
+        • cara-acarasya = of moving and non-moving (gen. sg. n.)
+    </td>
+    <td class="literal" contenteditable="true">
+        Who is the lord of creatures, of the moving and non-moving...
+    </td>
+    <td class="meaning">
+        Compound prajā-pati = "lord of offspring/creatures". Dvandva compound cara-acara = "moving and non-moving" covers all existence. Genitive shows domain of lordship.
+    </td>
+    <td class="jims">
+        <strong>prajā-pati</strong> = lord of creatures<br>
+        <strong>cara</strong> = moving<br>
+        <strong>acara</strong> = non-moving<br>
+        <strong>Totality</strong>
+    </td>
+</tr>
+
+<tr>
+    <td class="sanskrit">na tasmāt paraḥ</td>
+    <td class="words" contenteditable="true">
+        • na = not (neg.)<br>
+        • tasmāt = than him (abl. sg.)<br>
+        • paraḥ = higher, beyond (nom. sg. m.)
+    </td>
+    <td class="literal" contenteditable="true">
+        There is none higher than Him.
+    </td>
+    <td class="meaning">
+        Ablative of comparison: tasmāt = "than him". Negative statement affirming absolute supremacy. Para = "higher, beyond, supreme" - nothing transcends this reality.
+    </td>
+    <td class="jims">
+        <strong>para</strong> = higher, supreme<br>
+        <strong>Ablative of comparison</strong><br>
+        <strong>Absolute supremacy</strong>
+    </td>
+</tr>
+
+            </tbody>
+        </table>
+
+        <p style="text-align: center; font-style: italic; margin-top: 30px; color: #888;">
+            ✓ Śvetāśvatara Upaniṣad 1.1-5 Added<br>
+            Focus: Philosophical Inquiry and the Nature of Ultimate Cause
+        </p>
+    </div>
+    <!-- End Śvetāśvatara Content -->
+
+</div>
+<!-- End Upaniṣads Tab -->
+
+<script>
+    // Sub-tab switching function
+    function switchSubTab(subTabName) {
+        // Hide all sub-contents
+        const subContents = document.getElementsByClassName('sub-content');
+        for (let i = 0; i < subContents.length; i++) {
+            subContents[i].classList.remove('active');
+        }
+
+        // Remove active class from all sub-tabs
+        const subTabs = document.getElementsByClassName('sub-tab');
+        for (let i = 0; i < subTabs.length; i++) {
+            subTabs[i].classList.remove('active');
+        }
+
+        // Show selected sub-tab content
+        const selectedSubContent = document.getElementById(subTabName);
+        if (selectedSubContent) {
+            selectedSubContent.classList.add('active');
+        }
+
+        // Mark selected sub-tab as active
+        const allSubTabs = document.querySelectorAll('.sub-tab');
+        allSubTabs.forEach(subTab => {
+            if (subTab.getAttribute('onclick').includes(subTabName)) {
+                subTab.classList.add('active');
+            }
+        });
+
+        console.log('Switched to sub-tab:', subTabName);
+    }
+</script>
 
 <script>
     // Tab switching function
