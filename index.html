@@ -371,50 +371,42 @@
         });
 
         function saveToLocalStorage() {
-            const literalCells = document.querySelectorAll('.literal[contenteditable="true"]');
-            const wordsCells = document.querySelectorAll('.words[contenteditable="true"]');
+            const cellClasses = ['sanskrit', 'words', 'literal', 'translation', 'grammar', 'meaning', 'jims'];
 
-            const literalData = {};
-            literalCells.forEach((cell, index) => {
-                literalData[index] = cell.innerHTML;
+            cellClasses.forEach(className => {
+                const cells = document.querySelectorAll(`.${className}[contenteditable="true"]`);
+                if (cells.length > 0) {
+                    const cellData = {};
+                    cells.forEach((cell, index) => {
+                        cellData[index] = cell.innerHTML;
+                    });
+                    localStorage.setItem(`pasupata_${className}_edits`, JSON.stringify(cellData));
+                }
             });
 
-            const wordsData = {};
-            wordsCells.forEach((cell, index) => {
-                wordsData[index] = cell.innerHTML;
-            });
-
-            localStorage.setItem('pasupata_literal_edits', JSON.stringify(literalData));
-            localStorage.setItem('pasupata_words_edits', JSON.stringify(wordsData));
             localStorage.setItem('pasupata_last_save', new Date().toISOString());
         }
 
         function restoreFromLocalStorage() {
-            const savedLiteralData = localStorage.getItem('pasupata_literal_edits');
-            const savedWordsData = localStorage.getItem('pasupata_words_edits');
+            const cellClasses = ['sanskrit', 'words', 'literal', 'translation', 'grammar', 'meaning', 'jims'];
+            let hasRestoredData = false;
 
-            if (savedLiteralData) {
-                const data = JSON.parse(savedLiteralData);
-                const editableCells = document.querySelectorAll('.literal[contenteditable="true"]');
-                editableCells.forEach((cell, index) => {
-                    if (data[index]) {
-                        cell.innerHTML = data[index];
-                    }
-                });
-            }
-
-            if (savedWordsData) {
-                const data = JSON.parse(savedWordsData);
-                const editableCells = document.querySelectorAll('.words[contenteditable="true"]');
-                editableCells.forEach((cell, index) => {
-                    if (data[index]) {
-                        cell.innerHTML = data[index];
-                    }
-                });
-            }
+            cellClasses.forEach(className => {
+                const savedData = localStorage.getItem(`pasupata_${className}_edits`);
+                if (savedData) {
+                    const cellData = JSON.parse(savedData);
+                    const cells = document.querySelectorAll(`.${className}[contenteditable="true"]`);
+                    cells.forEach((cell, index) => {
+                        if (cellData[index]) {
+                            cell.innerHTML = cellData[index];
+                            hasRestoredData = true;
+                        }
+                    });
+                }
+            });
 
             const lastSave = localStorage.getItem('pasupata_last_save');
-            if (lastSave) {
+            if (hasRestoredData && lastSave) {
                 showNotification('Restored from backup: ' + new Date(lastSave).toLocaleString(), 'info', 5000);
             }
         }
@@ -7301,21 +7293,19 @@ vicāraṇā = inquiry (nom.)</td>
 
     // Save to JSONbin
     async function saveToCloud() {
-        const literalCells = document.querySelectorAll('.literal[contenteditable="true"]');
-        const wordsCells = document.querySelectorAll('.words[contenteditable="true"]');
-
+        const cellClasses = ['sanskrit', 'words', 'literal', 'translation', 'grammar', 'meaning', 'jims'];
         const data = {
-            literal: {},
-            words: {},
             lastModified: new Date().toISOString()
         };
 
-        literalCells.forEach((cell, index) => {
-            data.literal[index] = cell.innerHTML;
-        });
-
-        wordsCells.forEach((cell, index) => {
-            data.words[index] = cell.innerHTML;
+        cellClasses.forEach(className => {
+            const cells = document.querySelectorAll(`.${className}[contenteditable="true"]`);
+            if (cells.length > 0) {
+                data[className] = {};
+                cells.forEach((cell, index) => {
+                    data[className][index] = cell.innerHTML;
+                });
+            }
         });
 
         try {
@@ -7353,32 +7343,28 @@ vicāraṇā = inquiry (nom.)</td>
             if (response.ok) {
                 const result = await response.json();
                 const data = result.record;
+                const cellClasses = ['sanskrit', 'words', 'literal', 'translation', 'grammar', 'meaning', 'jims'];
+                let hasLoadedData = false;
 
-                if (data && (data.literal || data.words)) {
+                if (data) {
                     console.log('Loading edits from cloud...');
 
-                    // Load literal edits
-                    if (data.literal) {
-                        const literalCells = document.querySelectorAll('.literal[contenteditable="true"]');
-                        Object.keys(data.literal).forEach(index => {
-                            if (literalCells[index]) {
-                                literalCells[index].innerHTML = data.literal[index];
-                            }
-                        });
-                    }
+                    cellClasses.forEach(className => {
+                        if (data[className]) {
+                            const cells = document.querySelectorAll(`.${className}[contenteditable="true"]`);
+                            Object.keys(data[className]).forEach(index => {
+                                if (cells[index]) {
+                                    cells[index].innerHTML = data[className][index];
+                                    hasLoadedData = true;
+                                }
+                            });
+                        }
+                    });
 
-                    // Load words edits
-                    if (data.words) {
-                        const wordsCells = document.querySelectorAll('.words[contenteditable="true"]');
-                        Object.keys(data.words).forEach(index => {
-                            if (wordsCells[index]) {
-                                wordsCells[index].innerHTML = data.words[index];
-                            }
-                        });
+                    if (hasLoadedData) {
+                        const lastModified = data.lastModified ? new Date(data.lastModified).toLocaleString() : 'unknown';
+                        showNotification('✓ Loaded from cloud (last saved: ' + lastModified + ')', 'info', 4000);
                     }
-
-                    const lastModified = data.lastModified ? new Date(data.lastModified).toLocaleString() : 'unknown';
-                    showNotification('✓ Loaded from cloud (last saved: ' + lastModified + ')', 'info', 4000);
                 } else {
                     console.log('No saved edits found');
                     showNotification('No previous edits found', 'info', 3000);
@@ -7464,6 +7450,15 @@ vicāraṇā = inquiry (nom.)</td>
 
     // Initialize on page load
     document.addEventListener('DOMContentLoaded', function() {
+        // Make all table cells editable (except section headers)
+        const allCells = document.querySelectorAll('table td');
+        allCells.forEach(cell => {
+            // Skip section headers
+            if (!cell.classList.contains('section-header')) {
+                cell.setAttribute('contenteditable', 'true');
+            }
+        });
+
         // Restore last active tab
         restoreActiveTab();
 
@@ -7483,47 +7478,32 @@ vicāraṇā = inquiry (nom.)</td>
             startPolling();
         } else {
             // Load from localStorage as fallback
-            const savedLiteral = localStorage.getItem('pasupata_literal_edits');
-            const savedWords = localStorage.getItem('pasupata_words_edits');
+            const cellClasses = ['sanskrit', 'words', 'literal', 'translation', 'grammar', 'meaning', 'jims'];
+            let hasLoadedData = false;
 
-            if (savedLiteral) {
-                const literalData = JSON.parse(savedLiteral);
-                const literalCells = document.querySelectorAll('.literal[contenteditable="true"]');
-                Object.keys(literalData).forEach(index => {
-                    if (literalCells[index]) {
-                        literalCells[index].innerHTML = literalData[index];
-                    }
-                });
-            }
+            cellClasses.forEach(className => {
+                const savedData = localStorage.getItem(`pasupata_${className}_edits`);
+                if (savedData) {
+                    const cellData = JSON.parse(savedData);
+                    const cells = document.querySelectorAll(`.${className}[contenteditable="true"]`);
+                    Object.keys(cellData).forEach(index => {
+                        if (cells[index]) {
+                            cells[index].innerHTML = cellData[index];
+                            hasLoadedData = true;
+                        }
+                    });
+                }
+            });
 
-            if (savedWords) {
-                const wordsData = JSON.parse(savedWords);
-                const wordsCells = document.querySelectorAll('.words[contenteditable="true"]');
-                Object.keys(wordsData).forEach(index => {
-                    if (wordsCells[index]) {
-                        wordsCells[index].innerHTML = wordsData[index];
-                    }
-                });
-            }
-
-            if (savedLiteral || savedWords) {
+            if (hasLoadedData) {
                 showNotification('✓ Loaded from browser storage', 'info', 3000);
             }
         }
 
         // Add event listeners to all editable cells
-        const literalCells = document.querySelectorAll('.literal[contenteditable="true"]');
-        const wordsCells = document.querySelectorAll('.words[contenteditable="true"]');
+        const allEditableCells = document.querySelectorAll('td[contenteditable="true"]');
 
-        literalCells.forEach(cell => {
-            cell.addEventListener('input', function() {
-                handleInput();
-                // Always save to localStorage as backup
-                saveToLocalStorage();
-            });
-        });
-
-        wordsCells.forEach(cell => {
+        allEditableCells.forEach(cell => {
             cell.addEventListener('input', function() {
                 handleInput();
                 // Always save to localStorage as backup
@@ -7532,27 +7512,25 @@ vicāraṇā = inquiry (nom.)</td>
         });
 
         console.log('Auto-save initialized');
-        console.log('Editable cells:', literalCells.length + wordsCells.length);
+        console.log('Editable cells:', allEditableCells.length);
         console.log('Cloud storage:', isConfigured ? 'ENABLED' : 'NOT CONFIGURED');
     });
 
     // Save to localStorage as backup
     function saveToLocalStorage() {
-        const literalCells = document.querySelectorAll('.literal[contenteditable="true"]');
-        const wordsCells = document.querySelectorAll('.words[contenteditable="true"]');
+        // Save all editable cells by their class
+        const cellClasses = ['sanskrit', 'words', 'literal', 'translation', 'grammar', 'meaning', 'jims'];
 
-        const literalData = {};
-        literalCells.forEach((cell, index) => {
-            literalData[index] = cell.innerHTML;
+        cellClasses.forEach(className => {
+            const cells = document.querySelectorAll(`.${className}[contenteditable="true"]`);
+            if (cells.length > 0) {
+                const cellData = {};
+                cells.forEach((cell, index) => {
+                    cellData[index] = cell.innerHTML;
+                });
+                localStorage.setItem(`pasupata_${className}_edits`, JSON.stringify(cellData));
+            }
         });
-
-        const wordsData = {};
-        wordsCells.forEach((cell, index) => {
-            wordsData[index] = cell.innerHTML;
-        });
-
-        localStorage.setItem('pasupata_literal_edits', JSON.stringify(literalData));
-        localStorage.setItem('pasupata_words_edits', JSON.stringify(wordsData));
     }
 
     // Warn before leaving with unsaved changes
