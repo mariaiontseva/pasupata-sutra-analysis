@@ -439,21 +439,23 @@
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', () => {
-            const currentVersion = '4.3'; // Added verses 54-67 mudrābandhāḥ - FORCE OVERRIDE!
+            const currentVersion = '4.4'; // FIXED verse 58 - corrected uḍḍīyāna Sanskrit!
             const storedVersion = localStorage.getItem('pasupata_version');
 
             if (storedVersion !== currentVersion) {
                 localStorage.setItem('pasupata_version', currentVersion);
-                console.log('🔄 Version changed from', storedVersion, 'to', currentVersion, '- Will force-save new verses to Firebase');
+                console.log('🔄 Version changed from', storedVersion, 'to', currentVersion);
+                console.log('⚡ SKIPPING Firebase load - will FORCE-SAVE correct HTML to Firebase instead!');
 
-                // FORCE SAVE: New verses added, override Firebase with correct HTML content
+                // FORCE SAVE: Push correct HTML to Firebase (do NOT load from Firebase first!)
                 setTimeout(() => {
-                    console.log('⚡ FORCE-SAVING new verses 54-67 to Firebase...');
+                    console.log('⚡ FORCE-SAVING corrected verses to Firebase...');
                     autoSave(); // Force-save the HTML content to Firebase
-                    showNotification('✅ New verses 54-67 saved to cloud!', 'success', 3000);
+                    showNotification('✅ Corrected verses saved to cloud!', 'success', 3000);
                 }, 1000); // Wait 1 second for page to fully load
             } else {
-                // Normal load from Firebase
+                // Normal load from Firebase ONLY if version hasn't changed
+                console.log('📥 Loading from Firebase (version unchanged)');
                 loadFromFirebase();
             }
 
