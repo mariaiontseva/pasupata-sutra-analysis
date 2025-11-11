@@ -352,10 +352,14 @@
             });
 
             // Debug info
-            console.log('Saving to Firebase with userId:', userId);
-            console.log('Data to save:', Object.keys(allData));
+            console.log('💾 Saving to Firebase with userId:', userId);
+            console.log('📊 Data categories:', Object.keys(allData));
+            Object.keys(allData).forEach(category => {
+                console.log(`  - ${category}: ${Object.keys(allData[category]).length} cells`);
+            });
 
             // Save to Firebase
+            console.log('🌐 Firebase path:', 'pasupata_analysis/' + userId);
             database.ref('pasupata_analysis/' + userId).set({
                 data: allData,
                 lastSave: new Date().toISOString(),
@@ -373,6 +377,13 @@
                 // Fallback to localStorage only
                 localStorage.setItem('pasupata_last_save', new Date().toISOString());
             });
+        }
+
+        // Manual save to cloud (for debugging/testing)
+        function manualSaveToCloud() {
+            console.log('🖱️ Manual save triggered');
+            showNotification('💾 Saving to cloud...', 'info', 1000);
+            autoSave();
         }
 
         // Schedule auto-save (1 second after you stop typing)
@@ -439,24 +450,24 @@
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', () => {
-            const currentVersion = '4.4'; // FIXED verse 58 - corrected uḍḍīyāna Sanskrit!
+            const currentVersion = '4.5'; // ALWAYS load Firebase + fixed auto-save!
             const storedVersion = localStorage.getItem('pasupata_version');
 
+            // ALWAYS load from Firebase first (works in incognito too!)
+            console.log('📥 Loading from Firebase...');
+            loadFromFirebase();
+
+            // If version changed, force-save correct HTML after Firebase loads
             if (storedVersion !== currentVersion) {
                 localStorage.setItem('pasupata_version', currentVersion);
-                console.log('🔄 Version changed from', storedVersion, 'to', currentVersion);
-                console.log('⚡ SKIPPING Firebase load - will FORCE-SAVE correct HTML to Firebase instead!');
+                console.log('🔄 Version changed to', currentVersion);
 
-                // FORCE SAVE: Push correct HTML to Firebase (do NOT load from Firebase first!)
+                // Force-save after 2 seconds (after Firebase load completes)
                 setTimeout(() => {
-                    console.log('⚡ FORCE-SAVING corrected verses to Firebase...');
-                    autoSave(); // Force-save the HTML content to Firebase
+                    console.log('⚡ FORCE-SAVING corrected verses to override any wrong data...');
+                    autoSave();
                     showNotification('✅ Corrected verses saved to cloud!', 'success', 3000);
-                }, 1000); // Wait 1 second for page to fully load
-            } else {
-                // Normal load from Firebase ONLY if version hasn't changed
-                console.log('📥 Loading from Firebase (version unchanged)');
-                loadFromFirebase();
+                }, 2000);
             }
 
             // Set up auto-save on every edit - ALL editable cells
@@ -503,22 +514,26 @@
 
                     if (saved && saved.data) {
                         // Load data from Firebase
+                        console.log('📊 Firebase data categories:', Object.keys(saved.data));
                         const cellClasses = ['sanskrit', 'words', 'literal', 'translation', 'grammar', 'meaning', 'jims'];
                         let loadedCount = 0;
 
                         cellClasses.forEach(className => {
                             if (saved.data[className]) {
                                 const cells = document.querySelectorAll(`.${className}[contenteditable="true"]`);
+                                let categoryCount = 0;
                                 cells.forEach((cell, index) => {
                                     if (saved.data[className][index]) {
                                         cell.innerHTML = saved.data[className][index];
                                         loadedCount++;
+                                        categoryCount++;
                                     }
                                 });
+                                console.log(`  ✓ ${className}: ${categoryCount} cells loaded`);
                             }
                         });
 
-                        console.log('✅ Loaded', loadedCount, 'cells from Firebase');
+                        console.log('✅ Total loaded:', loadedCount, 'cells from Firebase');
 
                         if (saved.lastSave) {
                             showNotification('☁️ Loaded from cloud: ' + new Date(saved.lastSave).toLocaleString() + ' (' + loadedCount + ' cells)', 'info', 4000);
@@ -592,6 +607,7 @@
 
 <button class="download-button" onclick="downloadFile()">💾 Download</button>
 <button class="download-button" onclick="resetToOriginal()" style="top: 70px; background-color: #ff9800;">🔄 Reset to Original</button>
+<button class="download-button" onclick="manualSaveToCloud()" style="top: 120px; background-color: #2196F3;">☁️ Save to Cloud</button>
 <div id="unsavedIndicator" class="unsaved-indicator">● Unsaved changes</div>
 <div id="notification" class="notification">✓ File saved successfully!</div>
 
