@@ -450,24 +450,29 @@
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', () => {
-            const currentVersion = '4.5'; // ALWAYS load Firebase + fixed auto-save!
+            const currentVersion = '4.6'; // ONLY Firebase data - no local HTML flash!
             const storedVersion = localStorage.getItem('pasupata_version');
+
+            // IMMEDIATELY clear all contenteditable cells - show ONLY Firebase data!
+            // But save original HTML as backup in case Firebase is empty
+            console.log('🧹 Clearing local HTML content...');
+            const originalHTMLBackup = new Map();
+            const allEditableCells = document.querySelectorAll('[contenteditable="true"]');
+            allEditableCells.forEach((cell, index) => {
+                originalHTMLBackup.set(index, cell.innerHTML); // Save original HTML
+                cell.innerHTML = ''; // Blank out - will be filled from Firebase only
+            });
+            window.originalHTMLBackup = originalHTMLBackup; // Store globally for loadFromFirebase
+            showNotification('⏳ Loading from cloud...', 'info', 10000);
 
             // ALWAYS load from Firebase first (works in incognito too!)
             console.log('📥 Loading from Firebase...');
             loadFromFirebase();
 
-            // If version changed, force-save correct HTML after Firebase loads
+            // Update version (no force-save needed - just load from Firebase)
             if (storedVersion !== currentVersion) {
                 localStorage.setItem('pasupata_version', currentVersion);
-                console.log('🔄 Version changed to', currentVersion);
-
-                // Force-save after 2 seconds (after Firebase load completes)
-                setTimeout(() => {
-                    console.log('⚡ FORCE-SAVING corrected verses to override any wrong data...');
-                    autoSave();
-                    showNotification('✅ Corrected verses saved to cloud!', 'success', 3000);
-                }, 2000);
+                console.log('🔄 Version updated to', currentVersion);
             }
 
             // Set up auto-save on every edit - ALL editable cells
@@ -495,6 +500,13 @@
             if (savedTab) {
                 console.log('📖 Restoring last tab:', savedTab);
                 switchTab(savedTab);
+            }
+
+            // Restore last active sub-tab (for Upaniṣads)
+            const savedSubTab = localStorage.getItem('activeSubTab');
+            if (savedSubTab) {
+                console.log('📖 Restoring last sub-tab:', savedSubTab);
+                switchSubTab(savedSubTab);
             }
 
             // Show welcome message
@@ -540,16 +552,41 @@
                             lastSaveTime = new Date(saved.lastSave);
                         }
                     } else {
-                        console.log('⚠️ No Firebase data, trying localStorage...');
-                        // No cloud data, try loading from localStorage backup
-                        loadFromStorage();
+                        console.log('⚠️ No Firebase data found!');
+
+                        // Restore original HTML backup (first time user)
+                        if (window.originalHTMLBackup) {
+                            console.log('📄 Restoring original HTML content...');
+                            const allCells = document.querySelectorAll('[contenteditable="true"]');
+                            allCells.forEach((cell, index) => {
+                                if (window.originalHTMLBackup.has(index)) {
+                                    cell.innerHTML = window.originalHTMLBackup.get(index);
+                                }
+                            });
+                            showNotification('⚠️ No cloud data found. Click "☁️ Save to Cloud" to sync this content.', 'warning', 8000);
+                        } else {
+                            // Try loading from localStorage backup
+                            loadFromStorage();
+                        }
                     }
                 })
                 .catch((error) => {
                     console.error('❌ Firebase load error:', error);
                     showNotification('⚠️ Cloud load failed: ' + error.message, 'warning', 3000);
-                    // Fallback to localStorage
-                    loadFromStorage();
+
+                    // Restore original HTML backup on error
+                    if (window.originalHTMLBackup) {
+                        console.log('📄 Restoring original HTML due to Firebase error...');
+                        const allCells = document.querySelectorAll('[contenteditable="true"]');
+                        allCells.forEach((cell, index) => {
+                            if (window.originalHTMLBackup.has(index)) {
+                                cell.innerHTML = window.originalHTMLBackup.get(index);
+                            }
+                        });
+                    } else {
+                        // Fallback to localStorage
+                        loadFromStorage();
+                    }
                 });
         }
 
@@ -8491,6 +8528,9 @@ The tongue position prevents loss of vital essence.</td>
                 subTab.classList.add('active');
             }
         });
+
+        // Save current sub-tab to localStorage
+        localStorage.setItem('activeSubTab', subTabName);
 
         console.log('Switched to sub-tab:', subTabName);
     }
