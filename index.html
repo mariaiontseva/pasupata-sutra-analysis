@@ -479,6 +479,13 @@
                 });
             });
 
+            // Restore last active tab
+            const savedTab = localStorage.getItem('activeTab');
+            if (savedTab) {
+                console.log('📖 Restoring last tab:', savedTab);
+                switchTab(savedTab);
+            }
+
             // Show welcome message
             setTimeout(() => {
                 showNotification('☁️ All columns editable! Cloud sync works everywhere: all browsers, devices, and incognito mode!', 'success', 4000);
