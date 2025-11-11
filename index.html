@@ -439,16 +439,23 @@
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', () => {
-            const currentVersion = '4.2'; // All columns editable across all tabs + cloud sync!
+            const currentVersion = '4.3'; // Added verses 54-67 mudrābandhāḥ - FORCE OVERRIDE!
             const storedVersion = localStorage.getItem('pasupata_version');
 
             if (storedVersion !== currentVersion) {
                 localStorage.setItem('pasupata_version', currentVersion);
-                showNotification('☁️ Cloud sync activated!', 'info', 3000);
-            }
+                console.log('🔄 Version changed from', storedVersion, 'to', currentVersion, '- Will force-save new verses to Firebase');
 
-            // Load from Firebase (cloud) first, fallback to localStorage
-            loadFromFirebase();
+                // FORCE SAVE: New verses added, override Firebase with correct HTML content
+                setTimeout(() => {
+                    console.log('⚡ FORCE-SAVING new verses 54-67 to Firebase...');
+                    autoSave(); // Force-save the HTML content to Firebase
+                    showNotification('✅ New verses 54-67 saved to cloud!', 'success', 3000);
+                }, 1000); // Wait 1 second for page to fully load
+            } else {
+                // Normal load from Firebase
+                loadFromFirebase();
+            }
 
             // Set up auto-save on every edit - ALL editable cells
             const editableCells = document.querySelectorAll(
@@ -5294,12 +5301,381 @@ Eating pleasant food while leaving 1/4 of stomach empty.</td>
     <td class="jims" contenteditable="true">He who, in order to please the gods, eats unctuous, sweet food leaving aside a quarter of it is said to be one who has a restricted diet.</td>
 </tr>
 
+<!-- Verse 54 - Kuṇḍalinī Śakti -->
+<tr>
+    <td class="sanskrit" contenteditable="true">kandordhaṃ kuṇḍalī śaktiḥ suptā mokṣāya yoginām |<br>
+bandhanaṃ badhyate yasmāt tena bandho nigadyate ||<br>
+<br>
+<em>De-sandhi:</em><br>
+kanda-ūrdhvam kuṇḍalī śaktiḥ suptā mokṣāya yoginām |<br>
+bandhanaṃ badhyate yasmāt tena bandhaḥ nigadyate ||</td>
+    <td class="words" contenteditable="true">kanda-ūrdhvam = above the bulb (adv.)<br>
+kuṇḍalī = coiled (nom. sg. f.)<br>
+śaktiḥ = power (nom. sg.)<br>
+suptā = sleeping (nom. sg. f.)<br>
+mokṣāya = for liberation (dat.)<br>
+yoginām = of yogis (gen. pl.)<br>
+bandhanaṃ = bondage (acc. sg.)<br>
+badhyate = is bound (3rd sg. pass.)<br>
+yasmāt = because (abl.)<br>
+tena = therefore (inst.)<br>
+bandhaḥ = lock (nom.)<br>
+nigadyate = is called (3rd sg. pass.)</td>
+    <td class="translation" contenteditable="true">Above the bulb <strong>(kandordhvam)</strong>, the coiled <strong>(kuṇḍalī)</strong> power <strong>(śaktiḥ)</strong> sleeps <strong>(suptā)</strong> for the liberation <strong>(mokṣāya)</strong> of yogis <strong>(yoginām)</strong>. Because <strong>(yasmāt)</strong> bondage <strong>(bandhanaṃ)</strong> is bound <strong>(badhyate)</strong>, therefore <strong>(tena)</strong> it is called <strong>(nigadyate)</strong> a lock <strong>(bandhaḥ)</strong>.</td>
+    <td class="grammar" contenteditable="true"><strong>Introduction to bandhas (locks)</strong><br>
+[√bandh - to bind, √gad - to speak]<br>
+The sleeping Kuṇḍalinī above the kanda (root bulb) and the purpose of bandhas.</td>
+    <td class="jims" contenteditable="true">The coiled goddess sleeps above the bulb for the liberation of yogis. Because it binds bondage it is called a lock.</td>
+</tr>
+
+<!-- Section Header: MUDRĀBANDHĀḤ -->
+<tr style="background-color: #f0f8ff;">
+    <td colspan="5" style="text-align: center; font-weight: bold; font-size: 1.2em; padding: 20px;">
+        MUDRĀBANDHĀḤ (SEALS AND LOCKS)
+    </td>
+</tr>
+
+<!-- Verse 55 - Five Mudrās -->
+<tr>
+    <td class="sanskrit" contenteditable="true">mahāmudrāṃ nabhomudrāṃ uḍḍīyānaṃ jalandharām |<br>
+mūlabandhaṃ ca yo vetti sa yogī siddhabhāg bhavet ||<br>
+<br>
+<em>De-sandhi:</em><br>
+mahā-mudrām nabha-mudrām uḍḍīyānam jalandharām |<br>
+mūla-bandham ca yaḥ vetti saḥ yogī siddha-bhāk bhavet ||</td>
+    <td class="words" contenteditable="true">mahā-mudrām = great seal (acc. sg. f.)<br>
+nabha-mudrām = sky seal (acc. sg. f.)<br>
+uḍḍīyānam = upward flying lock (acc.)<br>
+jalandharām = net-holder (acc. sg. f.)<br>
+mūla-bandham = root lock (acc.)<br>
+ca = and<br>
+yaḥ = who (nom.)<br>
+vetti = knows (3rd sg.)<br>
+saḥ = he (nom.)<br>
+yogī = yogi (nom.)<br>
+siddha-bhāk = sharer of perfections (nom.)<br>
+bhavet = becomes (3rd sg. opt.)</td>
+    <td class="translation" contenteditable="true">He who <strong>(yaḥ)</strong> knows <strong>(vetti)</strong> the great seal <strong>(mahāmudrām)</strong>, the sky seal <strong>(nabhomudrām)</strong>, uḍḍīyāna <strong>(uḍḍīyānam)</strong>, jālandhara <strong>(jalandharām)</strong>, and <strong>(ca)</strong> the root lock <strong>(mūlabandham)</strong>—that <strong>(saḥ)</strong> yogi <strong>(yogī)</strong> becomes <strong>(bhavet)</strong> a sharer of perfections <strong>(siddha-bhāk)</strong>.</td>
+    <td class="grammar" contenteditable="true"><strong>List of the five main mudrās/bandhas</strong><br>
+[√vid - to know, √bhū - to become]<br>
+Enumeration of the essential practices.</td>
+    <td class="jims" contenteditable="true">The yogi who knows the great seal, the sky seal, uḍḍīyāna, jālandhara and the root lock becomes a sharer of perfections.</td>
+</tr>
+
+<!-- Verse 56 - Mūlabandha Benefits -->
+<tr>
+    <td class="sanskrit" contenteditable="true">apānaprāṇayoraikyaṃ kṣayo mūtrapurīṣayoḥ |<br>
+yuvā bhavati vṛddho 'pi satataṃ mūlabandhanāt ||<br>
+<br>
+<em>De-sandhi:</em><br>
+apāna-prāṇayoḥ aikyam kṣayaḥ mūtra-purīṣayoḥ |<br>
+yuvā bhavati vṛddhaḥ api satatam mūla-bandhanāt ||</td>
+    <td class="words" contenteditable="true">apāna-prāṇayoḥ = of apāna and prāṇa (gen. dual)<br>
+aikyam = unity (nom. sg.)<br>
+kṣayaḥ = decrease (nom.)<br>
+mūtra-purīṣayoḥ = of urine and feces (gen. dual)<br>
+yuvā = youth (nom.)<br>
+bhavati = becomes (3rd sg.)<br>
+vṛddhaḥ = old man (nom.)<br>
+api = even<br>
+satatam = constantly (adv.)<br>
+mūla-bandhanāt = from root lock (abl.)</td>
+    <td class="translation" contenteditable="true">Unity <strong>(aikyam)</strong> of apāna and prāṇa <strong>(apānaprāṇayoḥ)</strong>, decrease <strong>(kṣayaḥ)</strong> of urine and feces <strong>(mūtrapurīṣayoḥ)</strong>—even <strong>(api)</strong> an old man <strong>(vṛddhaḥ)</strong> becomes <strong>(bhavati)</strong> young <strong>(yuvā)</strong> constantly <strong>(satatam)</strong> from the root lock <strong>(mūlabandhanāt)</strong>.</td>
+    <td class="grammar" contenteditable="true"><strong>Benefits of mūlabandha</strong><br>
+[√bhū - to become, √kṣi - to diminish]<br>
+Uniting the two main breaths and rejuvenation.</td>
+    <td class="jims" contenteditable="true">Through constantly [practicing] the root lock there is unity of apāna and prāṇa and a decrease in urine and feces. Even an old man becomes young.</td>
+</tr>
+
+<!-- Verse 57 - Mūlabandha Technique -->
+<tr>
+    <td class="sanskrit" contenteditable="true">pārṣṇibhāgena sampīḍya yoniṃ vāyuṃ samākṛṣet |<br>
+ānakuñcanaṃ kuryāt eṣā mūlabandhākhyayā smṛtā ||<br>
+<br>
+<em>De-sandhi:</em><br>
+pārṣṇi-bhāgena sampīḍya yonim vāyum samākṛṣet |<br>
+āna-kuñcanam kuryāt eṣā mūla-bandha-ākhyayā smṛtā ||</td>
+    <td class="words" contenteditable="true">pārṣṇi-bhāgena = with heel part (inst.)<br>
+sampīḍya = pressing (abs.)<br>
+yonim = perineum (acc.)<br>
+vāyum = breath (acc.)<br>
+samākṛṣet = should draw together (3rd sg. opt.)<br>
+āna-kuñcanam = upward contraction (acc.)<br>
+kuryāt = should do (3rd sg. opt.)<br>
+eṣā = this (nom. f.)<br>
+mūla-bandha-ākhyayā = by name root lock (inst.)<br>
+smṛtā = is remembered/known (nom. f.)</td>
+    <td class="translation" contenteditable="true">Pressing <strong>(sampīḍya)</strong> the perineum <strong>(yonim)</strong> with the heel <strong>(pārṣṇibhāgena)</strong>, one should draw together <strong>(samākṛṣet)</strong> the breath <strong>(vāyum)</strong> and do <strong>(kuryāt)</strong> upward contraction <strong>(ānakuñcanam)</strong>. This <strong>(eṣā)</strong> is known <strong>(smṛtā)</strong> by the name <strong>(ākhyayā)</strong> root lock <strong>(mūlabandha)</strong>.</td>
+    <td class="grammar" contenteditable="true"><strong>Technique of mūlabandha</strong><br>
+[√pīḍ - to press, √kṛṣ - to draw, √kṛ - to do, √smṛ - to remember]<br>
+Physical method of contracting the perineal muscles.</td>
+    <td class="jims" contenteditable="true">Pressing the perineum with the heel, one should draw the breath together and make an upward contraction. This is known by the name root lock.</td>
+</tr>
+
+<!-- Verse 58 - Uḍḍīyāna Etymology -->
+<tr>
+    <td class="sanskrit" contenteditable="true">uḍḍīyate kurute yasmāt saṃsārasāgarataraṇam |<br>
+tasmād uḍḍīyanaṃ nāma mṛtyumātaṅgakesarī ||<br>
+<br>
+<em>De-sandhi:</em><br>
+uḍḍīyate kurute yasmāt saṃsāra-sāgara-taraṇam |<br>
+tasmāt uḍḍīyanam nāma mṛtyu-mātaṅga-kesarī ||</td>
+    <td class="words" contenteditable="true">uḍḍīyate = flies upward (3rd sg.)<br>
+kurute = makes (3rd sg. mid.)<br>
+yasmāt = because (abl.)<br>
+saṃsāra-sāgara-taraṇam = crossing ocean of existence (acc.)<br>
+tasmāt = therefore (abl.)<br>
+uḍḍīyanam = upward flight (nom.)<br>
+nāma = by name<br>
+mṛtyu-mātaṅga-kesarī = lion to death-elephant (nom.)</td>
+    <td class="translation" contenteditable="true">Because <strong>(yasmāt)</strong> it flies upward <strong>(uḍḍīyate)</strong> and makes <strong>(kurute)</strong> the crossing <strong>(taraṇam)</strong> of the ocean of existence <strong>(saṃsārasāgara)</strong>, therefore <strong>(tasmāt)</strong> it is called <strong>(nāma)</strong> uḍḍīyāna <strong>(uḍḍīyanam)</strong>—a lion <strong>(kesarī)</strong> to the elephant of death <strong>(mṛtyumātaṅga)</strong>.</td>
+    <td class="grammar" contenteditable="true"><strong>Etymology and power of uḍḍīyāna</strong><br>
+[√ḍī - to fly, √kṛ - to make, √tṛ - to cross]<br>
+The upward movement conquers death like a lion conquers an elephant.</td>
+    <td class="jims" contenteditable="true">Because it flies upward and makes one cross the ocean of existence, it is called uḍḍīyāna—a lion to the elephant of death.</td>
+</tr>
+
+<!-- Verse 59 - Uḍḍīyāna Technique -->
+<tr>
+    <td class="sanskrit" contenteditable="true">udare paścime tāṇaṃ nābheḥ ūrdhvañca kārayet |<br>
+uḍḍīyanaṃ ṣaḍbhirmasair mṛtyuṃ jayati yogavit ||<br>
+<br>
+<em>De-sandhi:</em><br>
+udare paścime tāṇam nābheḥ ūrdhvam ca kārayet |<br>
+uḍḍīyanam ṣaṭ-bhiḥ-māsaiḥ mṛtyum jayati yoga-vit ||</td>
+    <td class="words" contenteditable="true">udare = in belly (loc.)<br>
+paścime = posterior (loc.)<br>
+tāṇam = stretching (acc.)<br>
+nābheḥ = of navel (gen.)<br>
+ūrdhvam = upward (adv.)<br>
+ca = and<br>
+kārayet = should make (3rd sg. caus. opt.)<br>
+uḍḍīyanam = uḍḍīyāna (acc.)<br>
+ṣaṭ-bhiḥ-māsaiḥ = in six months (inst.)<br>
+mṛtyum = death (acc.)<br>
+jayati = conquers (3rd sg.)<br>
+yoga-vit = knower of yoga (nom.)</td>
+    <td class="translation" contenteditable="true">One should make <strong>(kārayet)</strong> the belly <strong>(udare)</strong> stretch <strong>(tāṇam)</strong> back <strong>(paścime)</strong> and <strong>(ca)</strong> upward <strong>(ūrdhvam)</strong> from the navel <strong>(nābheḥ)</strong>. The knower of yoga <strong>(yogavit)</strong> conquers <strong>(jayati)</strong> death <strong>(mṛtyum)</strong> in six months <strong>(ṣaḍbhirmāsaiḥ)</strong> through uḍḍīyāna <strong>(uḍḍīyanam)</strong>.</td>
+    <td class="grammar" contenteditable="true"><strong>Technique and results of uḍḍīyāna</strong><br>
+[√kṛ - to make, √ji - to conquer]<br>
+Drawing the belly back and up toward the spine; conquering death in 6 months.</td>
+    <td class="jims" contenteditable="true">One should make the belly stretch back and upward from the navel. The knower of yoga conquers death in six months through uḍḍīyāna.</td>
+</tr>
+
+<!-- Verse 60 - Jālandhara Function -->
+<tr>
+    <td class="sanskrit" contenteditable="true">badhnāti hi śirājālam adhogaṃ nābhikandaram |<br>
+jālandharaṃ tataḥ proktaṃ kaṇṭhasaṃkocanakramam ||<br>
+<br>
+<em>De-sandhi:</em><br>
+badhnāti hi śirā-jālam adhaḥ-gam nābhi-kandaram |<br>
+jālandharam tataḥ proktam kaṇṭha-saṃkocana-kramam ||</td>
+    <td class="words" contenteditable="true">badhnāti = binds (3rd sg.)<br>
+hi = indeed<br>
+śirā-jālam = network of channels (acc.)<br>
+adhaḥ-gam = going downward (acc.)<br>
+nābhi-kandaram = navel cavity (acc.)<br>
+jālandharam = net-holder (acc.)<br>
+tataḥ = therefore<br>
+proktam = is called (nom. n.)<br>
+kaṇṭha-saṃkocana-kramam = throat contraction sequence (acc.)</td>
+    <td class="translation" contenteditable="true">Indeed <strong>(hi)</strong> it binds <strong>(badhnāti)</strong> the network of channels <strong>(śirājālam)</strong> going downward <strong>(adhogam)</strong> to the navel cavity <strong>(nābhikandaram)</strong>. Therefore <strong>(tataḥ)</strong> it is called <strong>(proktam)</strong> jālandhara <strong>(jālandharam)</strong>—the throat contraction sequence <strong>(kaṇṭhasaṃkocanakramam)</strong>.</td>
+    <td class="grammar" contenteditable="true"><strong>Function of jālandhara bandha</strong><br>
+[√bandh - to bind, √vac - to speak]<br>
+Binds the downward flow of nectar from the head.</td>
+    <td class="jims" contenteditable="true">Indeed it binds the network of channels going downward to the navel cavity. Therefore it is called jālandhara—the throat contraction sequence.</td>
+</tr>
+
+<!-- Verse 61 - Jālandhara Technique -->
+<tr>
+    <td class="sanskrit" contenteditable="true">jālandhare kṛte bandhe kaṇṭhasaṃkocanalakṣaṇe |<br>
+na pīyūṣaṃ pataty agnau na ca vāyuḥ prakupyati ||<br>
+<br>
+<em>De-sandhi:</em><br>
+jālandhare kṛte bandhe kaṇṭha-saṃkocana-lakṣaṇe |<br>
+na pīyūṣam patati agnau na ca vāyuḥ prakupyati ||</td>
+    <td class="words" contenteditable="true">jālandhare = jālandhara (loc.)<br>
+kṛte = done (loc.)<br>
+bandhe = lock (loc.)<br>
+kaṇṭha-saṃkocana-lakṣaṇe = characterized by throat contraction (loc.)<br>
+na = not<br>
+pīyūṣam = nectar (nom.)<br>
+patati = falls (3rd sg.)<br>
+agnau = in fire (loc.)<br>
+na ca = and not<br>
+vāyuḥ = breath (nom.)<br>
+prakupyati = becomes agitated (3rd sg.)</td>
+    <td class="translation" contenteditable="true">When the jālandhara lock <strong>(jālandhare bandhe)</strong> is done <strong>(kṛte)</strong>, characterized by throat contraction <strong>(kaṇṭhasaṃkocanalakṣaṇe)</strong>, the nectar <strong>(pīyūṣam)</strong> does not <strong>(na)</strong> fall <strong>(patati)</strong> into the fire <strong>(agnau)</strong> and <strong>(ca)</strong> the breath <strong>(vāyuḥ)</strong> does not become agitated <strong>(prakupyati)</strong>.</td>
+    <td class="grammar" contenteditable="true"><strong>Effects of jālandhara</strong><br>
+[√kṛ - to do, √pat - to fall, √kup - to be agitated]<br>
+Preserves the nectar from being consumed by digestive fire.</td>
+    <td class="jims" contenteditable="true">When the jālandhara lock is done, characterized by throat contraction, the nectar does not fall into the fire and the breath does not become agitated.</td>
+</tr>
+
+<!-- Verse 62 - Khecarī Description -->
+<tr>
+    <td class="sanskrit" contenteditable="true">kapālakuhare jihvā praviṣṭā viparītāgatiḥ |<br>
+bhruvorāntargatā dṛṣṭiḥ khecarīmudrā bhavati ||<br>
+<br>
+<em>De-sandhi:</em><br>
+kapāla-kuhare jihvā praviṣṭā viparīta-āgatiḥ |<br>
+bhruvoḥ-antara-gatā dṛṣṭiḥ khecarī-mudrā bhavati ||</td>
+    <td class="words" contenteditable="true">kapāla-kuhare = in skull cavity (loc.)<br>
+jihvā = tongue (nom.)<br>
+praviṣṭā = entered (nom. f.)<br>
+viparīta-āgatiḥ = reverse movement (nom.)<br>
+bhruvoḥ-antara-gatā = gone between eyebrows (nom. f.)<br>
+dṛṣṭiḥ = gaze (nom.)<br>
+khecarī-mudrā = sky-moving seal (nom.)<br>
+bhavati = becomes (3rd sg.)</td>
+    <td class="translation" contenteditable="true">The tongue <strong>(jihvā)</strong> entered <strong>(praviṣṭā)</strong> into the skull cavity <strong>(kapālakuhare)</strong> with reverse movement <strong>(viparītāgatiḥ)</strong>, the gaze <strong>(dṛṣṭiḥ)</strong> fixed <strong>(gatā)</strong> between the eyebrows <strong>(bhruvorāntara)</strong>—this becomes <strong>(bhavati)</strong> the khecarī seal <strong>(khecarīmudrā)</strong>.</td>
+    <td class="grammar" contenteditable="true"><strong>Description of khecarī mudrā</strong><br>
+[√viś - to enter, √gam - to go, √bhū - to become]<br>
+Tongue turned back into skull with upward gaze.</td>
+    <td class="jims" contenteditable="true">The tongue turned back and entered into the hollow of the skull, the gaze between the brows: this is khecarī mudrā.</td>
+</tr>
+
+<!-- Verse 63 - Khecarī Benefits 1 -->
+<tr>
+    <td class="sanskrit" contenteditable="true">na rogo maraṇaṃ tandrā na nidrā na kṣudhā tṛṣā |<br>
+na ca mūrchā bhaven mūrteḥ khecarī mudrā bhavati ||<br>
+<br>
+<em>De-sandhi:</em><br>
+na rogaḥ maraṇam tandrā na nidrā na kṣudhā tṛṣā |<br>
+na ca mūrchā bhavet mūrteḥ khecarī mudrā bhavati ||</td>
+    <td class="words" contenteditable="true">na = not<br>
+rogaḥ = disease (nom.)<br>
+maraṇam = death (nom.)<br>
+tandrā = torpor (nom.)<br>
+na nidrā = not sleep (nom.)<br>
+na kṣudhā = not hunger (nom.)<br>
+tṛṣā = thirst (nom.)<br>
+na ca mūrchā = and not fainting (nom.)<br>
+bhavet = occurs (3rd sg. opt.)<br>
+mūrteḥ = to the embodied one (gen.)<br>
+khecarī mudrā = sky-moving seal (nom.)<br>
+bhavati = becomes (3rd sg.)</td>
+    <td class="translation" contenteditable="true">Not <strong>(na)</strong> disease <strong>(rogaḥ)</strong>, death <strong>(maraṇam)</strong>, torpor <strong>(tandrā)</strong>, not sleep <strong>(nidrā)</strong>, not hunger <strong>(kṣudhā)</strong>, thirst <strong>(tṛṣā)</strong>, and not fainting <strong>(mūrchā)</strong> occurs <strong>(bhavet)</strong> to the embodied one <strong>(mūrteḥ)</strong> when khecarī mudrā <strong>(khecarī mudrā)</strong> is practiced <strong>(bhavati)</strong>.</td>
+    <td class="grammar" contenteditable="true"><strong>Benefits of khecarī mudrā (1)</strong><br>
+[√bhū - to be/become]<br>
+Freedom from disease, death, and bodily needs.</td>
+    <td class="jims" contenteditable="true">No disease, death, torpor, sleep, hunger, thirst, or fainting occurs to the embodied one [who practices] khecarī mudrā.</td>
+</tr>
+
+<!-- Verse 64 - Khecarī Benefits 2 -->
+<tr>
+    <td class="sanskrit" contenteditable="true">pīḍyate na sarogeṇa lipyate na ca karmaṇā |<br>
+bādhyate na sa kālena yeṣāṃ mudrā vidhīyate ||<br>
+<br>
+<em>De-sandhi:</em><br>
+pīḍyate na sa rogeṇa lipyate na ca karmaṇā |<br>
+bādhyate na sa kālena yeṣām mudrā vidhīyate ||</td>
+    <td class="words" contenteditable="true">pīḍyate = is afflicted (3rd sg. pass.)<br>
+na sa = not he<br>
+rogeṇa = by disease (inst.)<br>
+lipyate = is stained (3rd sg. pass.)<br>
+na ca = and not<br>
+karmaṇā = by karma (inst.)<br>
+bādhyate = is troubled (3rd sg. pass.)<br>
+na sa = not he<br>
+kālena = by time (inst.)<br>
+yeṣām = of whom (gen. pl.)<br>
+mudrā = seal (nom.)<br>
+vidhīyate = is practiced (3rd sg. pass.)</td>
+    <td class="translation" contenteditable="true">He <strong>(sa)</strong> is not <strong>(na)</strong> afflicted <strong>(pīḍyate)</strong> by disease <strong>(rogeṇa)</strong>, not <strong>(na)</strong> stained <strong>(lipyate)</strong> by karma <strong>(karmaṇā)</strong>, and <strong>(ca)</strong> not troubled <strong>(bādhyate)</strong> by time <strong>(kālena)</strong>—those <strong>(yeṣām)</strong> by whom the seal <strong>(mudrā)</strong> is practiced <strong>(vidhīyate)</strong>.</td>
+    <td class="grammar" contenteditable="true"><strong>Benefits of khecarī mudrā (2)</strong><br>
+[√pīḍ - to afflict, √lip - to smear, √bādh - to trouble]<br>
+Transcending disease, karma, and time.</td>
+    <td class="jims" contenteditable="true">He is not afflicted by disease, not stained by karma, and not troubled by time—those by whom the seal is practiced.</td>
+</tr>
+
+<!-- Verse 65 - Khecarī Etymology -->
+<tr>
+    <td class="sanskrit" contenteditable="true">cittaṃ carati khe yasmāt jihvā carati khe gatā |<br>
+tenaiṣā khecarī nāma mudrā siddhaiḥ pradarśitā ||<br>
+<br>
+<em>De-sandhi:</em><br>
+cittam carati khe yasmāt jihvā carati khe gatā |<br>
+tena eṣā khecarī nāma mudrā siddhaiḥ pradarśitā ||</td>
+    <td class="words" contenteditable="true">cittam = mind (nom.)<br>
+carati = moves (3rd sg.)<br>
+khe = in space (loc.)<br>
+yasmāt = because (abl.)<br>
+jihvā = tongue (nom.)<br>
+carati = moves (3rd sg.)<br>
+khe = in space (loc.)<br>
+gatā = gone (nom. f.)<br>
+tena = therefore (inst.)<br>
+eṣā = this (nom. f.)<br>
+khecarī = space-moving (nom.)<br>
+nāma = by name<br>
+mudrā = seal (nom.)<br>
+siddhaiḥ = by perfected ones (inst. pl.)<br>
+pradarśitā = shown (nom. f.)</td>
+    <td class="translation" contenteditable="true">Because <strong>(yasmāt)</strong> the mind <strong>(cittam)</strong> moves <strong>(carati)</strong> in space <strong>(khe)</strong> and the tongue <strong>(jihvā)</strong>, having gone <strong>(gatā)</strong>, moves <strong>(carati)</strong> in space <strong>(khe)</strong>, therefore <strong>(tena)</strong> this <strong>(eṣā)</strong> seal <strong>(mudrā)</strong> is shown <strong>(pradarśitā)</strong> by the perfected ones <strong>(siddhaiḥ)</strong> with the name <strong>(nāma)</strong> khecarī <strong>(khecarī)</strong>.</td>
+    <td class="grammar" contenteditable="true"><strong>Etymology of khecarī</strong><br>
+[√car - to move, √gam - to go, √dṛś - to show]<br>
+Both mind and tongue move in the space (kha) of consciousness.</td>
+    <td class="jims" contenteditable="true">Because the mind moves in space and the tongue, having gone, moves in space, therefore this seal is shown by the perfected ones with the name khecarī.</td>
+</tr>
+
+<!-- Verse 66 - Bindu Foundation -->
+<tr>
+    <td class="sanskrit" contenteditable="true">bindumūlaṃ śarīraṃ bindusthāneṣu vartate |<br>
+yāvad binduḥ sthiro dehe tāvat kāyavyasaktakaḥ ||<br>
+<br>
+<em>De-sandhi:</em><br>
+bindu-mūlam śarīram bindu-sthāneṣu vartate |<br>
+yāvat binduḥ sthiraḥ dehe tāvat kāya-vyasaktakaḥ ||</td>
+    <td class="words" contenteditable="true">bindu-mūlam = root in bindu (nom. n.)<br>
+śarīram = body (nom.)<br>
+bindu-sthāneṣu = in bindu places (loc. pl.)<br>
+vartate = exists (3rd sg. mid.)<br>
+yāvat = as long as<br>
+binduḥ = drop/semen (nom.)<br>
+sthiraḥ = steady (nom.)<br>
+dehe = in body (loc.)<br>
+tāvat = so long<br>
+kāya-vyasaktakaḥ = attachment to body (nom.)</td>
+    <td class="translation" contenteditable="true">The body <strong>(śarīram)</strong> has its root in bindu <strong>(bindumūlam)</strong> and exists <strong>(vartate)</strong> in the places of bindu <strong>(bindusthāneṣu)</strong>. As long as <strong>(yāvat)</strong> bindu <strong>(binduḥ)</strong> is steady <strong>(sthiraḥ)</strong> in the body <strong>(dehe)</strong>, so long <strong>(tāvat)</strong> there is no attachment to the body <strong>(kāyavyasaktakaḥ)</strong>.</td>
+    <td class="grammar" contenteditable="true"><strong>Bindu as foundation of body</strong><br>
+[√vṛt - to exist, √sthā - to stand]<br>
+The vital essence (bindu) is the basis of life and consciousness.</td>
+    <td class="jims" contenteditable="true">The body has its root in bindu and exists in the places of bindu. As long as bindu is steady in the body, so long there is attachment to the body.</td>
+</tr>
+
+<!-- Verse 67 - Bindu Retention -->
+<tr>
+    <td class="sanskrit" contenteditable="true">khecaryā mudrāṃ yena bindurna cyavate kamapi |<br>
+candracyutam api bindū khecarīkuharaṃ gatam ||<br>
+<br>
+<em>De-sandhi:</em><br>
+khecaryā mudrām yena binduḥ na cyavate kam-api |<br>
+candra-cyutam api bindūḥ khecarī-kuharam gatam ||</td>
+    <td class="words" contenteditable="true">khecaryā = by khecarī (inst.)<br>
+mudrām = seal (acc.)<br>
+yena = by which (inst.)<br>
+binduḥ = drop (nom.)<br>
+na cyavate = does not fall (3rd sg.)<br>
+kam-api = anywhere (acc.)<br>
+candra-cyutam = fallen from moon (acc.)<br>
+api = even<br>
+bindūḥ = drop (nom.)<br>
+khecarī-kuharam = cavity of khecarī (acc.)<br>
+gatam = gone (nom. n.)</td>
+    <td class="translation" contenteditable="true">By which <strong>(yena)</strong> khecarī seal <strong>(khecaryā mudrām)</strong> the bindu <strong>(binduḥ)</strong> does not fall <strong>(na cyavate)</strong> anywhere <strong>(kamapi)</strong>—even <strong>(api)</strong> the bindu <strong>(bindūḥ)</strong> that has fallen from the moon <strong>(candracyutam)</strong>, having gone <strong>(gatam)</strong> to the cavity of khecarī <strong>(khecarīkuharam)</strong>.</td>
+    <td class="grammar" contenteditable="true"><strong>Khecarī preserves bindu</strong><br>
+[√cyu - to fall, √gam - to go]<br>
+The tongue position prevents loss of vital essence.</td>
+    <td class="jims" contenteditable="true">By khecarī mudrā the bindu does not fall anywhere—even the bindu that has fallen from the moon, having gone to the cavity of khecarī.</td>
+</tr>
+
         </tbody>
     </table>
 
     <p style="text-align: center; font-style: italic; margin-top: 30px; color: #888; font-weight: bold;">
-        ✓ Verses up to 53 completed<br>
-        Sections: Invocation, Postures, Chakras, Channels, Prāṇa Vāyus, Kuṇḍalinī, Mudrās.
+        ✓ Verses up to 67 completed<br>
+        Sections: Invocation, Postures, Chakras, Channels, Prāṇa Vāyus, Kuṇḍalinī, Mudrās, Bandhas.
     </p>
 
 </div>
