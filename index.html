@@ -461,8 +461,11 @@
                 '.jims[contenteditable="true"]'
             );
 
-            editableCells.forEach(cell => {
-                cell.addEventListener('input', () => {
+            console.log('📝 Found', editableCells.length, 'editable cells');
+
+            editableCells.forEach((cell, index) => {
+                cell.addEventListener('input', (e) => {
+                    console.log('✏️ Edit detected in cell', index, 'class:', cell.className);
                     scheduleAutoSave(); // Auto-save 1 second after you stop typing
                 });
             });
