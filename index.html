@@ -346,8 +346,7 @@
                         cellData[index] = cell.innerHTML;
                     });
                     allData[className] = cellData;
-                    // Also save to localStorage as backup
-                    localStorage.setItem(`pasupata_${className}_edits`, JSON.stringify(cellData));
+                    // NO localStorage - Firebase is ONLY source of truth
                 }
             });
 
@@ -493,32 +492,48 @@
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', () => {
-            const currentVersion = '4.9'; // FIXED FIREBASE LOADING LOGIC - immediate save, no Firebase load on version change!
+            const currentVersion = '5.0'; // Firebase is ONLY source of truth!
             const storedVersion = localStorage.getItem('pasupata_version');
+            const cellClasses = ['sanskrit', 'words', 'literal', 'translation', 'grammar', 'meaning', 'jims'];
 
-            // DON'T clear cells - show HTML immediately
-            console.log('📄 Showing HTML content...');
-
-            // If version changed - FORCE SAVE HTML to Firebase FIRST, DON'T LOAD FROM FIREBASE!
+            // If version changed - Save HTML → Firebase FIRST, then clear and load
             if (storedVersion !== currentVersion) {
                 localStorage.setItem('pasupata_version', currentVersion);
-                console.log('🔄 Version changed to', currentVersion, '- FORCE SAVING to Firebase...');
-                showNotification('💾 Saving corrected verses to cloud...', 'info', 2000);
+                console.log('🔄 Version changed to', currentVersion, '- Updating Firebase with corrected verses...');
+                showNotification('💾 Updating cloud with corrected verses...', 'info', 2000);
 
-                // Force-save IMMEDIATELY - don't wait!
-                console.log('⚡ FORCE-SAVING corrected verses to Firebase RIGHT NOW...');
+                // Step 1: Save HTML → Firebase (while cells still have content)
+                console.log('⚡ Step 1: Saving HTML → Firebase...');
                 autoSave();
 
-                // Show success message after save completes
+                // Step 2: Clear cells after save completes
                 setTimeout(() => {
-                    showNotification('✅ All verses 53-67 corrected and saved to cloud!', 'success', 3000);
-                }, 1500);
+                    console.log('🧹 Step 2: Clearing cells...');
+                    cellClasses.forEach(className => {
+                        const cells = document.querySelectorAll(`.${className}[contenteditable="true"]`);
+                        cells.forEach(cell => {
+                            cell.innerHTML = '';
+                        });
+                    });
 
-                // CRITICAL: DO NOT load from Firebase when version changes!
-                // HTML is the source of truth, we just saved it to Firebase
+                    // Step 3: Load from Firebase (now has correct verses)
+                    setTimeout(() => {
+                        console.log('📥 Step 3: Loading from Firebase...');
+                        loadFromFirebase();
+                        showNotification('✅ Verses updated! Firebase is now source of truth.', 'success', 3000);
+                    }, 500);
+                }, 1500);
             } else {
-                // Normal load from Firebase (will overlay HTML if data exists)
-                showNotification('⏳ Loading from cloud...', 'info', 3000);
+                // Normal load: Clear cells, then load from Firebase
+                console.log('🧹 Clearing cells - Firebase is ONLY source of truth');
+                cellClasses.forEach(className => {
+                    const cells = document.querySelectorAll(`.${className}[contenteditable="true"]`);
+                    cells.forEach(cell => {
+                        cell.innerHTML = '';
+                    });
+                });
+
+                showNotification('⏳ Loading from cloud...', 'info', 2000);
                 console.log('📥 Loading from Firebase...');
                 loadFromFirebase();
             }
