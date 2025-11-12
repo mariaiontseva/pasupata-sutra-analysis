@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Export Vivekamārtaṇḍa to Google Sheets</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .instructions {
+            background: #e3f2fd;
+            padding: 15px;
+            border-left: 4px solid #2196F3;
+            margin-bottom: 20px;
+        }
+        .button {
+            background: #2196F3;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        .button:hover {
+            background: #1976D2;
+        }
+        .button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        #status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 4px;
+            display: none;
+        }
+        .success {
+            background: #c8e6c9;
+            color: #2e7d32;
+        }
+        .error {
+            background: #ffcdd2;
+            color: #c62828;
+        }
+        .info {
+            background: #fff9c4;
+            color: #f57f17;
+        }
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #2196F3;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Export Vivekamārtaṇḍa to Google Sheets</h1>
+
+        <div class="instructions">
+            <strong>Instructions:</strong><br>
+            1. Click "Export to CSV" button<br>
+            2. Open the downloaded CSV file<br>
+            3. Copy all data (Ctrl+A, Ctrl+C)<br>
+            4. Go to <a href="https://sheets.google.com" target="_blank">Google Sheets</a> and create new spreadsheet<br>
+            5. Paste data (Ctrl+V)<br>
+            6. Column colors and formatting will be included as instructions
+        </div>
+
+        <button class="button" id="exportBtn" onclick="exportToCSV()">📥 Export to CSV</button>
+        <button class="button" id="exportTSVBtn" onclick="exportToTSV()">📥 Export to TSV (Tab-separated)</button>
+        <button class="button" onclick="generateSheetsLink()">🔗 Generate Google Sheets Link</button>
+
+        <div id="status"></div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDXoeGyK17dire2L_c1H_cWN9ltD6-H5dw",
+            authDomain: "pasupata-sutra-analysis.firebaseapp.com",
+            databaseURL: "https://pasupata-sutra-analysis-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "pasupata-sutra-analysis",
+            storageBucket: "pasupata-sutra-analysis.firebasestorage.app",
+            messagingSenderId: "13800996634",
+            appId: "1:13800996634:web:f53d87a90bcff7f0a36d0c"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        function showStatus(message, type) {
+            const status = document.getElementById('status');
+            status.textContent = message;
+            status.className = type;
+            status.style.display = 'block';
+        }
+
+        async function fetchDataFromFirebase() {
+            showStatus('Connecting to Firebase...', 'info');
+
+            return new Promise((resolve, reject) => {
+                firebase.auth().signInAnonymously()
+                    .then(() => {
+                        const userId = firebase.auth().currentUser.uid;
+                        const dbRef = firebase.database().ref('pasupata_analysis/' + userId);
+
+                        showStatus('Fetching data from Firebase...', 'info');
+
+                        dbRef.once('value')
+                            .then(snapshot => {
+                                const data = snapshot.val();
+                                if (data) {
+                                    resolve(data);
+                                } else {
+                                    reject('No data found in Firebase');
+                                }
+                            })
+                            .catch(error => reject(error));
+                    })
+                    .catch(error => reject(error));
+            });
+        }
+
+        function parseHTML(html) {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            return doc;
+        }
+
+        async function exportToCSV() {
+            try {
+                document.getElementById('exportBtn').disabled = true;
+                const data = await fetchDataFromFirebase();
+
+                showStatus('Processing data...', 'info');
+
+                // Build CSV content
+                let csv = [];
+
+                // Add header row
+                csv.push([
+                    'Verse Number',
+                    'Sanskrit (with de-sandhi)',
+                    'Word-by-Word Vocabulary',
+                    'Literal Translation',
+                    'Student Translation',
+                    'Grammar Notes',
+                    "Jim Mallinson's Translation"
+                ]);
+
+                // Column colors info
+                csv.push([
+                    '(Color: #fff9f0)',
+                    '(Color: #f0f8ff)',
+                    '(Color: #f0fff4)',
+                    '(Color: #fff0f5)',
+                    '(Color: #fffef0)',
+                    '(Color: #f5f0ff)',
+                    '(Color: #fff5f0)'
+                ]);
+
+                csv.push([]); // Empty row for separation
+
+                // Process each verse
+                const cellClasses = ['sanskrit', 'words', 'literal', 'translation', 'grammar', 'meaning', 'jims'];
+                const verseNumbers = Object.keys(data)
+                    .filter(key => cellClasses.some(cls => key.startsWith(cls)))
+                    .map(key => {
+                        const match = key.match(/\d+/);
+                        return match ? parseInt(match[0]) : null;
+                    })
+                    .filter((v, i, a) => v !== null && a.indexOf(v) === i)
+                    .sort((a, b) => a - b);
+
+                for (const verseNum of verseNumbers) {
+                    const row = [verseNum];
+
+                    for (const cls of cellClasses) {
+                        const key = cls + verseNum;
+                        let content = data[key] || '';
+
+                        // Clean HTML
+                        if (content) {
+                            const div = document.createElement('div');
+                            div.innerHTML = content;
+                            content = div.textContent || div.innerText || '';
+                            // Replace multiple spaces/newlines with single space
+                            content = content.replace(/\s+/g, ' ').trim();
+                        }
+
+                        row.push(content);
+                    }
+
+                    csv.push(row);
+                }
+
+                // Convert to CSV format
+                const csvContent = csv.map(row =>
+                    row.map(cell =>
+                        '"' + String(cell).replace(/"/g, '""') + '"'
+                    ).join(',')
+                ).join('\n');
+
+                // Add BOM for proper UTF-8 encoding
+                const BOM = '\uFEFF';
+                const blob = new Blob([BOM + csvContent], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = 'vivekamartanda_data.csv';
+                link.click();
+
+                showStatus(`✅ Success! Exported ${verseNumbers.length} verses. File downloaded.`, 'success');
+                document.getElementById('exportBtn').disabled = false;
+            } catch (error) {
+                showStatus('❌ Error: ' + error, 'error');
+                document.getElementById('exportBtn').disabled = false;
+            }
+        }
+
+        async function exportToTSV() {
+            try {
+                document.getElementById('exportTSVBtn').disabled = true;
+                const data = await fetchDataFromFirebase();
+
+                showStatus('Processing data...', 'info');
+
+                // Build TSV content
+                let tsv = [];
+
+                // Add header row
+                tsv.push([
+                    'Verse',
+                    'Sanskrit',
+                    'Words',
+                    'Literal',
+                    'Translation',
+                    'Grammar',
+                    "Jim's Translation"
+                ].join('\t'));
+
+                // Process each verse
+                const cellClasses = ['sanskrit', 'words', 'literal', 'translation', 'grammar', 'meaning', 'jims'];
+                const verseNumbers = Object.keys(data)
+                    .filter(key => cellClasses.some(cls => key.startsWith(cls)))
+                    .map(key => {
+                        const match = key.match(/\d+/);
+                        return match ? parseInt(match[0]) : null;
+                    })
+                    .filter((v, i, a) => v !== null && a.indexOf(v) === i)
+                    .sort((a, b) => a - b);
+
+                for (const verseNum of verseNumbers) {
+                    const row = [verseNum];
+
+                    for (const cls of cellClasses) {
+                        const key = cls + verseNum;
+                        let content = data[key] || '';
+
+                        // Clean HTML
+                        if (content) {
+                            const div = document.createElement('div');
+                            div.innerHTML = content;
+                            content = div.textContent || div.innerText || '';
+                            // Replace tabs with spaces, preserve line breaks somewhat
+                            content = content.replace(/\t/g, '  ').trim();
+                        }
+
+                        row.push(content);
+                    }
+
+                    tsv.push(row.join('\t'));
+                }
+
+                const tsvContent = tsv.join('\n');
+
+                // Add BOM for proper UTF-8 encoding
+                const BOM = '\uFEFF';
+                const blob = new Blob([BOM + tsvContent], { type: 'text/tab-separated-values;charset=utf-8;' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = 'vivekamartanda_data.tsv';
+                link.click();
+
+                showStatus(`✅ Success! Exported ${verseNumbers.length} verses. File downloaded.`, 'success');
+                document.getElementById('exportTSVBtn').disabled = false;
+            } catch (error) {
+                showStatus('❌ Error: ' + error, 'error');
+                document.getElementById('exportTSVBtn').disabled = false;
+            }
+        }
+
+        function generateSheetsLink() {
+            const instructions = `
+GOOGLE SHEETS FORMATTING INSTRUCTIONS:
+
+After pasting the data into Google Sheets, apply these column colors:
+
+Column A (Verse Number): Background #fff9f0 (light peach)
+Column B (Sanskrit): Background #f0f8ff (light blue)
+Column C (Word-by-Word): Background #f0fff4 (light green)
+Column D (Literal Translation): Background #fff0f5 (light pink)
+Column E (Student Translation): Background #fffef0 (light yellow)
+Column F (Grammar Notes): Background #f5f0ff (light purple)
+Column G (Jim's Translation): Background #fff5f0 (light orange)
+
+To apply colors in Google Sheets:
+1. Select column A (click on column letter)
+2. Click paint bucket icon or Format > Fill color
+3. Enter hex code or choose color
+4. Repeat for each column
+
+Additional formatting:
+- Make header row (row 1) bold
+- Set font to "Noto Sans" or "Roboto"
+- Set Sanskrit column (B) to larger font (14pt)
+- Freeze first row: View > Freeze > 1 row
+            `.trim();
+
+            showStatus(instructions, 'info');
+
+            // Copy to clipboard
+            navigator.clipboard.writeText(instructions).then(() => {
+                alert('Formatting instructions copied to clipboard!');
+            });
+        }
+    </script>
+</body>
+</html>
