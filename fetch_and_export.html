@@ -55,6 +55,11 @@
         };
 
         firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        // Use the same shared key as the main site
+        const userId = 'pasupata_analysis_shared';
+        console.log('🔑 Using shared sync key:', userId);
 
         function cleanHTML(html) {
             if (!html) return '';
@@ -66,12 +71,10 @@
             return text;
         }
 
-        firebase.auth().signInAnonymously()
-            .then(() => {
-                const userId = firebase.auth().currentUser.uid;
-                const dbRef = firebase.database().ref('pasupata_analysis/' + userId);
+        // Directly access the database - no auth needed
+        const dbRef = database.ref('pasupata_analysis/' + userId);
 
-                dbRef.once('value')
+        dbRef.once('value')
                     .then(snapshot => {
                         const data = snapshot.val();
 
@@ -142,10 +145,6 @@
                     .catch(error => {
                         document.getElementById('status').innerHTML = `<div style="color:red;">Error: ${error.message}</div>`;
                     });
-            })
-            .catch(error => {
-                document.getElementById('status').innerHTML = `<div style="color:red;">Auth Error: ${error.message}</div>`;
-            });
     </script>
 </body>
 </html>
