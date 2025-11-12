@@ -450,26 +450,32 @@
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', () => {
-            const currentVersion = '4.8'; // REPLACED ALL verses 53-67 with user's correct Sanskrit - FORCE SAVE to Firebase!
+            const currentVersion = '4.9'; // FIXED FIREBASE LOADING LOGIC - immediate save, no Firebase load on version change!
             const storedVersion = localStorage.getItem('pasupata_version');
 
-            // DON'T clear cells - show HTML immediately, Firebase will overlay if it has data
+            // DON'T clear cells - show HTML immediately
             console.log('📄 Showing HTML content...');
-            showNotification('⏳ Loading from cloud...', 'info', 3000);
 
-            // If version changed - FORCE SAVE HTML to Firebase FIRST
+            // If version changed - FORCE SAVE HTML to Firebase FIRST, DON'T LOAD FROM FIREBASE!
             if (storedVersion !== currentVersion) {
                 localStorage.setItem('pasupata_version', currentVersion);
                 console.log('🔄 Version changed to', currentVersion, '- FORCE SAVING to Firebase...');
+                showNotification('💾 Saving corrected verses to cloud...', 'info', 2000);
 
-                // Force-save after 1 second
+                // Force-save IMMEDIATELY - don't wait!
+                console.log('⚡ FORCE-SAVING corrected verses to Firebase RIGHT NOW...');
+                autoSave();
+
+                // Show success message after save completes
                 setTimeout(() => {
-                    console.log('⚡ FORCE-SAVING corrected verses to Firebase...');
-                    autoSave();
                     showNotification('✅ All verses 53-67 corrected and saved to cloud!', 'success', 3000);
-                }, 1000);
+                }, 1500);
+
+                // CRITICAL: DO NOT load from Firebase when version changes!
+                // HTML is the source of truth, we just saved it to Firebase
             } else {
                 // Normal load from Firebase (will overlay HTML if data exists)
+                showNotification('⏳ Loading from cloud...', 'info', 3000);
                 console.log('📥 Loading from Firebase...');
                 loadFromFirebase();
             }
