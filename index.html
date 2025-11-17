@@ -494,37 +494,27 @@
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', () => {
-            const currentVersion = '7.0'; // Major update - delete old Firebase, save new HTML
-            const storedVersion = localStorage.getItem('pasupata_version');
             const cellClasses = ['sanskrit', 'words', 'literal', 'translation', 'grammar', 'meaning', 'jims'];
 
-            // If version changed - DELETE old Firebase data, then save new HTML
-            if (storedVersion !== currentVersion) {
-                localStorage.setItem('pasupata_version', currentVersion);
-                console.log('🔄 Version 7.0 - Resetting Firebase with new content...');
-                showNotification('🔥 Resetting cloud data...', 'warning', 2000);
+            // ALWAYS reset Firebase - delete old data and save fresh HTML
+            console.log('🔥 FORCE RESET: Deleting Firebase and saving fresh HTML...');
 
-                // Step 1: DELETE all old Firebase data
-                database.ref('pasupata_analysis/' + userId).remove()
-                    .then(() => {
-                        console.log('✅ Old Firebase data deleted');
-                        showNotification('💾 Saving new content to cloud...', 'info', 2000);
+            // Clear all localStorage
+            localStorage.clear();
 
-                        // Step 2: Save current HTML to Firebase
-                        setTimeout(() => {
-                            autoSave();
-                            showNotification('✅ New content saved to cloud!', 'success', 3000);
-                        }, 500);
-                    })
-                    .catch((error) => {
-                        console.error('❌ Firebase delete error:', error);
-                        // Try to save anyway
+            // Delete Firebase and save fresh
+            database.ref('pasupata_analysis/' + userId).remove()
+                .then(() => {
+                    console.log('✅ Firebase deleted');
+                    setTimeout(() => {
                         autoSave();
-                    });
-            } else {
-                // Same version - just use HTML as-is
-                console.log('📄 Using HTML content (version', currentVersion, ')');
-            }
+                        console.log('✅ Fresh HTML saved to Firebase');
+                    }, 500);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    autoSave();
+                });
 
             // Set up auto-save on every edit - ALL editable cells
             const editableCells = document.querySelectorAll(
