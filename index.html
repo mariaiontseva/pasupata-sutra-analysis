@@ -494,27 +494,32 @@
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', () => {
+            const currentVersion = '8.0';
+            const storedVersion = localStorage.getItem('pasupata_version');
             const cellClasses = ['sanskrit', 'words', 'literal', 'translation', 'grammar', 'meaning', 'jims'];
 
-            // ALWAYS reset Firebase - delete old data and save fresh HTML
-            console.log('🔥 FORCE RESET: Deleting Firebase and saving fresh HTML...');
+            if (storedVersion !== currentVersion) {
+                // VERSION CHANGED - I updated HTML, reset Firebase
+                localStorage.setItem('pasupata_version', currentVersion);
+                console.log('🔄 New version', currentVersion, '- resetting Firebase...');
 
-            // Clear all localStorage
-            localStorage.clear();
-
-            // Delete Firebase and save fresh
-            database.ref('pasupata_analysis/' + userId).remove()
-                .then(() => {
-                    console.log('✅ Firebase deleted');
-                    setTimeout(() => {
+                database.ref('pasupata_analysis/' + userId).remove()
+                    .then(() => {
+                        console.log('✅ Old data deleted');
+                        setTimeout(() => {
+                            autoSave();
+                            console.log('✅ New HTML saved to Firebase');
+                        }, 500);
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
                         autoSave();
-                        console.log('✅ Fresh HTML saved to Firebase');
-                    }, 500);
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                    autoSave();
-                });
+                    });
+            } else {
+                // SAME VERSION - load user edits from Firebase
+                console.log('📥 Loading your edits from Firebase...');
+                loadFromFirebase();
+            }
 
             // Set up auto-save on every edit - ALL editable cells
             const editableCells = document.querySelectorAll(
