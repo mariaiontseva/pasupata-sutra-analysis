@@ -527,17 +527,16 @@
                     }, 500);
                 }, 1500);
             } else {
-                // Normal load: Clear cells, then load from Firebase
-                console.log('🧹 Clearing cells - Firebase is ONLY source of truth');
-                cellClasses.forEach(className => {
-                    const cells = document.querySelectorAll(`.${className}[contenteditable="true"]`);
-                    cells.forEach(cell => {
-                        cell.innerHTML = '';
-                    });
-                });
+                // Normal load: DON'T clear cells - preserve HTML content for new tabs
+                console.log('📥 Loading from Firebase (preserving HTML content)...');
+                // cellClasses.forEach(className => {
+                //     const cells = document.querySelectorAll(`.${className}[contenteditable="true"]`);
+                //     cells.forEach(cell => {
+                //         cell.innerHTML = '';
+                //     });
+                // });
 
                 showNotification('⏳ Loading from cloud...', 'info', 2000);
-                console.log('📥 Loading from Firebase...');
                 loadFromFirebase();
             }
 
@@ -706,6 +705,23 @@
 <!-- Pāśupatasūtra Tab Content -->
 <div id="pasupata" class="tab-content active">
     <h1>Pāśupata Sūtra - Comprehensive Scholarly Analysis</h1>
+    <p style="text-align: center; font-style: italic; margin-bottom: 30px;">
+    Complete Sūtrapāṭha Edition by Peter Bisschop (2006)
+    </p>
+
+    <!-- Sub-tabs Navigation -->
+    <div class="sub-tabs">
+        <div class="sub-tab active" onclick="switchSubTab('pasupata-current')">Current Analysis</div>
+        <div class="sub-tab" onclick="switchSubTab('adhyaya-1')">Adhyāya 1</div>
+        <div class="sub-tab" onclick="switchSubTab('adhyaya-2')">Adhyāya 2</div>
+        <div class="sub-tab" onclick="switchSubTab('adhyaya-3')">Adhyāya 3</div>
+        <div class="sub-tab" onclick="switchSubTab('adhyaya-4')">Adhyāya 4</div>
+        <div class="sub-tab" onclick="switchSubTab('adhyaya-5')">Adhyāya 5</div>
+    </div>
+
+    <!-- Sub-tab 1: Current content (БЕЗ ИЗМЕНЕНИЙ) -->
+    <div id="pasupata-current" class="sub-content active">
+<h1>Pāśupata Sūtra - Comprehensive Scholarly Analysis</h1>
     <p style="text-align: center; font-style: italic; margin-bottom: 30px;">
     Sentence-by-Sentence Translation with Linguistic Analysis
     </p>
@@ -3943,7 +3959,672 @@ Complete Document - All Sentences Analyzed with Introductory Section and First T
 </p>
 
 </div>
+    </div>
+    <!-- End Current Analysis sub-tab -->
+
+    <!-- Adhyāya 1 (34 Sūtras) sub-tab -->
+    <div id="adhyaya-1" class="sub-content">
+        <h2>Pāśupatasūtra Adhyāya 1 (34 Sūtras)</h2>
+        <p style="text-align: center; font-style: italic; margin-bottom: 30px;">
+        Sūtrapāṭha edition by Peter Bisschop (2006)
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 35%;">Sanskrit Text</th>
+                    <th style="width: 30%;">Dictionary</th>
+                    <th style="width: 35%;">Translation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">1.1 athātaḥ paśupateḥ pāśupataṃ yogavidhim vyākhyāsyāmaḥ</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">1.2 bhasmanā triṣavaṇaṃ snāyīta</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">1.3 bhasmani śayīta</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">1.4 anusnānam</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">1.5 nirmālyam</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">1.6 liṅgadhārī</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">1.7 āyatanavāsī</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">1.8 hasitagītanṛtyahuḍuṃkāranamaskārajapyopahāreṇopatiṣṭhet</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">1.9 mahādevasya dakṣiṇāmūrtim</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">1.10 ekavāsāḥ</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">1.11 avāsā vā</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">1.12 mūtrapurīṣaṃ nāvekṣet</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">1.13 strīśūdraṃ nābhibhāṣet</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">1.14 yady avekṣed yady abhibhāṣet</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">1.15 upaspṛśya</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">1.16 prāṇāyāmaṃ kṛtvā</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">1.17 raudrīṃ gāyatrīṃ bahurūpīṃ vā japet</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">1.18 akaluṣamateś caratas tato 'sya yogaḥ pravartate</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">1.19 dūrād darśanaśravaṇamananavijñānāni cāsya pravartante</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">1.20 sarvajñatā</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">1.21 manojavitvam</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">1.22 kāmarūpitvam vikaraṇadharmitvam ca</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">1.23 sarve cāsya vaśyā bhavanti</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">1.24 sarveṣāṃ cāvaśyo bhavati</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">1.25 sarvāṃś cāviśati</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">1.26 sarveṣāṃ cānāveśyo bhavati</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">1.27 sarve cāsya vadhyā bhavanti</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">1.28 sarveṣāṃ cāvadhyo bhavati</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">1.29 abhīto 'kṣayo 'jaro 'maraḥ sarvatra cāpratihatagatir bhavati</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">1.30 ity etair guṇair yukto bhagavato mahādevasya mahāgaṇapatir bhavati</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">1.31 atredaṃ brahma japet</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">1.32 sadyojātaṃ prapadyāmi sadyojātāya vai namaḥ</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">1.33 bhave bhave nātibhave bhavasva mām</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">1.34 bhavodbhavāya namaḥ</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Adhyāya 2 (14 Sūtras) sub-tab -->
+    <div id="adhyaya-2" class="sub-content">
+        <h2>Pāśupatasūtra Adhyāya 2 (14 Sūtras)</h2>
+        <p style="text-align: center; font-style: italic; margin-bottom: 30px;">
+        Sūtrapāṭha edition by Peter Bisschop (2006)
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 35%;">Sanskrit Text</th>
+                    <th style="width: 30%;">Dictionary</th>
+                    <th style="width: 35%;">Translation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">2.1 vāmadevasya jyeṣṭhasya śreṣṭhasya rudrasya kalitāsanam</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">2.2 sarvakāmika ity ācakṣate</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">2.3 amaṅgalaṃ cātra maṅgalaṃ bhavati</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">2.4 apasavyaṃ ca pradakṣiṇam</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">2.5 tasmād ubhayathā yaṣṭavyo devavat pitṛvac ca</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">2.6 ubhaye tu rudre devāḥ pitaraś ca</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">2.7 harṣāpramādī</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">2.8 caryāyāṃ caryāyāṃ māhātmyam avāpnoti</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">2.9 atidattam atigūḍham</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">2.10 atitaptaṃ tapas tathā</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">2.11 atyāgatiṃ gamayate</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">2.12 tasmād bhūyas tapaś caret | nānyabhaktis tu śaṃkare</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">2.13 atredaṃ brahma japet</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">2.14 vāmadevāya namo jyeṣṭhāya namaḥ śreṣṭhāya namo rudrāya namaḥ kālāya namaḥ kalavikara ṇāya namo balavikara ṇāya namo balāya namo balapramathanāya namaḥ sarvabhūtadamanāya namo manonmanāya namaḥ</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Adhyāya 3 (18 Sūtras) sub-tab -->
+    <div id="adhyaya-3" class="sub-content">
+        <h2>Pāśupatasūtra Adhyāya 3 (18 Sūtras)</h2>
+        <p style="text-align: center; font-style: italic; margin-bottom: 30px;">
+        Sūtrapāṭha edition by Peter Bisschop (2006)
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 35%;">Sanskrit Text</th>
+                    <th style="width: 30%;">Dictionary</th>
+                    <th style="width: 35%;">Translation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">3.1 avyaktaliṅgī vyaktācāraḥ</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">3.2 avamataḥ sarvabhūteṣu</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">3.3 paribhūyamānaś caret</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">3.4 apahatapāpmā pareṣāṃ parivādāt</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">3.5 pāpaṃ ca tebhyo dadāti</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">3.6 sukṛtaṃ ca teṣām ādatte</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">3.7 tasmāt pretavac caret</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">3.8 krātheta vā</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">3.9 spandeta vā</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">3.10 maṇṭeta vā</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">3.11 śṛṅgāreta vā</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">3.12 apitatkuryāt</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">3.13 apitadbhāṣet</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">3.14 yena parebhyaḥ paribhavaṃ gacchet</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">3.15 paribhūyamāno hi vidvān kṛtsnatapā bhavati</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">3.16 atredaṃ brahma japet</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">3.17 aghorebhyo 'tha ghorebhyo ghoraghoratarebhyaḥ</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">3.18 sarvebhyaḥ sarvaśarvebhyo namas te astu rudrarūpebhyaḥ</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Adhyāya 4 (17 Sūtras) sub-tab -->
+    <div id="adhyaya-4" class="sub-content">
+        <h2>Pāśupatasūtra Adhyāya 4 (17 Sūtras)</h2>
+        <p style="text-align: center; font-style: italic; margin-bottom: 30px;">
+        Sūtrapāṭha edition by Peter Bisschop (2006)
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 35%;">Sanskrit Text</th>
+                    <th style="width: 30%;">Dictionary</th>
+                    <th style="width: 35%;">Translation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">4.1 gūḍhavidyā taponantyāya prakāśate</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">4.2 gūḍhavrato gūḍhapavitravāṇiḥ</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">4.3 sarvāṇi dvārāṇi pidhāya buddhyā</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">4.4 unmattavad eko vicareta loke</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">4.5 kṛtānnam utsṛṣṭam upādadīta</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">4.6 unmatto mūḍha ity evaṃ manyante itare janāḥ</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">4.7 asaṃmāno hi jantūnāṃ sarveṣām uttamaḥ smṛtaḥ</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">4.8 indro vā agre asureṣu pāśupatam acarat</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">4.9 sa teṣām iṣṭāpūrttam ādatta māyayā sukṛtayā samavindata</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">4.10 nindā hy eṣām anindā</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">4.11 tasmān nindyamānaś caret</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">4.12 sarvaviśiṣṭo 'yaṃ panthāḥ satpathaḥ</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">4.13 kupathās tv anye</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">4.14 anena vidhinā rudrasam īpaṃ gatvā na kaścid brāhmaṇaḥ punar āvartate</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">4.15 atredaṃ brahma japet</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">4.16 tatpuruṣāya vidmahe mahādevāya dhīmahi</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">4.17 tan no rudraḥ pracodayāt</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Adhyāya 5 (29 Sūtras) sub-tab -->
+    <div id="adhyaya-5" class="sub-content">
+        <h2>Pāśupatasūtra Adhyāya 5 (29 Sūtras)</h2>
+        <p style="text-align: center; font-style: italic; margin-bottom: 30px;">
+        Sūtrapāṭha edition by Peter Bisschop (2006)
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 35%;">Sanskrit Text</th>
+                    <th style="width: 30%;">Dictionary</th>
+                    <th style="width: 35%;">Translation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">5.1 asaṅgayogī nityātmā ajo maitro 'bhijāyate</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">5.2 indriyāṇām abhijayāt</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">5.3 rudraḥ provāca tāvat</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">5.4 śūnyāgāraguhāvāsī</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">5.5 devanityo jitendriyaḥ</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">5.6 ṣaṇmāsān nityayuktasya bhūyiṣṭhaṃ sampravartate</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">5.7 bhaikṣyaṃ pātrāgataṃ māṃsam aduṣyaṃ lavaṇena vā</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">5.8 āpo vāpi yathākālam aśnīyād anupūrvaśaḥ</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">5.9 godharmā mṛgadharmā vā</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">5.10 adbhir eva śucir bhavet</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">5.11 siddhayogī na lipyeta</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">5.12 karmaṇā pātakena vā</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">5.13 ṛcam iṣṭām adhīyīta</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">5.14 gāyatrīm ātmayantritaḥ</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">5.15 raudrīṃ vā bahurūpīṃ vā</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">5.16 ato yogaḥ pravartate</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">5.17 oṃkāram abhidhyāyīta</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">5.18 tat sad iti hṛdi kurvīta dhāraṇām</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">5.19 ṛṣir vipro mahān eṣa vāgviśuddho maheśvaraḥ</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">5.20 śmaśānavāsī dharmātmā yathālabdhopajīvakaḥ</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">5.21 labhate rudrasāyujyam</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">5.22 sadā rudram anusmaret</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">5.23 chittvā doṣāṇāṃ hetujālasya mūlam</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">5.24 buddhyā saṃcintya sthāpayitvā tu rudre</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">5.25 ekaḥ kṣemyāṃsaṃ vītaśokaḥ</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">5.26 apramādī gacched duḥkhānām antam īśaprasādāt</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">5.27 atredaṃ brahma japet</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">5.28 īśānaḥ sarvavidyānām īśvaraḥ sarvabhūtānām</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <td class="sanskrit" contenteditable="true">5.29 brahmādipati brahmaṇo 'dhipati brahmā śivo me astu sadāśivom</td>
+                    <td class="words" contenteditable="true"></td>
+                    <td class="translation" contenteditable="true"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
 <!-- End Pāśupatasūtra Tab -->
+
 
 <!-- Vivekamārtaṇḍa Tab Content -->
 <div id="vivekamartanda" class="tab-content">
@@ -6806,9 +7487,7 @@ Tongue reaching cavity above uvula prevents loss of vital essence.</td>
         Vocative address to authorities. Compound brahma-vid = "Brahman-knower". Vyavasthā = determination, settled conclusion, definitive answer. Appeal to those who know to resolve these questions.
     </td>
     <td class="jims" contenteditable="true">
-        <strong>brahma-vid</strong> = Brahman-knower<br>
-        <strong>vyavasthā</strong> = determination<br>
-        <strong>Vocative appeal</strong>
+        Рассуждающие о Брахмане рассуждают: В чем причина? В Брахмане? Откуда мы родились? Чем живем? И где основаны? Знающие Брахмана, [поведайте] – кем ведомые существуем мы в смене счастья и иных [обстоятельств]?
     </td>
 </tr>
 
@@ -6885,10 +7564,7 @@ Tongue reaching cavity above uvula prevents loss of vital essence.</td>
         Gerundive cintyam = "must be thought about" (obligation). Question: can these theories explain spiritual bliss (ānanda) from Self-realization? Locative absolute construction.
     </td>
     <td class="jims" contenteditable="true">
-        <strong>√cit</strong> = to think, perceive<br>
-        <strong>saṃyoga</strong> = conjunction<br>
-        <strong>ānanda</strong> = bliss<br>
-        <strong>hetu</strong> = cause
+        Время, собственная природа, необходимость, случайность [первичные] элементы, пуруша – считать ли их источником? Но сочетание их не [является этим источником] из-за природы Атмана – ведь и Атман бессилен перед причиной счастья и несчастья.
     </td>
 </tr>
 
@@ -6940,11 +7616,7 @@ Tongue reaching cavity above uvula prevents loss of vital essence.</td>
         Second half: relative clause describing the Supreme One. Verb adhi-√sthā = "to stand over, preside, govern". Nikhila = all, entire (comprehensive). Demonstrative tāni refers to causes from verse 1.2 (time, nature, fate, etc.). Compound kāla-ātma-yukta = "united/connected with time-and-self" - all temporal and conscious causes. Eka = the singular divine principle that transcends and rules all multiplicity.
     </td>
     <td class="jims" contenteditable="true">
-        <strong>adhi-√sthā</strong> = to rule over, preside<br>
-        <strong>nikhila</strong> = all, entire<br>
-        <strong>kāla-ātma-yukta</strong> = time-self-united<br>
-        <strong>eka</strong> = One, singular<br>
-        <strong>Supreme ruler</strong>
+        Следовавшие размышлению и йоге видели силу божественной сущности, скрытую [ее] собственными свойствами, Что одна правит всеми этими причинами, связанными с временем и Атманом.
     </td>
 </tr>
 
@@ -7007,11 +7679,7 @@ Tongue reaching cavity above uvula prevents loss of vital essence.</td>
         Second half: path to liberation. Absolutive matvā = "having understood/thought". Pṛthak = separately (initially seeing duality between self and God). PPP juṣṭa from √juṣ = "favored, graced, blessed". When the soul, having first seen itself as separate from the divine mover/controller, is then blessed by Him, it attains amṛtatva (immortality/liberation). Instrumental tena = means of grace.
     </td>
     <td class="jims" contenteditable="true">
-        <strong>pṛthak</strong> = separate, different<br>
-        <strong>preritṛ</strong> = mover, impeller<br>
-        <strong>√juṣ</strong> = to favor, bless<br>
-        <strong>amṛtatva</strong> = immortality<br>
-        <strong>Absolutive</strong> = matvā
+        В этом великом колесе Брахмана, всеоживляющем, всеохватывающем, блуждает "лебедь". Мысля Атмана и Движущего различными; возлюбленный [же] им, он идет к бессмертию.
     </td>
 </tr>
 
@@ -7075,10 +7743,7 @@ Tongue reaching cavity above uvula prevents loss of vital essence.</td>
         Antara = "distinction/difference" between the triad and Brahman. Absolutive viditvā shows prior knowledge. Līnāḥ indicates complete absorption/dissolution. Yoni-mukta compound = "freed from the womb" (rebirth).
     </td>
     <td class="jims" contenteditable="true">
-        <strong>antara</strong> = difference<br>
-        <strong>√lī</strong> = to be absorbed<br>
-        <strong>tat-para</strong> = devoted to That<br>
-        <strong>yoni-mukta</strong> = freed from rebirth
+        Это воспето как высший Брахман, в нем – триада, [он] твердо основанный и нетленный. Знающие Брахмана, узнав, что [содержится] в нем, погружаются в Брахмана; преданные ему, [они] освобождаются от рождения.
     </td>
 </tr>
 
@@ -7136,11 +7801,7 @@ Tongue reaching cavity above uvula prevents loss of vital essence.</td>
         Contrasts īśa (Lord) with anīśa (powerless soul). Passive verbs: badhyate (is bound), mucyate (is freed). Ablative bhāvāt shows cause: "due to being an enjoyer (bhoktṛ)". Absolutive jñātvā precedes liberation. Instrumental pāśaiḥ = "from bonds".
     </td>
     <td class="jims" contenteditable="true">
-        <strong>anīśa</strong> = powerless<br>
-        <strong>√bandh</strong> = to bind<br>
-        <strong>bhoktṛ</strong> = enjoyer<br>
-        <strong>√muc</strong> = to free<br>
-        <strong>pāśa</strong> = bond, fetter
+        Владыка поддерживает все это сочетание тленного и нетленного, проявленного и непроявленного. Не будучи владыкой, [индивидуальный] Атман связан, ибо по природе [он] – воспринимающий. Познав божество, он освобождается от всех уз.
     </td>
 </tr>
 
@@ -7200,11 +7861,7 @@ Tongue reaching cavity above uvula prevents loss of vital essence.</td>
         The ātman is characterized by three qualities: ananta (infinite), viśva-rūpa (all-forms), akartā (non-agent). When the seeker comprehends (vindate) all three principles (trayam), this realization constitutes knowing Brahman. Ātmanepada vindate emphasizes personal realization.
     </td>
     <td class="jims" contenteditable="true">
-        <strong>ananta</strong> = infinite<br>
-        <strong>viśva-rūpa</strong> = universal form<br>
-        <strong>akartṛ</strong> = non-doer<br>
-        <strong>trayam</strong> = three<br>
-        <strong>√vid</strong> = to find, know
+        [Существуют] двое нерожденных – знающих и незнающих, владыка и не владыка, ибо один, нерожденный, связан с воспринимающим и воспринимаемым предметом. И [еще есть] бесконечный Атман, принимающий все образы, недеятельный. Когда [человек] находит триаду, это Брахман.
     </td>
 </tr>
 
@@ -7260,11 +7917,7 @@ Tongue reaching cavity above uvula prevents loss of vital essence.</td>
         Three ablatives showing progressive stages: abhidhyānāt (from meditation), yojanāt (from yoga/union), tattvabhāvāt (from abiding in reality). Bhūyaḥ = "increasingly, further". Result: viśva-māyā-nivṛtti = complete cessation of cosmic illusion. Ante = "ultimately, at the end".
     </td>
     <td class="jims" contenteditable="true">
-        <strong>abhidhyāna</strong> = meditation<br>
-        <strong>yojana</strong> = union, yoga<br>
-        <strong>tattva-bhāva</strong> = reality-state<br>
-        <strong>māyā</strong> = illusion<br>
-        <strong>nivṛtti</strong> = cessation
+        Тленное – прадхана, бессмертное и нетленное – Хара. Тленным и Атманом правит один бог. Размышлением о нем, соединением [с ним], пребыванием в [его] сущности постепенно [прекращается] и в конце исчезает всякое заблуждение.
     </td>
 </tr>
 
@@ -7317,11 +7970,7 @@ Tongue reaching cavity above uvula prevents loss of vital essence.</td>
         Third stage: tṛtīya (third result). Deha-bhede (locative) = "at body-dissolution" (death). Result: viśva-aiśvarya = cosmic lordship, kevala = absolute/alone (kaivalya), āpta-kāma = all desires fulfilled. This describes videha-mukti (liberation after death) with divine powers.
     </td>
     <td class="jims" contenteditable="true">
-        <strong>tṛtīya</strong> = third<br>
-        <strong>deha-bheda</strong> = body-dissolution<br>
-        <strong>aiśvarya</strong> = lordship<br>
-        <strong>kevala</strong> = alone, absolute<br>
-        <strong>āpta-kāma</strong> = fulfilled desires
+        Когда познан бог, спадают все узы, с уничтожением страданий исчезают рождение и смерть. Размышлением о нем [достигается] третье [состояние], с распадом плоти – господство над всем, одинокий достигает [исполнения] желаний.
     </td>
 </tr>
 
@@ -7382,11 +8031,7 @@ Tongue reaching cavity above uvula prevents loss of vital essence.</td>
         Summarizes the teaching with three principles: bhoktā (experiencer/puruṣa), bhogyam (experienced/prakṛti), preritāra (mover/īśvara). Absolutive matvā shows completion of understanding. Trividha = "threefold". Proktam = "fully declared/taught". This verse concludes the opening chapter's inquiry.
     </td>
     <td class="jims" contenteditable="true">
-        <strong>bhoktṛ</strong> = enjoyer<br>
-        <strong>bhogya</strong> = to be enjoyed<br>
-        <strong>preritṛ</strong> = impeller<br>
-        <strong>tri-vidha</strong> = threefold<br>
-        <strong>√vac</strong> = to declare
+        Следует узнать это вечное, пребывающее в Атмане; ничего не следует знать, кроме него. В помышлении о воспринимающем, воспринимаемом в Движущем высказано все. Это тройной Брахман.
     </td>
 </tr>
 
@@ -7442,10 +8087,7 @@ Tongue reaching cavity above uvula prevents loss of vital essence.</td>
         Fire emerges again (bhūyas) when grasped from its source through friction. Similarly, the Self (both gross and subtle aspects - ubhayam) is realized through praṇava (Om) practiced in the body. Compound indhana-yoni = "fuel-source". Instrumental praṇavena = "by means of Om".
     </td>
     <td class="jims" contenteditable="true">
-        <strong>indhana</strong> = fuel<br>
-        <strong>praṇava</strong> = Om<br>
-        <strong>ubhaya</strong> = both<br>
-        <strong>gṛhya</strong> = to be grasped
+        Как не виден облик огня, скрытого [в своем] источнике, [но] основа [его] не гибнет И он снова добывается в [своем] источнике [с помощью] дерева, – так, поистине, в обоих случаях [постигается Атман] в теле с помощью пранавы.
     </td>
 </tr>
 
@@ -7493,11 +8135,7 @@ Tongue reaching cavity above uvula prevents loss of vital essence.</td>
         Triple compound: dhyāna-nirmathana-abhyāsa = "practice of meditation-churning". Optative paśyet = "one should see" (prescription). The Self/God (deva) is hidden like fire in wood, revealed through sustained practice. Ablative shows cause: "from practice". Nigūḍha-vat = "like hidden [fire]".
     </td>
     <td class="jims" contenteditable="true">
-        <strong>dhyāna</strong> = meditation<br>
-        <strong>nirmathana</strong> = churning<br>
-        <strong>abhyāsa</strong> = practice<br>
-        <strong>nigūḍha</strong> = hidden<br>
-        <strong>√paś</strong> = to see
+        Сделав свое тело [верхним] арани и пранаву – нижним арани, Усердным трением размышления [человек] увидит бога, подобного скрытому [огню].
     </td>
 </tr>
 
@@ -7556,11 +8194,7 @@ Tongue reaching cavity above uvula prevents loss of vital essence.</td>
         Main point: Ātman (capital S Self) exists within ātman (small s self/individual). Passive gṛhyate = "is grasped/comprehended". Two instrumental means: satya (truth/truthfulness) and tapas (ascetic discipline). Relative clause with yaḥ...anupaśyati = "who perceives". The perceiver must use both truth and austerity.
     </td>
     <td class="jims" contenteditable="true">
-        <strong>ātman</strong> = Self/self<br>
-        <strong>satya</strong> = truth<br>
-        <strong>tapas</strong> = austerity<br>
-        <strong>√grah</strong> = to grasp<br>
-        <strong>anu-√paś</strong> = to perceive
+        Как сезамовое масло в зернах сезама, масло – в сливках, вода – в русле реки и огонь – в кусках дерева, Так постигает в самом себе Атмана тот, кто взирает на него в правде и подвижничестве.
     </td>
 </tr>
 
@@ -7608,946 +8242,463 @@ Tongue reaching cavity above uvula prevents loss of vital essence.</td>
         Triple compound: ātma-vidyā-tapas-mūla = "having Self-knowledge and austerity as root". The means are ātma-vidyā (Self-knowledge) and tapas (discipline). Compound brahma-upaniṣat-para = "having Brahman-teaching as supreme". Final phrase repeated (epizeuxis) for solemn emphasis. This concludes Chapter 1's practical teaching.
     </td>
     <td class="jims" contenteditable="true">
-        <strong>ātma-vidyā</strong> = Self-knowledge<br>
-        <strong>mūla</strong> = root, basis<br>
-        <strong>upaniṣat</strong> = secret teaching<br>
-        <strong>para</strong> = supreme, highest<br>
-        <strong>Repetition</strong> = emphasis
+        [Он постигает] Атмана, проникающего во все, словно масло, находящееся в сливках, – Корень самопознания и подвижничества. Это высшая упанишада Брахмана! Это высшая упанишада Брахмана!
     </td>
 </tr>
 
-<!-- Chapter 2 -->
+<!-- Chapter 3 -->
 <tr>
-    <td colspan="5" class="section-header">CHAPTER 2 - YOGA AND MEDITATION PRACTICE</td>
+    <td colspan="5" class="section-header">CHAPTER 3 - RUDRA, THE ONE GOD</td>
 </tr>
 
-<!-- Verse 2.1 -->
+<!-- Verse 3.1 -->
 <tr>
-    <td colspan="5" class="section-header">VERSE 2.1 - SAVITṚ'S YOKING OF MIND</td>
+    <td colspan="5" class="section-header">VERSE 3.1 - THE ONE RULER WITH HIS POWERS</td>
 </tr>
 
 <tr>
-    <td class="sanskrit" contenteditable="true">yuñjānaḥ prathamaṃ manas<br>tatvāya savitā dhiyaḥ</td>
+    <td class="sanskrit" contenteditable="true">ya eko jālavān īśata īśanībhiḥ sarvāṃl lokān īśata īśanībhiḥ /<br>ya evaika udbhave saṃbhave ca ya etad vidur amṛtās te bhavanti // SvetUp_3.1 //</td>
     <td class="words" contenteditable="true">
-        • yuñjānaḥ = yoking, harnessing (pres. part. nom. sg. m. from √yuj)<br>
-        • prathamam = first, foremost (acc. sg. n.)<br>
-        • manaḥ = mind (acc. sg. n.)<br>
-        • tatvāya = for the truth/that-ness (dat. sg. n.)<br>
-        • savitā = the impeller, Savitṛ (sun deity) (nom. sg. m.)<br>
-        • dhiyaḥ = thoughts, insights (acc. pl. f.)
+        [Word-by-word analysis to be added]
     </td>
     <td class="literal" contenteditable="true">
-        Savitṛ <strong>(savitā)</strong>, yoking <strong>(yuñjānaḥ)</strong> first <strong>(prathamam)</strong> the mind <strong>(manaḥ)</strong> for truth <strong>(tatvāya)</strong>, [yokes] the insights <strong>(dhiyaḥ)</strong>...
+        He who alone, possessing the net, rules all worlds with his ruling powers; who alone [presides] over creation and dissolution—those who know this become immortal.
     </td>
     <td class="meaning" contenteditable="true">
-        Opens Chapter 2 with Vedic imagery. Savitṛ (solar deity of impulsion) yokes the mind and thoughts. Present participle yuñjāna from √yuj "to yoke" - key yoga root. Dative tatvāya = "for the purpose of truth". Adapted from Ṛg Veda 5.81.1. Sets up yoga practice as divine yoking.
+        Opens Chapter 3 with the declaration of the One God who rules all worlds through his powers (īśanī). The metaphor of the net (jāla) suggests divine omnipresence and control.
     </td>
     <td class="jims" contenteditable="true">
-        <strong>√yuj</strong> = to yoke (yoga root)<br>
-        <strong>savitṛ</strong> = impeller, sun<br>
-        <strong>manas</strong> = mind<br>
-        <strong>dhī</strong> = insight, thought<br>
-        <strong>tatva</strong> = truth, that-ness
+        Кто познает того, который один, простирает сеть, владеет с помощью сил владычества, владеет всеми мирами с помощью сил владычества, Который один в возникновении и пребывании [мира], – те становятся бессмертными.
     </td>
 </tr>
 
+<!-- Verse 3.2 -->
 <tr>
-    <td class="sanskrit" contenteditable="true">agner jyotir nicāyya<br>pṛthivyā adhy ābharat</td>
+    <td colspan="5" class="section-header">VERSE 3.2 - RUDRA, THE ONE WITHOUT A SECOND</td>
+</tr>
+
+<tr>
+    <td class="sanskrit" contenteditable="true">eko hi rudro na dvitīyāya tasthe ya imāṃl lokān īśata īśanībhiḥ /<br>pratyaṅ janās tiṣṭhati saṃcukocāntakāle saṃsṛjya viśvā bhuvanāni gopāḥ // SvetUp_3.2 //</td>
     <td class="words" contenteditable="true">
-        • agneḥ = of fire (gen. sg. m.)<br>
-        • jyotiḥ = light (acc. sg. n.)<br>
-        • nicāyya = having gathered (abs. from ni-√ci)<br>
-        • pṛthivyāḥ = from the earth (abl. sg. f.)<br>
-        • adhi = from, upon<br>
-        • ābharat = brought forth (3rd sg. impf. from ā-√bhṛ)
+        [Word-by-word analysis to be added]
     </td>
     <td class="literal" contenteditable="true">
-        ...having gathered <strong>(nicāyya)</strong> the light <strong>(jyotiḥ)</strong> of fire <strong>(agneḥ)</strong>, [Savitṛ] brought it forth <strong>(ābharat)</strong> from <strong>(adhi)</strong> the earth <strong>(pṛthivyāḥ)</strong>.
+        Rudra is indeed one; for a second does not exist; he rules these worlds with his powers. He stands facing creatures; the protector, having created all worlds, withdraws them at the end of time.
     </td>
     <td class="meaning" contenteditable="true">
-        Absolutive nicāyya = "having gathered/collected". Savitṛ gathers inner fire/light from the earth (body/base). Imperfect ābharat indicates completed past action. Esoteric meaning: gathering the inner light of consciousness from the bodily base through yoga. Agni's light = consciousness/spiritual fire.
+        Identifies the One God as Rudra. The phrase "na dvitīyāya tasthe" (no second exists) is a strong statement of non-dualism. Rudra is both creator and destroyer.
     </td>
     <td class="jims" contenteditable="true">
-        <strong>agni</strong> = fire<br>
-        <strong>jyotis</strong> = light<br>
-        <strong>√ci</strong> = to gather, heap<br>
-        <strong>√bhṛ</strong> = to carry, bring<br>
-        <strong>pṛthivī</strong> = earth
+        Ибо Рудра, который владеет этими мирами с помощью сил владычества, один – [мудрецы] не держатся второго. Он стоит перед людьми; сотворив все миры, он, пастырь, свертывает [их] в конце времени.
     </td>
 </tr>
 
-<!-- Verse 2.2 -->
+<!-- Verse 3.3 -->
 <tr>
-    <td colspan="5" class="section-header">VERSE 2.2 - YOKED MIND FOR HEAVEN</td>
+    <td colspan="5" class="section-header">VERSE 3.3 - THE GOD WITH EYES AND FACES EVERYWHERE</td>
 </tr>
 
 <tr>
-    <td class="sanskrit" contenteditable="true">yuktena manasā vayaṃ<br>devasya savituḥ save<br>suvargeyāya śaktyā</td>
+    <td class="sanskrit" contenteditable="true">viśvataścakṣur uta viśvatomukho viśvatobāhur uta viśvatospāt /<br>saṃ bāhubhyāṃ dhamati saṃ patatrair dyāvābhūmī janayan deva ekaḥ // SvetUp_3.3 //</td>
     <td class="words" contenteditable="true">
-        • yuktena = with yoked (instr. sg. n.)<br>
-        • manasā = with mind (instr. sg. n.)<br>
-        • vayam = we (nom. pl.)<br>
-        • devasya = of the deity (gen. sg. m.)<br>
-        • savituḥ = of Savitṛ (gen. sg. m.)<br>
-        • save = under impulsion, instigation (loc. sg. m.)<br>
-        • suvar-geyāya = for going to heaven (dat. sg. n.)<br>
-        • śaktyā = with power, ability (instr. sg. f.)
+        [Word-by-word analysis to be added]
     </td>
     <td class="literal" contenteditable="true">
-        We <strong>(vayam)</strong>, with yoked <strong>(yuktena)</strong> mind <strong>(manasā)</strong>, under the impulsion <strong>(save)</strong> of the deity <strong>(devasya)</strong> Savitṛ <strong>(savituḥ)</strong>, with power <strong>(śaktyā)</strong> for going to heaven <strong>(suvargeyāya)</strong>...
+        With eyes everywhere, with faces everywhere, with arms everywhere, with feet everywhere; forging together with arms, with wings, the one God generates heaven and earth.
     </td>
     <td class="meaning" contenteditable="true">
-        Past participle yukta = "yoked" (from √yuj). Compound suvar-geya = "going to heaven/sun-world". Two instrumental means: yukta manasā (yoked mind) and śaktyā (spiritual power). Locative save = "under the impulsion of". The collective "we" indicates yogic community. Heaven = higher consciousness.
+        Universal omnipresence of the divine. The God with all-pervasive senses and limbs creates the cosmos through divine power. The phrase "deva ekaḥ" (the one God) emphasizes monotheism.
     </td>
     <td class="jims" contenteditable="true">
-        <strong>yukta</strong> = yoked, joined<br>
-        <strong>save</strong> = impulsion<br>
-        <strong>svar</strong> = heaven, sun-world<br>
-        <strong>śakti</strong> = power, energy
+        [Имеющий] повсюду глаз и повсюду лицо, повсюду руку и повсюду ногу, Сотворив небо и землю, единый бог выковывает [их] руками и крыльями.
     </td>
 </tr>
 
-<!-- Verse 2.3 -->
+<!-- Verse 3.4 -->
 <tr>
-    <td colspan="5" class="section-header">VERSE 2.3 - SAVITṚ IMPELS TO GREAT LIGHT</td>
+    <td colspan="5" class="section-header">VERSE 3.4 - RUDRA THE ORIGIN OF GODS</td>
 </tr>
 
 <tr>
-    <td class="sanskrit" contenteditable="true">yuktvāya manasā devān<br>suvar yato dhiyā divaṃ</td>
+    <td class="sanskrit" contenteditable="true">yo devānāṃ prabhavaś codbhavaś ca viśvādhipo rudro maharṣiḥ /<br>hiraṇyagarbhaṃ janayāmāsa pūrvaṃ sa no buddhyā śubhayā saṃyunaktu // SvetUp_3.4 //</td>
     <td class="words" contenteditable="true">
-        • yuktvā = having yoked (abs. from √yuj)<br>
-        • manasā = with mind (instr. sg. n.)<br>
-        • devān = the gods (acc. pl. m.)<br>
-        • svar = heaven, light (indecl.)<br>
-        • yataḥ = whence, from where<br>
-        • dhiyā = with thought (instr. sg. f.)<br>
-        • divam = to heaven (acc. sg. m.)
+        [Word-by-word analysis to be added]
     </td>
     <td class="literal" contenteditable="true">
-        Having yoked <strong>(yuktvā)</strong> with mind <strong>(manasā)</strong> the gods <strong>(devān)</strong>, whence <strong>(yataḥ)</strong> with thought <strong>(dhiyā)</strong> [going] to heaven <strong>(divam)</strong>, to the light <strong>(svar)</strong>...
+        Who is the source and origin of the gods, the lord of all, Rudra the great seer, who in the beginning generated the golden womb - may he unite us with auspicious understanding.
     </td>
     <td class="meaning" contenteditable="true">
-        Absolutive yuktvā = "having yoked". Yogin yokes the devān (inner divine faculties/senses) with mind. Two instrumental means: manasā (mind) and dhiyā (insight). Svar = heavenly light/realm. Movement from lower to higher consciousness indicated by "whence...to heaven".
+        Rudra identified as primal creator, source of gods and Hiraṇyagarbha. The verse links Rudra with cosmic creation and spiritual wisdom.
     </td>
     <td class="jims" contenteditable="true">
-        <strong>yuktvā</strong> = having yoked<br>
-        <strong>deva</strong> = god, divine faculty<br>
-        <strong>dhī</strong> = thought, insight<br>
-        <strong>diva</strong> = heaven
+        [Тот], кто повелитель и творец богов, всеобщий владыка, Рудра, великий мудрец, Породивший вначале золотой зародыш, – да наделит он нас [способностью] ясного постижения!
     </td>
 </tr>
 
+<!-- Verse 3.5 -->
 <tr>
-    <td class="sanskrit" contenteditable="true">bṛhaj jyotiḥ kariṣyataḥ<br>savitā prasuvāti tān</td>
+    <td colspan="5" class="section-header">VERSE 3.5 - PRAYER FOR RUDRA'S BENIGN FORM</td>
+</tr>
+
+<tr>
+    <td class="sanskrit" contenteditable="true">yā te rudra śivā tanūr aghorāpāpakāśinī /<br>tayā nas tanuvā śaṃtamayā giriśantābhicākaśīhi // SvetUp_3.5 //</td>
     <td class="words" contenteditable="true">
-        • bṛhat = great (acc. sg. n.)<br>
-        • jyotiḥ = light (acc. sg. n.)<br>
-        • kariṣyataḥ = for those who will make/do (gen. pl. m. fut. part.)<br>
-        • savitā = Savitṛ (nom. sg. m.)<br>
-        • prasuvāti = impels forward (3rd sg. pres. from pra-√sū)<br>
-        • tān = them (acc. pl. m.)
+        [Word-by-word analysis to be added]
     </td>
     <td class="literal" contenteditable="true">
-        ...Savitṛ <strong>(savitā)</strong> impels forward <strong>(prasuvāti)</strong> them <strong>(tān)</strong> [who are] about to make <strong>(kariṣyataḥ)</strong> the great <strong>(bṛhat)</strong> light <strong>(jyotiḥ)</strong>.
+        O Rudra, that auspicious form of yours which is not terrible, which does not show evil - with that most benign form, O dweller in mountains, appear to us.
     </td>
     <td class="meaning" contenteditable="true">
-        Future participle kariṣyatas = "those who will make/create". Savitṛ (divine impeller) pushes forward those yogins who will manifest the great light. Bṛhat jyotiḥ = "great light" (brahman/highest consciousness). Verb pra-suvāti from pra-√sū = "to impel, set in motion" - same root as Savitṛ.
+        Prayer for Rudra's benevolent aspect. Contrasts the fierce (ghora) with peaceful (śiva) manifestations. Invokes Rudra as Giriśa (mountain-dweller).
     </td>
     <td class="jims" contenteditable="true">
-        <strong>bṛhat</strong> = great, vast<br>
-        <strong>pra-√sū</strong> = to impel forward<br>
-        <strong>kariṣyat</strong> = future doer<br>
-        <strong>FUT PART</strong> = intention
+        Твой благодетельный образ, Рудра, не ужасен, не являет зла, – Воззри на нас этим несущим покой образом, обитатель гор!
     </td>
 </tr>
 
-<!-- Verse 2.4 -->
+<!-- Verse 3.6 -->
 <tr>
-    <td colspan="5" class="section-header">VERSE 2.4 - THE WISE YOKE MIND AND THOUGHT</td>
+    <td colspan="5" class="section-header">VERSE 3.6 - APPEAL TO LOWER THE ARROW</td>
 </tr>
 
 <tr>
-    <td class="sanskrit" contenteditable="true">yuñjate mana uta yuñjate dhiyo<br>viprā viprasya bṛhato vipaścitaḥ</td>
+    <td class="sanskrit" contenteditable="true">yām iṣuṃ giriśanta haste bibharṣy astave /<br>śivāṃ giritra tāṃ kuru mā hiṃsīḥ puruṣaṃ jagat // SvetUp_3.6 //</td>
     <td class="words" contenteditable="true">
-        • yuñjate = they yoke (3rd pl. mid. pres. from √yuj)<br>
-        • manaḥ = mind (acc. sg. n.)<br>
-        • uta = and, also<br>
-        • dhiyaḥ = thoughts (acc. pl. f.)<br>
-        • viprāḥ = the wise, inspired ones (nom. pl. m.)<br>
-        • viprasya = of the inspired one (gen. sg. m.)<br>
-        • bṛhataḥ = of the great one (gen. sg. m.)<br>
-        • vipaścitaḥ = of the all-knowing (gen. sg. m.)
+        [Word-by-word analysis to be added]
     </td>
     <td class="literal" contenteditable="true">
-        The wise <strong>(viprāḥ)</strong> yoke <strong>(yuñjate)</strong> the mind <strong>(manaḥ)</strong> and also <strong>(uta)</strong> yoke the thoughts <strong>(dhiyaḥ)</strong> of the great <strong>(bṛhataḥ)</strong>, all-knowing <strong>(vipaścitaḥ)</strong>, inspired one <strong>(viprasya)</strong>...
+        That arrow which you hold in your hand to shoot, O dweller in mountains, make that auspicious, O protector of mountains. Do not harm person or world.
     </td>
     <td class="meaning" contenteditable="true">
-        Middle voice yuñjate (they yoke for themselves). Viprāḥ (wise seers) yoke both manas (mind) and dhī (thought). Three epithets for the divine: vipra (inspired), bṛhat (great), vipaścit (all-knowing). The wise yoke their faculties to the supreme consciousness. Word-play: viprāḥ...viprasya.
+        Supplication to Rudra to make his weapon benign. Shows dual nature of divine power - can destroy or protect. Emphasis on non-violence toward beings.
     </td>
     <td class="jims" contenteditable="true">
-        <strong>vipra</strong> = wise, inspired<br>
-        <strong>vipaścit</strong> = all-knowing<br>
-        <strong>Middle voice</strong> = reflexive<br>
-        <strong>Paronomasia</strong> = word-play
+        Стрелу, которую [ты], обитатель гор, держишь в руке, чтобы метнуть [ее], – Сделай ее благодетельной, хранитель гор, не причиняй вреда человеку и животному!
     </td>
 </tr>
 
+<!-- Verse 3.7 -->
 <tr>
-    <td class="sanskrit" contenteditable="true">vi hotrā dadhe vayunāvid eka<br>in mahī devasya savituḥ pariṣṭutiḥ</td>
+    <td colspan="5" class="section-header">VERSE 3.7 - THE SUPREME BRAHMAN HIDDEN IN ALL</td>
+</tr>
+
+<tr>
+    <td class="sanskrit" contenteditable="true">tataḥ paraṃ brahma paraṃ bṛhantaṃ yathānikāyaṃ sarvabhūteṣu gūḍhaṃ /<br>viśvasyaikaṃ pariveṣṭitāram īśaṃ taṃ jñātvāmṛtā bhavanti // SvetUp_3.7 //</td>
     <td class="words" contenteditable="true">
-        • vi = apart, asunder<br>
-        • hotrāḥ = oblations, sacrifices (acc. pl. m.)<br>
-        • dadhe = established (3rd sg. perf. mid. from √dhā)<br>
-        • vayuna-vit = knower of ways/paths (nom. sg. m.)<br>
-        • ekaḥ = one, alone (nom. sg. m.)<br>
-        • it = indeed (particle)<br>
-        • mahī = great (nom. sg. f.)<br>
-        • devasya = of the deity (gen. sg. m.)<br>
-        • savituḥ = of Savitṛ (gen. sg. m.)<br>
-        • pariṣṭutiḥ = praise, hymn (nom. sg. f.)
+        [Word-by-word analysis to be added]
     </td>
     <td class="literal" contenteditable="true">
-        The one <strong>(ekaḥ)</strong> knower of paths <strong>(vayunāvit)</strong> has established <strong>(dadhe)</strong> the oblations <strong>(hotrāḥ)</strong> separately <strong>(vi)</strong>. Indeed <strong>(it)</strong> great <strong>(mahī)</strong> is the praise <strong>(pariṣṭutiḥ)</strong> of the deity <strong>(devasya)</strong> Savitṛ <strong>(savituḥ)</strong>.
+        Higher than that is Brahman, supreme, vast, hidden according to form in all beings, the one enveloper of the universe, the Lord - knowing him, they become immortal.
     </td>
     <td class="meaning" contenteditable="true">
-        Perfect dadhe = completed establishment. Compound vayuna-vit = "knower of paths" (knowledge of method). Eka = the singular divine principle that establishes all ritual/inner actions. Pariṣṭuti = praise/hymn. The one consciousness manifests as many (vi = apart). Transition from ritual to yoga interpretation.
+        Describes the transcendent Brahman hidden within all beings. Knowledge of this supreme reality leads to immortality. Key Upaniṣadic teaching on immanence and transcendence.
     </td>
     <td class="jims" contenteditable="true">
-        <strong>hotra</strong> = oblation<br>
-        <strong>vayuna</strong> = path, way<br>
-        <strong>-vit</strong> = knower<br>
-        <strong>pariṣṭuti</strong> = praise<br>
-        <strong>√dhā</strong> = to establish
+        Выше этого – Брахман, высший, великий, скрытый во всех существах, в теле каждого, Единый, объемлющий вселенную, – познав этого владыку, становятся бессмертными.
     </td>
 </tr>
 
-<!-- Verse 2.5 -->
+<!-- Verse 3.8 -->
 <tr>
-    <td colspan="5" class="section-header">VERSE 2.5 - ANCIENT BRAHMAN AND IMMORTAL SONS</td>
+    <td colspan="5" class="section-header">VERSE 3.8 - THE GREAT PERSON BEYOND DARKNESS</td>
 </tr>
 
 <tr>
-    <td class="sanskrit" contenteditable="true">yuje vāṃ brahma pūrvyaṃ namobhir<br>vi śloka etu pathyeva sūreḥ</td>
+    <td class="sanskrit" contenteditable="true">vedāham etaṃ puruṣaṃ mahāntam ādityavarṇaṃ tamasaḥ parastāt /<br>tam eva viditvāti mṛtyum eti nānyaḥ panthā vidyate 'yanāya // SvetUp_3.8 //</td>
     <td class="words" contenteditable="true">
-        • yuje = I yoke, join (1st sg. pres. mid. from √yuj)<br>
-        • vām = to you two (dual dat.)<br>
-        • brahma = sacred utterance, Brahman (acc. sg. n.)<br>
-        • pūrvyam = ancient, primordial (acc. sg. n.)<br>
-        • namobhiḥ = with salutations (instr. pl. n.)<br>
-        • vi = forth, out<br>
-        • ślokaḥ = verse, hymn (nom. sg. m.)<br>
-        • etu = may go (3rd sg. opt. from √i)<br>
-        • pathyā = on a path, along a road (instr. sg. f.)<br>
-        • iva = like, as<br>
-        • sūreḥ = of the sun (gen. sg. m.)
+        [Word-by-word analysis to be added]
     </td>
     <td class="literal" contenteditable="true">
-        I yoke <strong>(yuje)</strong> to you <strong>(vām)</strong> the ancient <strong>(pūrvyam)</strong> Brahman <strong>(brahma)</strong> with salutations <strong>(namobhiḥ)</strong>. May the hymn <strong>(ślokaḥ)</strong> go forth <strong>(vi...etu)</strong> like <strong>(iva)</strong> [traveling] on a path <strong>(pathyā)</strong> of the sun <strong>(sūreḥ)</strong>.
+        I know this great Person, sun-colored, beyond darkness. Only by knowing him does one pass beyond death; there is no other path to go.
     </td>
     <td class="meaning" contenteditable="true">
-        First person yuje = "I yoke" (middle voice, reflexive yoga). Dual vām addresses two divine principles. Brahma pūrvyam = "ancient Brahman/sacred word" - primordial teaching. Instrumental namobhiḥ = means of connection. Optative etu = wish/prayer. Simile: hymn travels like sun's path - straight, luminous, celestial.
+        Famous verse on liberation through knowledge. The Person is luminous (āditya-varṇa) and transcends ignorance (tamas). Exclusive path to immortality is knowing this reality.
     </td>
     <td class="jims" contenteditable="true">
-        <strong>pūrvya</strong> = ancient, primordial<br>
-        <strong>namas</strong> = salutation<br>
-        <strong>śloka</strong> = verse, hymn<br>
-        <strong>pathyā</strong> = path<br>
-        <strong>OPT</strong> = wish, prayer
+        Я знаю этого пурушу, великого, цвета солнца, [находящегося] по ту сторону мрака, – Лишь познав его, идет [человек] за пределы смерти; нет иного пути, [которым можно было бы] следовать.
     </td>
 </tr>
 
+<!-- Verse 3.9 -->
 <tr>
-    <td class="sanskrit" contenteditable="true">śṛṇvanti viśve amṛtasya putrā<br>ā ye dhāmāni diviyāni tasthuḥ</td>
+    <td colspan="5" class="section-header">VERSE 3.9 - NOTHING HIGHER OR SMALLER</td>
+</tr>
+
+<tr>
+    <td class="sanskrit" contenteditable="true">yasmāt paraṃ nāparam asti kiṃcid yasmān nāṇīyo na jyāyo 'sti kiṃcit /<br>vṛkṣa iva stabdho divi tiṣṭhaty ekas tenedaṃ pūrṇaṃ puruṣeṇa sarvam // SvetUp_3.9 //</td>
     <td class="words" contenteditable="true">
-        • śṛṇvanti = they hear (3rd pl. pres. from √śru)<br>
-        • viśve = all (nom. pl. m.)<br>
-        • amṛtasya = of immortality (gen. sg. n.)<br>
-        • putrāḥ = sons, children (nom. pl. m.)<br>
-        • ā = fully, completely<br>
-        • ye = who (nom. pl. m.)<br>
-        • dhāmāni = abodes, realms (acc. pl. n.)<br>
-        • diviyāni = heavenly, divine (acc. pl. n.)<br>
-        • tasthuḥ = have stood, are established (3rd pl. perf. from √sthā)
+        [Word-by-word analysis to be added]
     </td>
     <td class="literal" contenteditable="true">
-        All <strong>(viśve)</strong> the sons <strong>(putrāḥ)</strong> of immortality <strong>(amṛtasya)</strong> hear [this], who <strong>(ye)</strong> are fully <strong>(ā)</strong> established <strong>(tasthuḥ)</strong> in the heavenly <strong>(diviyāni)</strong> abodes <strong>(dhāmāni)</strong>.
+        Than whom nothing higher or lower exists, than whom nothing smaller or greater exists - like a tree firmly rooted he stands alone in heaven; by that Person all this is filled.
     </td>
     <td class="meaning" contenteditable="true">
-        Famous phrase: amṛtasya putrāḥ = "sons of immortality" (enlightened beings). Perfect tasthuḥ = stable establishment in divine realms. Relative clause: ye...tasthuḥ describes the qualified listeners. Diviyāni dhāmāni = "heavenly abodes" - higher states of consciousness. Only the immortal ones truly hear this teaching.
+        Paradox of supreme reality - nothing beyond it, yet encompasses all. Tree metaphor shows stability and cosmic support. All pervaded by the Person.
     </td>
     <td class="jims" contenteditable="true">
-        <strong>amṛta</strong> = immortal, nectar<br>
-        <strong>putra</strong> = son, child<br>
-        <strong>dhāman</strong> = abode, realm<br>
-        <strong>diviya</strong> = heavenly<br>
-        <strong>√sthā</strong> = to stand, be established
+        Выше которого ничего нет, меньше или больше которого ничего нет, Единый, он стоит словно древо, утвержденное в небе; этим пурушей наполнен весь этот [мир].
     </td>
 </tr>
 
-<!-- Verse 2.6 -->
+<!-- Verse 3.10 -->
 <tr>
-    <td colspan="5" class="section-header">VERSE 2.6 - WHERE MIND ARISES</td>
+    <td colspan="5" class="section-header">VERSE 3.10 - THE FORMLESS AND FREEDOM FROM AFFLICTION</td>
 </tr>
 
 <tr>
-    <td class="sanskrit" contenteditable="true">agnir yatrābhimathyate<br>vāyur yatrādhirudhyate<br>somo yatrātiricyate<br>tatra saṃjāyate manaḥ</td>
+    <td class="sanskrit" contenteditable="true">tato yad uttarataraṃ yad arūpam anāmayam /<br>ya etad vidur amṛtās te bhavanti athetare duḥkham evāpiyanti // SvetUp_3.10 //</td>
     <td class="words" contenteditable="true">
-        • agniḥ = fire (nom. sg. m.)<br>
-        • yatra = where (adv.)<br>
-        • abhimathyate = is churned (3rd sg. pres. pass. from abhi-√math)<br>
-        • vāyuḥ = air, breath (nom. sg. m.)<br>
-        • adhirudhyate = is restrained (3rd sg. pres. pass. from adhi-√rudh)<br>
-        • somaḥ = soma (nom. sg. m.)<br>
-        • atiricyate = overflows (3rd sg. pres. pass. from ati-√ric)<br>
-        • tatra = there (adv.)<br>
-        • saṃjāyate = is born, arises (3rd sg. pres. pass. from sam-√jan)<br>
-        • manaḥ = mind (nom. sg. n.)
+        [Word-by-word analysis to be added]
     </td>
     <td class="literal" contenteditable="true">
-        Where <strong>(yatra)</strong> fire <strong>(agniḥ)</strong> is churned <strong>(abhimathyate)</strong>, where breath <strong>(vāyuḥ)</strong> is restrained <strong>(adhirudhyate)</strong>, where soma <strong>(somaḥ)</strong> overflows <strong>(atiricyate)</strong>—there <strong>(tatra)</strong> the mind <strong>(manaḥ)</strong> is born <strong>(saṃjāyate)</strong>.
+        Higher than that, which is formless, free from affliction - those who know this become immortal, but others go only to suffering.
     </td>
     <td class="meaning" contenteditable="true">
-        Three-fold yogic process. Agni abhimathyate = fire churned (prāṇa awakened through practice). Vāyu adhirudhyate = breath restrained (prāṇāyāma). Soma atiricyate = nectar overflows (bliss arising). All passive verbs showing natural process. Result: saṃjāyate manaḥ = "mind is born/transformed" - higher mind emerges from yogic practice. Yatra...tatra = correlative (where...there).
+        Describes ultimate reality as formless (arūpa) and beyond suffering (anāmaya). Sharp contrast between liberating knowledge and ignorance leading to suffering.
     </td>
     <td class="jims" contenteditable="true">
-        <strong>abhi-√math</strong> = to churn<br>
-        <strong>adhi-√rudh</strong> = to restrain<br>
-        <strong>ati-√ric</strong> = to overflow<br>
-        <strong>soma</strong> = nectar, moon<br>
-        <strong>sam-√jan</strong> = to be born together
+        Лишено образа, свободно от страдания то, что выше этого [мира]; Те, кто знает это, становятся бессмертными, прочие достигают лишь несчастья.
     </td>
 </tr>
 
-<!-- Verse 2.7 -->
+<!-- Verse 3.11 -->
 <tr>
-    <td colspan="5" class="section-header">VERSE 2.7 - SERVING THE ANCIENT BRAHMAN</td>
+    <td colspan="5" class="section-header">VERSE 3.11 - THE ALL-PERVADING ŚIVA</td>
 </tr>
 
 <tr>
-    <td class="sanskrit" contenteditable="true">savitrā prasavena<br>juṣeta brahma pūrvyam</td>
+    <td class="sanskrit" contenteditable="true">sarvānanaśirogrīvaḥ sarvabhūtaguhāśayaḥ /<br>sarvavyāpī sa bhagavāṃs tasmāt sarvagataḥ śivaḥ // SvetUp_3.11 //</td>
     <td class="words" contenteditable="true">
-        • savitrā = by Savitṛ (instr. sg. m.)<br>
-        • prasavena = by impulsion, instigation (instr. sg. m.)<br>
-        • juṣeta = one should serve, enjoy (3rd sg. opt. mid. from √juṣ)<br>
-        • brahma = Brahman (acc. sg. n.)<br>
-        • pūrvyam = ancient (acc. sg. n.)
+        [Word-by-word analysis to be added]
     </td>
     <td class="literal" contenteditable="true">
-        By the impulsion <strong>(prasavena)</strong> of Savitṛ <strong>(savitrā)</strong>, one should serve <strong>(juṣeta)</strong> the ancient <strong>(pūrvyam)</strong> Brahman <strong>(brahma)</strong>.
+        With all faces, heads, and necks, dwelling in the cave of all beings, all-pervading is that blessed one - therefore Śiva is omnipresent.
     </td>
     <td class="meaning" contenteditable="true">
-        Optative juṣeta = prescription/advice. Double instrumental: savitrā prasavena = "by Savitṛ's impulsion" - through divine inspiration. Brahma pūrvyam (ancient Brahman) recalls verse 2.5. Root √juṣ = to serve, enjoy, be devoted to. The yogin should serve primordial truth through divine inspiration.
+        Cosmic form with universal features. Immanent presence in the heart-cave (guhā) of all beings. First explicit naming of supreme as Śiva in this Upaniṣad.
     </td>
     <td class="jims" contenteditable="true">
-        <strong>prasava</strong> = impulsion, impulse<br>
-        <strong>√juṣ</strong> = to serve, enjoy<br>
-        <strong>pūrvya</strong> = ancient<br>
-        <strong>OPT MID</strong> = should (for oneself)
+        Пребывающий во всех лицах, головах, шеях, в тайнике [сердца] всех существ, Он – всепроникающий, владыка и потому – вездесущий Шива.
     </td>
 </tr>
 
+<!-- Verse 3.12 -->
 <tr>
-    <td class="sanskrit" contenteditable="true">tatra yoniṃ kṛṇavase<br>nahi te pūrtam akṣipat</td>
+    <td colspan="5" class="section-header">VERSE 3.12 - THE GREAT LORD ACTIVATING EXISTENCE</td>
+</tr>
+
+<tr>
+    <td class="sanskrit" contenteditable="true">mahān prabhur vai puruṣaḥ sattvasyaiṣa pravartakaḥ /<br>sunirmalām imāṃ prāptim īśāno jyotir avyayaḥ // SvetUp_3.12 //</td>
     <td class="words" contenteditable="true">
-        • tatra = there, in that (adv.)<br>
-        • yonim = womb, source (acc. sg. f.)<br>
-        • kṛṇavase = you may make (2nd sg. pres. mid. from √kṛ)<br>
-        • na hi = for not, certainly not<br>
-        • te = your (gen. sg.)<br>
-        • pūrtam = fullness, merit (acc. sg. n.)<br>
-        • akṣipat = will be destroyed (3rd sg. aor. from ā-√kṣip)
+        [Word-by-word analysis to be added]
     </td>
     <td class="literal" contenteditable="true">
-        There <strong>(tatra)</strong> you may make <strong>(kṛṇavase)</strong> [your] source <strong>(yonim)</strong>; for <strong>(hi)</strong> not <strong>(na)</strong> will your <strong>(te)</strong> fullness/merit <strong>(pūrtam)</strong> be destroyed <strong>(akṣipat)</strong>.
+        Great indeed is the Lord, the Person, the activator of sattva (existence/purity); the ruler, the imperishable light, granting this supremely pure attainment.
     </td>
     <td class="meaning" contenteditable="true">
-        Middle voice kṛṇavase = "you make for yourself". Yoni = source, womb, foundation. Negative assurance: na hi...akṣipat = merit won't be destroyed. Pūrta = fullness, religious merit, spiritual accomplishment. Promise: establishing oneself in ancient Brahman preserves all merit. Aorist akṣipat suggests definitive non-destruction.
+        Lord as activator of sattva (pure being/consciousness). Described as imperishable light (jyotir avyaya) and source of spiritual attainment.
     </td>
     <td class="jims" contenteditable="true">
-        <strong>yoni</strong> = womb, source<br>
-        <strong>pūrta</strong> = fullness, merit<br>
-        <strong>√kṣip</strong> = to destroy, throw<br>
-        <strong>MID VOICE</strong> = for oneself<br>
-        <strong>Assurance</strong> = promise
+        Поистине, этот пуруша – великий властитель, движущая сила существующего; Незапятнано это достижение [его, он] – владыка, непреходящий свет.
     </td>
 </tr>
 
-<!-- Verse 2.8 -->
+<!-- Verse 3.13 -->
 <tr>
-    <td colspan="5" class="section-header">VERSE 2.8 - POSTURE AND CONCENTRATION</td>
+    <td colspan="5" class="section-header">VERSE 3.13 - THE THUMB-SIZED ĀTMAN IN THE HEART</td>
 </tr>
 
 <tr>
-    <td class="sanskrit" contenteditable="true">trirunnataṃ sthāpya samaṃ śarīraṃ<br>hṛdīndriyāṇi manasā saṃniveśya</td>
+    <td class="sanskrit" contenteditable="true">aṅguṣṭhamātraḥ puruṣo 'ntarātmā sadā janānāṃ hṛdaye saṃniviṣṭaḥ /<br>hṛdā manīṣā manasābhikḷpto ya etad vidur amṛtās te bhavanti // SvetUp_3.13 //</td>
     <td class="words" contenteditable="true">
-        • tris = three times, thrice (adv.)<br>
-        • unnataṃ = raised up (acc. sg. n. PPP from ud-√nam)<br>
-        • sthāpya = having established (abs. from √sthā-caus.)<br>
-        • samam = even, balanced (acc. sg. n.)<br>
-        • śarīram = body (acc. sg. n.)<br>
-        • hṛdi = in the heart (loc. sg. n.)<br>
-        • indriyāṇi = senses (acc. pl. n.)<br>
-        • manasā = by mind (instr. sg. n.)<br>
-        • saṃniveśya = having concentrated, placed (abs. from sam-ni-√viś)
+        [Word-by-word analysis to be added]
     </td>
     <td class="literal" contenteditable="true">
-        Having established <strong>(sthāpya)</strong> the body <strong>(śarīram)</strong> evenly <strong>(samam)</strong> with raised <strong>(unnataṃ)</strong> [chest] three times <strong>(tris)</strong>, and having concentrated <strong>(saṃniveśya)</strong> the senses <strong>(indriyāṇi)</strong> in the heart <strong>(hṛdi)</strong> by means of mind <strong>(manasā)</strong>...
+        The thumb-sized Person, the inner self, always dwelling in the hearts of people, is perceived by the heart through thought and mind - those who know this become immortal.
     </td>
     <td class="meaning" contenteditable="true">
-        Yogic posture instruction. Tris-unnata = "thrice raised" (chest, neck, head or three-part torso). Sama śarīra = balanced body. Absolutive sthāpya = having established. Compound saṃniveśya from sam-ni-√viś = "having concentrated together". Locative hṛdi = focal point. Instrumental manasā = means. First detailed āsana reference.
+        Famous image of thumb-sized (aṅguṣṭha-mātra) Person in the heart. Requires inner perception through refined consciousness. Knowledge leads to immortality.
     </td>
     <td class="jims" contenteditable="true">
-        <strong>tris</strong> = thrice<br>
-        <strong>unnata</strong> = raised<br>
-        <strong>sama</strong> = even, balanced<br>
-        <strong>sam-ni-√viś</strong> = to concentrate<br>
-        <strong>hṛd</strong> = heart
+        Пуруша, величиной с большой палец, постоянно пребывающий внутри тела, в сердце людей, Постигнут сердцем, мыслью, разумом. Те, кто знает его, становятся бессмертными.
     </td>
 </tr>
 
+<!-- Verse 3.14 -->
 <tr>
-    <td class="sanskrit" contenteditable="true">brahmoḍupena pratareta vidvān<br>srotāṃsi sarvāṇi bhayāvahāni</td>
+    <td colspan="5" class="section-header">VERSE 3.14 - THE THOUSAND-HEADED PERSON</td>
+</tr>
+
+<tr>
+    <td class="sanskrit" contenteditable="true">sahasraśīrṣā puruṣaḥ sahasrākṣaḥ sahasrapāt /<br>sa bhūmiṃ viśvato vṛtvā atyatiṣṭhad daśāṅgulam // SvetUp_3.14 //</td>
     <td class="words" contenteditable="true">
-        • brahma-uḍupena = by the boat of Brahman (instr. sg. m.)<br>
-        • pratareta = one should cross over (3rd sg. opt. mid. from pra-√tṛ)<br>
-        • vidvān = the wise one (nom. sg. m. perf. part. from √vid)<br>
-        • srotāṃsi = streams, currents (acc. pl. n.)<br>
-        • sarvāṇi = all (acc. pl. n.)<br>
-        • bhaya-āvahāni = bringing fear (acc. pl. n.)
+        [Word-by-word analysis to be added]
     </td>
     <td class="literal" contenteditable="true">
-        ...the wise one <strong>(vidvān)</strong> should cross over <strong>(pratareta)</strong> by the boat <strong>(uḍupena)</strong> of Brahman <strong>(brahma)</strong> all <strong>(sarvāṇi)</strong> the streams <strong>(srotāṃsi)</strong> that bring fear <strong>(bhayāvahāni)</strong>.
+        The Person with a thousand heads, a thousand eyes, a thousand feet - having enveloped the earth on all sides, he stands ten fingers beyond.
     </td>
     <td class="meaning" contenteditable="true">
-        Beautiful metaphor: brahma-uḍupa = "Brahman-boat" for crossing saṃsāra. Optative pratareta = prescription to cross over. Perfect participle vidvān = "one who knows". Compound bhaya-āvaha = "fear-bringing" (dangerous currents). Srotas = stream, current (of life/saṃsāra). Meditation as vehicle across dangerous waters of existence.
+        Famous opening verse of Puruṣa Sūkta (RV 10.90). Cosmic Person transcends creation by ten fingers (daśa-aṅgula) - both immanent and transcendent.
     </td>
     <td class="jims" contenteditable="true">
-        <strong>uḍupa</strong> = boat, raft<br>
-        <strong>pra-√tṛ</strong> = to cross over<br>
-        <strong>srotas</strong> = stream, current<br>
-        <strong>bhaya-āvaha</strong> = fear-bringing<br>
-        <strong>Metaphor</strong> = crossing
+        Тысячеголовый пуруша, тысячеглазый, тысяченогий – Окружив всю землю, он простирается на десять пальцев над ней.
     </td>
 </tr>
 
-<!-- Verse 2.9 -->
+<!-- Verse 3.15 -->
 <tr>
-    <td colspan="5" class="section-header">VERSE 2.9 - BREATH CONTROL</td>
+    <td colspan="5" class="section-header">VERSE 3.15 - THE PERSON IS ALL THIS</td>
 </tr>
 
 <tr>
-    <td class="sanskrit" contenteditable="true">prāṇān prapīḍyeha sa yuktaceṣṭaḥ<br>kṣīne prāṇe nāsikayocchvasīta</td>
+    <td class="sanskrit" contenteditable="true">puruṣa evedaṃ sarvaṃ yad bhūtaṃ yac ca bhavyam /<br>utāmṛtatvasyeśāno yad annenātirohati // SvetUp_3.15 //</td>
     <td class="words" contenteditable="true">
-        • prāṇān = breaths, vital airs (acc. pl. m.)<br>
-        • prapīḍya = having compressed (abs. from pra-√pīḍ)<br>
-        • iha = here, in this [body] (adv.)<br>
-        • saḥ = he (nom. sg. m.)<br>
-        • yukta-ceṣṭaḥ = one with controlled movements (nom. sg. m.)<br>
-        • kṣīne = when diminished (loc. sg. abs. from √kṣi)<br>
-        • prāṇe = breath (loc. sg. m.)<br>
-        • nāsikayā = through the nose (instr. sg. f.)<br>
-        • ucchvasīta = should breathe out (3rd sg. opt. from ud-√śvas)
+        [Word-by-word analysis to be added]
     </td>
     <td class="literal" contenteditable="true">
-        Having compressed <strong>(prapīḍya)</strong> the breaths <strong>(prāṇān)</strong> here <strong>(iha)</strong>, he <strong>(saḥ)</strong>, one with controlled <strong>(yukta)</strong> movements <strong>(ceṣṭaḥ)</strong>, when the breath <strong>(prāṇe)</strong> is diminished <strong>(kṣīne)</strong>, should breathe out <strong>(ucchvasīta)</strong> through the nose <strong>(nāsikayā)</strong>.
+        The Person is all this - what has been and what will be; and he is the lord of immortality, who grows beyond through food.
     </td>
     <td class="meaning" contenteditable="true">
-        Prāṇāyāma instruction. Absolutive prapīḍya = "having compressed/restrained". Compound yukta-ceṣṭa = "controlled in movement" (disciplined yogin). Locative absolute kṣīne prāṇe = "when breath diminishes". Optative ucchvasīta = should exhale. Nāsikayā = instrumental means. Precise breathing technique: compress, hold, exhale through nose when depleted.
+        Puruṣa as totality of existence - past, present, future. Lord of immortality yet manifests through material sustenance. Paradox of transcendence and immanence.
     </td>
     <td class="jims" contenteditable="true">
-        <strong>pra-√pīḍ</strong> = to compress<br>
-        <strong>yukta-ceṣṭa</strong> = controlled movement<br>
-        <strong>√kṣi</strong> = to diminish<br>
-        <strong>ud-√śvas</strong> = to breathe out<br>
-        <strong>nāsikā</strong> = nose
+        Этот пуруша – все, что было и что будет, А также владыка бессмертия и того, что возрастает благодаря пище.
     </td>
 </tr>
 
+<!-- Verse 3.16 -->
 <tr>
-    <td class="sanskrit" contenteditable="true">duṣṭāśvayuktam iva vāham enaṃ<br>vidvān mano dhārayetāpramattaḥ</td>
+    <td colspan="5" class="section-header">VERSE 3.16 - HANDS AND FEET EVERYWHERE</td>
+</tr>
+
+<tr>
+    <td class="sanskrit" contenteditable="true">sarvataḥpāṇipādaṃ tat sarvato'kṣiśiromukhaṃ /<br>sarvataḥśrutimal loke sarvam āvṛtya tiṣṭhati // SvetUp_3.16 //</td>
     <td class="words" contenteditable="true">
-        • duṣṭa-aśva-yuktam = yoked with unruly horses (acc. sg. m.)<br>
-        • iva = like, as<br>
-        • vāham = chariot (acc. sg. m.)<br>
-        • enam = this (acc. sg. m.)<br>
-        • vidvān = the wise one (nom. sg. m.)<br>
-        • manaḥ = mind (acc. sg. n.)<br>
-        • dhārayeta = should restrain (3rd sg. opt. from √dhṛ)<br>
-        • apramattaḥ = vigilant, unmindful (nom. sg. m.)
+        [Word-by-word analysis to be added]
     </td>
     <td class="literal" contenteditable="true">
-        Like <strong>(iva)</strong> a chariot <strong>(vāham)</strong> yoked <strong>(yuktam)</strong> with unruly <strong>(duṣṭa)</strong> horses <strong>(aśva)</strong>, this <strong>(enam)</strong> mind <strong>(manaḥ)</strong> the wise one <strong>(vidvān)</strong>, vigilant <strong>(apramattaḥ)</strong>, should restrain <strong>(dhārayeta)</strong>.
+        With hands and feet everywhere, with eyes, heads, and faces everywhere, with ears everywhere in the world - that stands enveloping all.
     </td>
     <td class="meaning" contenteditable="true">
-        Famous Upaniṣadic metaphor: mind = chariot with wild horses (senses). Triple compound: duṣṭa-aśva-yukta = "yoked with bad horses". Optative dhārayeta = should hold/restrain. Apramatta = vigilant, not careless (a-pramatta). The charioteer (buddhi/discrimination) must vigilantly control unruly horses (mind/senses). Echoes Kaṭha Upaniṣad 3.3-9.
+        Universal form with sensory and motor organs everywhere. Divine omnipresence expressed through physical imagery. Stands enveloping (āvṛtya) all creation.
     </td>
     <td class="jims" contenteditable="true">
-        <strong>duṣṭa</strong> = unruly, wicked<br>
-        <strong>aśva</strong> = horse<br>
-        <strong>vāha</strong> = chariot<br>
-        <strong>√dhṛ</strong> = to hold, restrain<br>
-        <strong>a-pramatta</strong> = vigilant
+        Со всех сторон у него руки и ноги, со всех сторон – глаза, головы, рты, Со всех сторон – уши; он стоит, охватывая все в мире.
     </td>
 </tr>
 
-<!-- Verse 2.10 -->
+<!-- Verse 3.17 -->
 <tr>
-    <td colspan="5" class="section-header">VERSE 2.10 - IDEAL MEDITATION PLACE</td>
+    <td colspan="5" class="section-header">VERSE 3.17 - APPEARING THROUGH SENSES YET BEYOND THEM</td>
 </tr>
 
 <tr>
-    <td class="sanskrit" contenteditable="true">same śucau śarkarāvahni-<br>vālukāvivarjite<br>śabdajalāśrayādibhiḥ</td>
+    <td class="sanskrit" contenteditable="true">sarvendriyaguṇābhāsaṃ sarvendriyavivarjitaṃ /<br>sarvasya prabhum īśānaṃ sarvasya śaraṇaṃ suhṛt // SvetUp_3.17 //</td>
     <td class="words" contenteditable="true">
-        • same = in a level, even [place] (loc. sg. n.)<br>
-        • śucau = in a clean, pure [place] (loc. sg. n.)<br>
-        • śarkarā-vahni-vālukā-vivarjite = free from pebbles, fire, sand (loc. sg. n.)<br>
-        • śabda-jala-āśraya-ādibhiḥ = by sound, water, shelter, etc. (instr. pl. n.)
+        [Word-by-word analysis to be added]
     </td>
     <td class="literal" contenteditable="true">
-        In a level <strong>(same)</strong>, clean <strong>(śucau)</strong> [place], free from <strong>(vivarjite)</strong> pebbles <strong>(śarkarā)</strong>, fire <strong>(vahni)</strong>, sand <strong>(vālukā)</strong>, and by <strong>(ādibhiḥ)</strong> sound <strong>(śabda)</strong>, water <strong>(jala)</strong>, shelter <strong>(āśraya)</strong>, etc...
+        Shining through all sense qualities yet devoid of all senses, the lord and ruler of all, the refuge of all, the friend.
     </td>
     <td class="meaning" contenteditable="true">
-        Environmental requirements for meditation. Two locatives: same śucau = "level and clean". Long compound: śarkarā-vahni-vālukā-vivarjita = "devoid of pebbles-fire-sand". Vivarjita = avoided, free from. Ādi = "etc." indicates more requirements. Place should be level, clean, protected from elements.
+        Paradox: manifests through sensory experience (guṇa-ābhāsa) yet transcends all senses (indriya-vivarjita). Supreme as lord, refuge, and friend of all beings.
     </td>
     <td class="jims" contenteditable="true">
-        <strong>sama</strong> = level, even<br>
-        <strong>śuci</strong> = clean, pure<br>
-        <strong>vivarjita</strong> = free from<br>
-        <strong>āśraya</strong> = shelter<br>
-        <strong>ādi</strong> = etc., and so on
+        Отражающий свойства всех чувств, лишенный всех чувств, [Он – ] повелитель, владыка всего, великое убежище всего.
     </td>
 </tr>
 
+<!-- Verse 3.18 -->
 <tr>
-    <td class="sanskrit" contenteditable="true">mano'nukūle na tu cakṣupīḍane<br>guhānivātāśrayaṇe prayojayet</td>
+    <td colspan="5" class="section-header">VERSE 3.18 - THE SWAN IN THE NINE-GATED CITY</td>
+</tr>
+
+<tr>
+    <td class="sanskrit" contenteditable="true">navadvāre pure dehī haṃso lelāyate bahiḥ /<br>vaśī sarvasya lokasya sthāvarasya carasya ca // SvetUp_3.18 //</td>
     <td class="words" contenteditable="true">
-        • manaḥ-anukūle = favorable to mind (loc. sg. n.)<br>
-        • na tu = but not<br>
-        • cakṣus-pīḍane = oppressive/harmful to eyes (loc. sg. n.)<br>
-        • guhā-nivāta-āśrayaṇe = in cave-windless-shelter (loc. sg. n.)<br>
-        • prayojayet = one should practice (3rd sg. opt. caus. from pra-√yuj)
+        [Word-by-word analysis to be added]
     </td>
     <td class="literal" contenteditable="true">
-        ...[a place] favorable <strong>(anukūle)</strong> to the mind <strong>(manas)</strong> but not <strong>(na tu)</strong> harmful <strong>(pīḍane)</strong> to the eyes <strong>(cakṣus)</strong>, in a cave <strong>(guhā)</strong>, windless <strong>(nivāta)</strong> shelter <strong>(āśrayaṇe)</strong>—there one should practice <strong>(prayojayet)</strong>.
+        In the city with nine gates, the embodied one, the swan, sports without; the controller of the whole world, of both the stationary and the moving.
     </td>
     <td class="meaning" contenteditable="true">
-        Positive and negative criteria. Manas-anukūla = "mind-favorable" (conducive to concentration). Cakṣus-pīḍana = "eye-oppressive" (too dark or bright). Triple compound: guhā-nivāta-āśrayaṇa = "cave-windless-shelter". Optative causative prayojayet = "should apply/practice [yoga]". Ideal: sheltered cave, protected from wind, pleasant for mind, safe for eyes.
+        Body as nine-gated city (two eyes, two ears, two nostrils, mouth, genitals, anus). Soul as haṃsa (swan/spirit) playing externally. Yet remains master of all existence.
     </td>
     <td class="jims" contenteditable="true">
-        <strong>anukūla</strong> = favorable<br>
-        <strong>pīḍana</strong> = oppression, harm<br>
-        <strong>guhā</strong> = cave<br>
-        <strong>nivāta</strong> = windless<br>
-        <strong>pra-√yuj CAUS</strong> = to practice
+        В граде с девятью вратами наделенный телом "лебедь" устремляется наружу – Властитель всего мира, неподвижного и движущегося.
     </td>
 </tr>
 
-<!-- Verse 2.11 -->
+<!-- Verse 3.19 -->
 <tr>
-    <td colspan="5" class="section-header">VERSE 2.11 - PRELIMINARY VISIONS IN YOGA</td>
+    <td colspan="5" class="section-header">VERSE 3.19 - WITHOUT ORGANS YET ALL-CAPABLE</td>
 </tr>
 
 <tr>
-    <td class="sanskrit" contenteditable="true">nīhāradhūmārkānalānilānāṃ<br>khadyotavidyutsphaṭikāśaśīnām</td>
+    <td class="sanskrit" contenteditable="true">apāṇipādo javano grahītā paśyaty acakṣuḥ sa śṛṇoty akarṇaḥ /<br>sa vetti vedyaṃ na ca tasyāsti vettā tam āhur agryaṃ puruṣaṃ mahāntam // SvetUp_3.19 //</td>
     <td class="words" contenteditable="true">
-        • nīhāra-dhūma-arka-anala-anilānām = of mist, smoke, sun, fire, wind (gen. pl. m.)<br>
-        • khadyota-vidyut-sphaṭika-aśa-śīnām = of firefly, lightning, crystal, moon (gen. pl. m.)
+        [Word-by-word analysis to be added]
     </td>
     <td class="literal" contenteditable="true">
-        Of mist <strong>(nīhāra)</strong>, smoke <strong>(dhūma)</strong>, sun <strong>(arka)</strong>, fire <strong>(anala)</strong>, wind <strong>(anila)</strong>, firefly <strong>(khadyota)</strong>, lightning <strong>(vidyut)</strong>, crystal <strong>(sphaṭika)</strong>, moon <strong>(śaśin)</strong>...
+        Without hands or feet yet swift, grasping; seeing without eyes, hearing without ears; he knows what is to be known, but there is no knower of him - they call him the first, the great Person.
     </td>
     <td class="meaning" contenteditable="true">
-        Two compounds listing nine preliminary visions in yoga. First group: nīhāra (mist), dhūma (smoke), arka (sun), anala (fire), anila (wind). Second group: khadyota (firefly), vidyut (lightning), sphaṭika (crystal), śaśin (moon). Genitive plural indicates possession of these forms. Progression from subtle to gross to luminous phenomena.
+        Paradoxical nature of supreme consciousness - acts without organs, knows all yet unknowable. The ultimate subject who cannot become object. The primal great Person.
     </td>
     <td class="jims" contenteditable="true">
-        <strong>nīhāra</strong> = mist<br>
-        <strong>khadyota</strong> = firefly<br>
-        <strong>vidyut</strong> = lightning<br>
-        <strong>sphaṭika</strong> = crystal<br>
-        <strong>Nine visions</strong>
+        Без ног и рук, он быстрый и хватающий: он видит без глаз, слышает без ушей; Он знает то, что следует знать; его же никто не знает. Его зовут первым великим пурушей.
     </td>
 </tr>
 
+<!-- Verse 3.20 -->
 <tr>
-    <td class="sanskrit" contenteditable="true">etāni rūpāṇi puraḥsarāṇi<br>brahmaṇy abhivyaktikarāṇi yoge</td>
+    <td colspan="5" class="section-header">VERSE 3.20 - SMALLER THAN ATOM, GREATER THAN GREAT</td>
+</tr>
+
+<tr>
+    <td class="sanskrit" contenteditable="true">aṇor aṇīyān mahato mahīyān ātmā guhāyāṃ nihito 'sya jantoḥ /<br>tam akratuṃ paśyati vītaśoko dhātuprasādān mahimānam īśam // SvetUp_3.20 //</td>
     <td class="words" contenteditable="true">
-        • etāni = these (nom. pl. n.)<br>
-        • rūpāṇi = forms, appearances (nom. pl. n.)<br>
-        • puraḥsarāṇi = preliminary, going before (nom. pl. n.)<br>
-        • brahmaṇi = in Brahman (loc. sg. n.)<br>
-        • abhivyakti-karāṇi = making manifest (nom. pl. n.)<br>
-        • yoge = in yoga (loc. sg. m.)
+        [Word-by-word analysis to be added]
     </td>
     <td class="literal" contenteditable="true">
-        These <strong>(etāni)</strong> preliminary <strong>(puraḥsarāṇi)</strong> forms <strong>(rūpāṇi)</strong> making manifest <strong>(abhivyaktikarāṇi)</strong> Brahman <strong>(brahmaṇi)</strong> [arise] in yoga <strong>(yoge)</strong>.
+        Smaller than the atom, greater than the great, the self is set in the cave of this creature; the one without desire, free from sorrow, sees him through the creator's grace - the majesty of the Lord.
     </td>
     <td class="meaning" contenteditable="true">
-        Puraḥsara = "going before, preliminary" - these visions precede full realization. Compound abhivyakti-kara = "making manifestation" (revealing Brahman gradually). Locative brahmaṇi = "in relation to Brahman". Locative yoge = "in yoga [practice]". These are signs of progress, not final goal. Traditional yogic experiences documented.
+        Famous paradox of ātman - infinitesimally small yet infinitely great. Hidden in heart-cave. Vision requires divine grace and freedom from desire/sorrow.
     </td>
     <td class="jims" contenteditable="true">
-        <strong>puraḥsara</strong> = preliminary<br>
-        <strong>abhivyakti</strong> = manifestation<br>
-        <strong>-kara</strong> = making, causing<br>
-        <strong>Signs of progress</strong>
+        Меньше малого, больше большого скрыт Атман в сердце этого существа. Его, лишенного стремлений, великого владыку, видит [человек], свободный от печали, благодаря умиротворению чувств.
     </td>
 </tr>
 
-<!-- Verse 2.12 -->
+<!-- Verse 3.21 -->
 <tr>
-    <td colspan="5" class="section-header">VERSE 2.12 - THE YOGA BODY</td>
+    <td colspan="5" class="section-header">VERSE 3.21 - THE UNAGING, ANCIENT, ALL-SELF</td>
 </tr>
 
 <tr>
-    <td class="sanskrit" contenteditable="true">pṛthvyaptejo'nilakhe samutthite<br>pañcātmake yogaguṇe pravṛtte</td>
+    <td class="sanskrit" contenteditable="true">vedāham etam ajaraṃ purāṇaṃ sarvātmānaṃ sarvagataṃ vibhutvāt /<br>janmanirodhaṃ pravadanti yasya brahmavādino hi pravadanti nityam // SvetUp_3.21 //</td>
     <td class="words" contenteditable="true">
-        • pṛthvī-ap-tejas-anila-ākhe = earth, water, fire, wind, space (loc. sg. m.)<br>
-        • samutthite = when arisen (loc. sg. abs. PPP from sam-ud-√sthā)<br>
-        • pañca-ātmake = fivefold (loc. sg. m.)<br>
-        • yoga-guṇe = quality/attribute of yoga (loc. sg. m.)<br>
-        • pravṛtte = when manifested (loc. sg. abs. PPP from pra-√vṛt)
+        [Word-by-word analysis to be added]
     </td>
     <td class="literal" contenteditable="true">
-        When arisen <strong>(samutthite)</strong> [is] the fivefold <strong>(pañcātmake)</strong> [experience] of earth <strong>(pṛthvī)</strong>, water <strong>(ap)</strong>, fire <strong>(tejas)</strong>, wind <strong>(anila)</strong>, space <strong>(ākha)</strong>, when manifested <strong>(pravṛtte)</strong> [is] the quality <strong>(guṇe)</strong> of yoga <strong>(yoga)</strong>...
+        I know this unaging, ancient one, the self of all, all-pervading through omnipresence; of whom the knowers of Brahman declare there is cessation of birth, whom they declare eternal.
     </td>
     <td class="meaning" contenteditable="true">
-        Five-fold compound of elements (pañca-mahābhūta): pṛthvī, ap, tejas, anila, ākāśa. Two locative absolutes: samutthite and pravṛtte = "when arisen...when manifested". Pañcātmaka = "having five as essence". Yoga-guṇa = yogic attribute/experience of elements. When five elements are experienced in yoga practice...
+        Ultimate reality as unaging (ajara), ancient (purāṇa), self of all (sarva-ātman). Knowledge of this ends the cycle of birth. Eternal nature proclaimed by Brahman-knowers.
     </td>
     <td class="jims" contenteditable="true">
-        <strong>pañca-mahābhūta</strong> = five great elements<br>
-        <strong>sam-ud-√sthā</strong> = to arise<br>
-        <strong>yoga-guṇa</strong> = yoga quality<br>
-        <strong>LOC ABS</strong> = temporal clause
+        Я знаю этого нестарящегося, изначального, всеобщего Атмана, вошедшего во все благодаря [своей] вездесущности, [Которого] называют прекращением рождений, к которому рассуждающие о Брахмане обращаются как к вечному.
     </td>
 </tr>
 
-<tr>
-    <td class="sanskrit" contenteditable="true">na tasya rogo na jarā na mṛtyuḥ<br>prāptasya yogāgnimayaṃ śarīram</td>
-    <td class="words" contenteditable="true">
-        • na = not<br>
-        • tasya = of him, for him (gen. sg. m.)<br>
-        • rogaḥ = disease (nom. sg. m.)<br>
-        • jarā = old age (nom. sg. f.)<br>
-        • mṛtyuḥ = death (nom. sg. m.)<br>
-        • prāptasya = for one who has obtained (gen. sg. m. PPP from pra-√āp)<br>
-        • yoga-agni-mayam = made of yoga-fire (acc. sg. n.)<br>
-        • śarīram = body (acc. sg. n.)
-    </td>
-    <td class="literal" contenteditable="true">
-        For him <strong>(tasya)</strong> [there is] not <strong>(na)</strong> disease <strong>(rogaḥ)</strong>, not old age <strong>(jarā)</strong>, not death <strong>(mṛtyuḥ)</strong>, for one who has obtained <strong>(prāptasya)</strong> a body <strong>(śarīram)</strong> made of <strong>(mayam)</strong> yoga-fire <strong>(yogāgni)</strong>.
-    </td>
-    <td class="meaning" contenteditable="true">
-        Triple negation: na roga, na jarā, na mṛtyu = freedom from disease, aging, death. Compound yoga-agni-maya = "made of yoga-fire" (transformed subtle body). PPP prāpta = "obtained, achieved". The yogin obtains an incorruptible subtle body (yoga-deha) free from normal limitations. Famous promise of yogic transformation. Genitive tasya shows possession/experience.
-    </td>
-    <td class="jims" contenteditable="true">
-        <strong>roga</strong> = disease<br>
-        <strong>jarā</strong> = old age<br>
-        <strong>yoga-agni-maya</strong> = made of yoga-fire<br>
-        <strong>Triple negation</strong> = complete freedom<br>
-        <strong>Yoga-deha</strong> = yoga body
-    </td>
-</tr>
-
-<!-- Verse 2.13 -->
-<tr>
-    <td colspan="5" class="section-header">VERSE 2.13 - SIGNS OF YOGIC PROGRESS</td>
-</tr>
-
-<tr>
-    <td class="sanskrit" contenteditable="true">laghutvam ārogyam alolupatvaṃ<br>varṇaprasādaḥ svarasauṣṭhavaṃ ca</td>
-    <td class="words" contenteditable="true">
-        • laghutva = lightness (nom. sg. n.)<br>
-        • ārogyam = health (nom. sg. n.)<br>
-        • alolupatvam = non-greed, detachment (nom. sg. n.)<br>
-        • varṇa-prasādaḥ = clarity of complexion (nom. sg. m.)<br>
-        • svara-sauṣṭhavam = sweetness of voice (nom. sg. n.)<br>
-        • ca = and
-    </td>
-    <td class="literal" contenteditable="true">
-        Lightness <strong>(laghutva)</strong>, health <strong>(ārogyam)</strong>, detachment <strong>(alolupatvam)</strong>, clarity <strong>(prasādaḥ)</strong> of complexion <strong>(varṇa)</strong>, and <strong>(ca)</strong> sweetness <strong>(sauṣṭhavam)</strong> of voice <strong>(svara)</strong>...
-    </td>
-    <td class="meaning" contenteditable="true">
-        Five positive signs. Laghutvam (lightness - bodily and mental). Ārogya (health, freedom from disease). Alolupatva = a-lolupa-tva = "state of non-greed". Compound varṇa-prasāda = "complexion-clarity" (radiant skin). Compound svara-sauṣṭhava = "voice-sweetness" (melodious speech). Observable physical and psychological transformations.
-    </td>
-    <td class="jims" contenteditable="true">
-        <strong>laghu</strong> = light<br>
-        <strong>ārogya</strong> = health<br>
-        <strong>a-lolupa</strong> = non-greedy<br>
-        <strong>prasāda</strong> = clarity<br>
-        <strong>sauṣṭhava</strong> = sweetness
-    </td>
-</tr>
-
-<tr>
-    <td class="sanskrit" contenteditable="true">gandhaḥ śubho mūtrapurīṣam alpaṃ<br>yogapravṛttiṃ prathamāṃ vadanti</td>
-    <td class="words" contenteditable="true">
-        • gandhaḥ = smell, odor (nom. sg. m.)<br>
-        • śubhaḥ = auspicious, pleasant (nom. sg. m.)<br>
-        • mūtra-purīṣam = urine and feces (nom. sg. n.)<br>
-        • alpam = little, minimal (nom. sg. n.)<br>
-        • yoga-pravṛttim = commencement of yoga (acc. sg. f.)<br>
-        • prathamām = first, initial (acc. sg. f.)<br>
-        • vadanti = they say, declare (3rd pl. pres. from √vad)
-    </td>
-    <td class="literal" contenteditable="true">
-        ...pleasant <strong>(śubhaḥ)</strong> smell <strong>(gandhaḥ)</strong>, minimal <strong>(alpam)</strong> urine and feces <strong>(mūtrapurīṣam)</strong>—[these] they say <strong>(vadanti)</strong> [are] the first <strong>(prathamām)</strong> manifestation <strong>(pravṛttim)</strong> of yoga <strong>(yoga)</strong>.
-    </td>
-    <td class="meaning" contenteditable="true">
-        Two more signs: śubha gandha (pleasant body odor), alpa mūtra-purīṣa (minimal excretions). Compound yoga-pravṛtti = "yoga-manifestation/commencement". Prathama = "first, preliminary". Vadanti = traditional teaching ("they say" - authorities). Compound mūtra-purīṣa shows paired waste products. These eight signs indicate successful beginning of yogic transformation. Practical, observable criteria.
-    </td>
-    <td class="jims" contenteditable="true">
-        <strong>gandha</strong> = smell, odor<br>
-        <strong>alpa</strong> = little, minimal<br>
-        <strong>pravṛtti</strong> = commencement<br>
-        <strong>prathama</strong> = first<br>
-        <strong>Eight signs total</strong>
-    </td>
-</tr>
-
-<!-- Verse 2.14 -->
-<tr>
-    <td colspan="5" class="section-header">VERSE 2.14 - THE MIRROR METAPHOR</td>
-</tr>
-
-<tr>
-    <td class="sanskrit" contenteditable="true">yathaiva bimbaṃ mṛdayopaliptaṃ<br>tejomayaṃ bhrājate tat sudhāntam</td>
-    <td class="words" contenteditable="true">
-        • yathā = just as (adv.)<br>
-        • eva = indeed<br>
-        • bimbam = mirror (nom. sg. n.)<br>
-        • mṛdayā = with clay (instr. sg. f.)<br>
-        • upaliptam = smeared, covered (nom. sg. n. PPP from upa-√lip)<br>
-        • tejas-mayam = radiant, made of light (nom. sg. n.)<br>
-        • bhrājate = shines (3rd sg. mid. pres. from √bhrāj)<br>
-        • tat = that (nom. sg. n.)<br>
-        • sudhāntam = well-cleaned (nom. sg. n.)
-    </td>
-    <td class="literal" contenteditable="true">
-        Just as <strong>(yathā)</strong> indeed <strong>(eva)</strong> a mirror <strong>(bimbam)</strong> smeared <strong>(upaliptam)</strong> with clay <strong>(mṛdayā)</strong> shines <strong>(bhrājate)</strong> radiant <strong>(tejomayam)</strong> when <strong>(tat)</strong> well-cleaned <strong>(sudhāntam)</strong>...
-    </td>
-    <td class="meaning" contenteditable="true">
-        Simile begins: yathā...evam (as...so). Bimba = mirror/reflection. PPP upalipta = "smeared over" (obscured). Instrumental mṛdayā = means of covering. Compound tejas-maya = "made of light" (naturally radiant). Sudhānta = su-dhānta = "well cleaned". Middle voice bhrājate = shines (inherently). Mirror covered with clay → cleaned → shines. Metaphor for Self covered by impurities.
-    </td>
-    <td class="jims" contenteditable="true">
-        <strong>bimba</strong> = mirror, reflection<br>
-        <strong>upa-√lip</strong> = to smear<br>
-        <strong>tejas-maya</strong> = made of light<br>
-        <strong>su-dhānta</strong> = well-cleaned<br>
-        <strong>Simile</strong> = mirror
-    </td>
-</tr>
-
-<tr>
-    <td class="sanskrit" contenteditable="true">tad vātmatattvaṃ prasamīkṣya dehī<br>ekaḥ kṛtārtho bhavate vītaśokaḥ</td>
-    <td class="words" contenteditable="true">
-        • tat = that, thus (adv.)<br>
-        • vā = or, indeed<br>
-        • ātma-tattvam = reality of Self (acc. sg. n.)<br>
-        • prasamīkṣya = having seen completely (abs. from pra-sam-√īkṣ)<br>
-        • dehī = embodied one (nom. sg. m.)<br>
-        • ekaḥ = one, alone (nom. sg. m.)<br>
-        • kṛta-arthaḥ = one whose purpose is fulfilled (nom. sg. m.)<br>
-        • bhavate = becomes (3rd sg. mid. pres. from √bhū)<br>
-        • vīta-śokaḥ = free from sorrow (nom. sg. m.)
-    </td>
-    <td class="literal" contenteditable="true">
-        ...so <strong>(tat vā)</strong> the embodied one <strong>(dehī)</strong>, having completely seen <strong>(prasamīkṣya)</strong> the reality <strong>(tattvam)</strong> of the Self <strong>(ātma)</strong>, becomes <strong>(bhavate)</strong> one <strong>(ekaḥ)</strong>, fulfilled in purpose <strong>(kṛtārthaḥ)</strong>, free from sorrow <strong>(vītaśokaḥ)</strong>.
-    </td>
-    <td class="meaning" contenteditable="true">
-        Application of simile. Absolutive prasamīkṣya from pra-sam-√īkṣ = "having completely perceived". Compound ātma-tattva = "Self-reality/truth". Dehī = embodied soul (still has body but transformed). Three results: (1) eka = unified/singular (non-dual), (2) kṛta-artha = fulfilled purpose (life's goal achieved), (3) vīta-śoka = "gone-sorrow" = sorrowless. Middle bhavate = becomes (natural transformation). Clean mirror = realized Self.
-    </td>
-    <td class="jims" contenteditable="true">
-        <strong>pra-sam-√īkṣ</strong> = to see completely<br>
-        <strong>kṛta-artha</strong> = fulfilled purpose<br>
-        <strong>vīta-śoka</strong> = free from sorrow<br>
-        <strong>dehī</strong> = embodied one<br>
-        <strong>Three results</strong>
-    </td>
-</tr>
-
-<!-- Verse 2.15 -->
-<tr>
-    <td colspan="5" class="section-header">VERSE 2.15 - LAMP METAPHOR AND LIBERATION</td>
-</tr>
-
-<tr>
-    <td class="sanskrit" contenteditable="true">yad ātmatattvena tu brahmatattvaṃ<br>dīpopameneha yuktaḥ prapaśyet</td>
-    <td class="words" contenteditable="true">
-        • yat = when, if (temporal conj.)<br>
-        • ātma-tattvena = by means of Self-reality (instr. sg. n.)<br>
-        • tu = but, indeed<br>
-        • brahma-tattvam = reality of Brahman (acc. sg. n.)<br>
-        • dīpa-upamena = by lamp-metaphor (instr. sg. n.)<br>
-        • iha = here, in this [body] (adv.)<br>
-        • yuktaḥ = yoked, concentrated (nom. sg. m.)<br>
-        • prapaśyet = one should see (3rd sg. opt. from pra-√paś)
-    </td>
-    <td class="literal" contenteditable="true">
-        When <strong>(yat)</strong> indeed <strong>(tu)</strong> by means of <strong>(tattvena)</strong> the Self-reality <strong>(ātma)</strong> [one perceives] the Brahman-reality <strong>(brahmatattvaṃ)</strong>, here <strong>(iha)</strong> by the lamp-metaphor <strong>(dīpopamena)</strong>, the concentrated one <strong>(yuktaḥ)</strong> should see <strong>(prapaśyet)</strong>...
-    </td>
-    <td class="meaning" contenteditable="true">
-        Temporal clause with yat. Instrumental ātma-tattvena = "by means of Self-knowledge" (knowing microcosm). Object brahma-tattva = macrocosmic reality. Compound dīpa-upama = "lamp-simile". Yukta = concentrated yogin. Optative prapaśyet = prescription. Iha = in this very body. Method: know Self → know Brahman, like lamp illuminating (self-luminous consciousness).
-    </td>
-    <td class="jims" contenteditable="true">
-        <strong>ātma-tattva</strong> = Self-reality<br>
-        <strong>brahma-tattva</strong> = Brahman-reality<br>
-        <strong>dīpa-upama</strong> = lamp-simile<br>
-        <strong>yukta</strong> = concentrated<br>
-        <strong>Microcosm→Macrocosm</strong>
-    </td>
-</tr>
-
-<tr>
-    <td class="sanskrit" contenteditable="true">ajaṃ dhruvaṃ sarvatatt vair viśuddhaṃ<br>jñātvā devaṃ mucyate sarvapāśaiḥ</td>
-    <td class="words" contenteditable="true">
-        • ajam = unborn (acc. sg. m.)<br>
-        • dhruvam = immovable, eternal (acc. sg. m.)<br>
-        • sarva-tattvaiḥ = by all elements/realities (instr. pl. n.)<br>
-        • viśuddham = completely pure (acc. sg. m.)<br>
-        • jñātvā = having known (abs. from √jñā)<br>
-        • devam = the deity, God (acc. sg. m.)<br>
-        • mucyate = is freed (3rd sg. pass. pres. from √muc)<br>
-        • sarva-pāśaiḥ = from all bonds (abl. pl. m.)
-    </td>
-    <td class="literal" contenteditable="true">
-        ...the unborn <strong>(ajam)</strong>, eternal <strong>(dhruvam)</strong>, completely pure <strong>(viśuddham)</strong> by all elements <strong>(sarvatatt vaiḥ)</strong> [God], having known <strong>(jñātvā)</strong> the deity <strong>(devam)</strong>, one is freed <strong>(mucyate)</strong> from all <strong>(sarva)</strong> bonds <strong>(pāśaiḥ)</strong>.
-    </td>
-    <td class="meaning" contenteditable="true">
-        Four epithets of God: (1) aja = "unborn" (eternal), (2) dhruva = "immovable" (unchanging), (3) sarva-tattva-viśuddha = "pure from all elements" (transcendent), (4) deva = divine. Absolutive jñātvā = causal "having known". Passive mucyate = liberation happens naturally upon knowledge. Ablative sarva-pāśaiḥ = "from all bonds" (complete freedom). Compound sarva-pāśa = all fetters (bondage). Knowledge → immediate liberation.
-    </td>
-    <td class="jims" contenteditable="true">
-        <strong>aja</strong> = unborn<br>
-        <strong>dhruva</strong> = eternal, immovable<br>
-        <strong>viśuddha</strong> = completely pure<br>
-        <strong>√muc</strong> = to free, liberate<br>
-        <strong>pāśa</strong> = bond, fetter
-    </td>
-</tr>
-
-<!-- Verse 2.16 -->
-<tr>
-    <td colspan="5" class="section-header">VERSE 2.16 - THE ALL-FACING GOD</td>
-</tr>
-
-<tr>
-    <td class="sanskrit" contenteditable="true">eṣa ha devaḥ pradiśo 'nu sarvāḥ<br>pūrvo ha jātaḥ sa u garbhe antaḥ</td>
-    <td class="words" contenteditable="true">
-        • eṣaḥ = this (nom. sg. m.)<br>
-        • ha = indeed (particle)<br>
-        • devaḥ = deity, God (nom. sg. m.)<br>
-        • pradiśaḥ = directions (acc. pl. f.)<br>
-        • anu = along, throughout<br>
-        • sarvāḥ = all (acc. pl. f.)<br>
-        • pūrvaḥ = first, primordial (nom. sg. m.)<br>
-        • jātaḥ = born (nom. sg. m. PPP from √jan)<br>
-        • saḥ = he (nom. sg. m.)<br>
-        • u = and, also (particle)<br>
-        • garbhe = in the womb (loc. sg. m.)<br>
-        • antaḥ = within (adv.)
-    </td>
-    <td class="literal" contenteditable="true">
-        This <strong>(eṣaḥ)</strong> God <strong>(devaḥ)</strong> indeed <strong>(ha)</strong> [exists] throughout <strong>(anu)</strong> all <strong>(sarvāḥ)</strong> directions <strong>(pradiśaḥ)</strong>; he <strong>(saḥ)</strong> was born <strong>(jātaḥ)</strong> first <strong>(pūrvaḥ)</strong>, and <strong>(u)</strong> he [is] within <strong>(antaḥ)</strong> the womb <strong>(garbhe)</strong>...
-    </td>
-    <td class="meaning" contenteditable="true">
-        Particle ha = emphasis. Pradiśaḥ anu sarvāḥ = "along all directions" (omnipresent). Pūrva jāta = "first-born" (primordial). Paradox: first born yet unborn (aja from 2.15). Garbhe antaḥ = "within the womb" - immanent. God is both transcendent (all directions) and immanent (in womb/heart). Particle u adds emphasis.
-    </td>
-    <td class="jims" contenteditable="true">
-        <strong>pradiś</strong> = direction<br>
-        <strong>pūrva</strong> = first, primordial<br>
-        <strong>garbha</strong> = womb, embryo<br>
-        <strong>Transcendent & Immanent</strong>
-    </td>
-</tr>
-
-<tr>
-    <td class="sanskrit" contenteditable="true">sa eva jātaḥ sa janiṣyamānaḥ<br>pratyaṅ janās tiṣṭhati sarvatomukhaḥ</td>
-    <td class="words" contenteditable="true">
-        • saḥ = he (nom. sg. m.)<br>
-        • eva = indeed<br>
-        • jātaḥ = born (nom. sg. m. PPP)<br>
-        • janiṣyamāṇaḥ = about to be born (nom. sg. m. fut. pass. part.)<br>
-        • pratyak = facing inward (adv.)<br>
-        • janāḥ = people (voc. pl. m.)<br>
-        • tiṣṭhati = stands (3rd sg. pres. from √sthā)<br>
-        • sarvatas-mukhaḥ = all-faced, facing all directions (nom. sg. m.)
-    </td>
-    <td class="literal" contenteditable="true">
-        ...he <strong>(saḥ)</strong> himself <strong>(eva)</strong> [is already] born <strong>(jātaḥ)</strong>, he [is] being born <strong>(janiṣyamāṇaḥ)</strong>, O people <strong>(janāḥ)</strong>, he stands <strong>(tiṣṭhati)</strong> facing inward <strong>(pratyak)</strong>, facing all directions <strong>(sarvatomukhaḥ)</strong>.
-    </td>
-    <td class="meaning" contenteditable="true">
-        Triple time: pūrva jāta (was born), jāta (is born), janiṣyamāṇa (will be born) = eternal present. Future passive participle janiṣyamāṇa = continuous becoming. Pratyak = "facing inward" (in the heart). Compound sarvatas-mukha = "all-directional-faced" (omnipresent). Vocative janāḥ = direct address. God eternally born, being born, to be born - beyond time yet in time. Famous verse on divine omnipresence.
-    </td>
-    <td class="jims" contenteditable="true">
-        <strong>janiṣyamāṇa</strong> = about to be born<br>
-        <strong>pratyak</strong> = inward-facing<br>
-        <strong>sarvatas-mukha</strong> = all-faced<br>
-        <strong>Eternal present</strong><br>
-        <strong>Omnipresence</strong>
-    </td>
-</tr>
-
-<!-- Verse 2.17 -->
-<tr>
-    <td colspan="5" class="section-header">VERSE 2.17 - FINAL SALUTATION</td>
-</tr>
-
-<tr>
-    <td class="sanskrit" contenteditable="true">yo devo agnau yo apsu<br>yo viśvaṃ bhuvanam āviveśa</td>
-    <td class="words" contenteditable="true">
-        • yaḥ = who (nom. sg. m.)<br>
-        • devaḥ = deity (nom. sg. m.)<br>
-        • agnau = in fire (loc. sg. m.)<br>
-        • aḥsu = in waters (loc. pl. f.)<br>
-        • viśvam = all, entire (acc. sg. n.)<br>
-        • bhuvanam = world (acc. sg. n.)<br>
-        • āviveśa = has entered (3rd sg. perf. from ā-√viś)
-    </td>
-    <td class="literal" contenteditable="true">
-        Who <strong>(yaḥ)</strong> [is] the deity <strong>(devaḥ)</strong> in fire <strong>(agnau)</strong>, who [is] in waters <strong>(apsu)</strong>, who <strong>(yaḥ)</strong> has entered <strong>(āviveśa)</strong> the entire <strong>(viśvam)</strong> world <strong>(bhuvanam)</strong>...
-    </td>
-    <td class="meaning" contenteditable="true">
-        Relative clause begins: yaḥ (who). Anaphora: yaḥ...yaḥ...yaḥ (who...who...who). Locatives: agnau, apsu = God in elements. Perfect āviveśa from ā-√viś = "has entered/pervaded". Viśva bhuvana = entire universe. Progressive expansion: fire → waters → whole world → plants → trees (next line).
-    </td>
-    <td class="jims" contenteditable="true">
-        <strong>ā-√viś</strong> = to enter, pervade<br>
-        <strong>viśva-bhuvana</strong> = entire world<br>
-        <strong>Anaphora</strong> = repetition<br>
-        <strong>Progressive expansion</strong>
-    </td>
-</tr>
-
-<tr>
-    <td class="sanskrit" contenteditable="true">ya oṣadhīṣu yo vanaspatīṣu<br>tasmai devāya namo namaḥ</td>
-    <td class="words" contenteditable="true">
-        • yaḥ = who (nom. sg. m.)<br>
-        • oṣadhīṣu = in herbs, plants (loc. pl. f.)<br>
-        • vanaspatīṣu = in forest trees (loc. pl. m.)<br>
-        • tasmai = to that (dat. sg. m.)<br>
-        • devāya = to the deity (dat. sg. m.)<br>
-        • namaḥ = salutation (nom. sg. n.)<br>
-        • [repeated]
-    </td>
-    <td class="literal" contenteditable="true">
-        ...who <strong>(yaḥ)</strong> [is] in herbs <strong>(oṣadhīṣu)</strong>, who [is] in forest trees <strong>(vanaspatīṣu)</strong>—to that <strong>(tasmai)</strong> deity <strong>(devāya)</strong>, salutation <strong>(namaḥ)</strong>, salutation <strong>(namaḥ)</strong>!
-    </td>
-    <td class="meaning" contenteditable="true">
-        Continuation: yaḥ oṣadhīṣu, yaḥ vanaspatīṣu = in herbs, in trees. Relative-correlative: yaḥ...tasmai (who...to that one). Double dative: tasmai devāya = "to that deity". Namas repeated (epizeuxis) = emphatic salutation. Chapter 2 concludes with universal vision: God pervades fire, water, world, plants, trees - everything. Final double namaḥ = complete surrender. Beautiful hymnic conclusion combining yoga practice with devotion.
-    </td>
-    <td class="jims" contenteditable="true">
-        <strong>oṣadhi</strong> = herb, plant<br>
-        <strong>vanaspati</strong> = forest tree<br>
-        <strong>namas</strong> = salutation<br>
-        <strong>Relative-correlative</strong><br>
-        <strong>Epizeuxis</strong> = repetition<br>
-        <strong>Universal pervader</strong>
-    </td>
-</tr>
 
             </tbody>
         </table>
 
         <p style="text-align: center; font-style: italic; margin-top: 30px; color: #888;">
-            ✓ Śvetāśvatara Upaniṣad 1.1-16 & 2.1-17 Complete<br>
-            Focus: From Philosophical Inquiry to Yoga Practice and Realization
+            ✓ Śvetāśvatara Upaniṣad 1.1-16 & 3.1-21 Complete<br>
+            Focus: From Philosophical Inquiry to Knowledge of the Supreme Reality
         </p>
     </div>
     <!-- End Śvetāśvatara Content -->
