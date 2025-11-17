@@ -321,7 +321,6 @@
             console.log('✅ Firebase initialized successfully');
         } catch (error) {
             console.error('❌ Firebase initialization error:', error);
-            alert('Firebase connection failed! Check console for details.');
         }
 
         // Use a shared key for ALL browsers/devices/incognito tabs
@@ -495,29 +494,36 @@
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', () => {
-            const currentVersion = '6.1'; // HTML is source of truth, Firebase stores edits
+            const currentVersion = '7.0'; // Major update - delete old Firebase, save new HTML
             const storedVersion = localStorage.getItem('pasupata_version');
             const cellClasses = ['sanskrit', 'words', 'literal', 'translation', 'grammar', 'meaning', 'jims'];
 
-            // If version changed - Save HTML → Firebase, DON'T clear cells
+            // If version changed - DELETE old Firebase data, then save new HTML
             if (storedVersion !== currentVersion) {
                 localStorage.setItem('pasupata_version', currentVersion);
-                console.log('🔄 Version changed to', currentVersion, '- Saving HTML to Firebase...');
-                showNotification('💾 Saving content to cloud...', 'info', 2000);
+                console.log('🔄 Version 7.0 - Resetting Firebase with new content...');
+                showNotification('🔥 Resetting cloud data...', 'warning', 2000);
 
-                // Save HTML → Firebase (preserve HTML content, don't clear)
-                console.log('⚡ Saving HTML → Firebase...');
-                autoSave();
+                // Step 1: DELETE all old Firebase data
+                database.ref('pasupata_analysis/' + userId).remove()
+                    .then(() => {
+                        console.log('✅ Old Firebase data deleted');
+                        showNotification('💾 Saving new content to cloud...', 'info', 2000);
 
-                setTimeout(() => {
-                    showNotification('✅ Content saved to cloud!', 'success', 3000);
-                }, 2000);
-
-                // Don't load from Firebase - HTML is the source of truth for new versions
+                        // Step 2: Save current HTML to Firebase
+                        setTimeout(() => {
+                            autoSave();
+                            showNotification('✅ New content saved to cloud!', 'success', 3000);
+                        }, 500);
+                    })
+                    .catch((error) => {
+                        console.error('❌ Firebase delete error:', error);
+                        // Try to save anyway
+                        autoSave();
+                    });
             } else {
-                // Normal load: HTML is already correct, no need to load from Firebase
+                // Same version - just use HTML as-is
                 console.log('📄 Using HTML content (version', currentVersion, ')');
-                // Firebase loading disabled - HTML is source of truth
             }
 
             // Set up auto-save on every edit - ALL editable cells
