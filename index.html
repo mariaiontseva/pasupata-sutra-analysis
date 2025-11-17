@@ -495,49 +495,29 @@
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', () => {
-            const currentVersion = '6.0'; // Firebase is ONLY source of truth!
+            const currentVersion = '6.1'; // HTML is source of truth, Firebase stores edits
             const storedVersion = localStorage.getItem('pasupata_version');
             const cellClasses = ['sanskrit', 'words', 'literal', 'translation', 'grammar', 'meaning', 'jims'];
 
-            // If version changed - Save HTML → Firebase FIRST, then clear and load
+            // If version changed - Save HTML → Firebase, DON'T clear cells
             if (storedVersion !== currentVersion) {
                 localStorage.setItem('pasupata_version', currentVersion);
-                console.log('🔄 Version changed to', currentVersion, '- Updating Firebase with corrected verses...');
-                showNotification('💾 Updating cloud with corrected verses...', 'info', 2000);
+                console.log('🔄 Version changed to', currentVersion, '- Saving HTML to Firebase...');
+                showNotification('💾 Saving content to cloud...', 'info', 2000);
 
-                // Step 1: Save HTML → Firebase (while cells still have content)
-                console.log('⚡ Step 1: Saving HTML → Firebase...');
+                // Save HTML → Firebase (preserve HTML content, don't clear)
+                console.log('⚡ Saving HTML → Firebase...');
                 autoSave();
 
-                // Step 2: Clear cells after save completes
                 setTimeout(() => {
-                    console.log('🧹 Step 2: Clearing cells...');
-                    cellClasses.forEach(className => {
-                        const cells = document.querySelectorAll(`.${className}[contenteditable="true"]`);
-                        cells.forEach(cell => {
-                            cell.innerHTML = '';
-                        });
-                    });
+                    showNotification('✅ Content saved to cloud!', 'success', 3000);
+                }, 2000);
 
-                    // Step 3: Load from Firebase (now has correct verses)
-                    setTimeout(() => {
-                        console.log('📥 Step 3: Loading from Firebase...');
-                        loadFromFirebase();
-                        showNotification('✅ Verses updated! Firebase is now source of truth.', 'success', 3000);
-                    }, 500);
-                }, 1500);
+                // Don't load from Firebase - HTML is the source of truth for new versions
             } else {
-                // Normal load: DON'T clear cells - preserve HTML content for new tabs
-                console.log('📥 Loading from Firebase (preserving HTML content)...');
-                // cellClasses.forEach(className => {
-                //     const cells = document.querySelectorAll(`.${className}[contenteditable="true"]`);
-                //     cells.forEach(cell => {
-                //         cell.innerHTML = '';
-                //     });
-                // });
-
-                showNotification('⏳ Loading from cloud...', 'info', 2000);
-                loadFromFirebase();
+                // Normal load: HTML is already correct, no need to load from Firebase
+                console.log('📄 Using HTML content (version', currentVersion, ')');
+                // Firebase loading disabled - HTML is source of truth
             }
 
             // Set up auto-save on every edit - ALL editable cells
