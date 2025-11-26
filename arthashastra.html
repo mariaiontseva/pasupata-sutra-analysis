@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arthaśāstra Reading Course - One Month Intensive</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fafafa;
+        }
+        h1, h2, h3 {
+            color: #8B4513;
+            border-bottom: 2px solid #8B4513;
+            padding-bottom: 10px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .week {
+            margin: 30px 0;
+            padding: 20px;
+            background-color: white;
+            border-left: 5px solid #8B4513;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .day {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: #fff8e7;
+            border-radius: 5px;
+        }
+        .sanskrit {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            background-color: #fff8e7;
+            padding: 10px;
+            border-left: 3px solid #d2691e;
+            margin: 10px 0;
+        }
+        .analysis {
+            background-color: #f0fff0;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 3px solid #228b22;
+        }
+        .translation {
+            background-color: #f0f8ff;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 3px solid #4169e1;
+            font-style: italic;
+        }
+        .vocab {
+            background-color: #fff5ee;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 3px solid #ff6347;
+        }
+        .grammar-tip {
+            background-color: #e6f3ff;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 3px solid #1e90ff;
+        }
+        .progress-tracker {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            min-width: 200px;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #ddd;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+        .progress-fill {
+            height: 100%;
+            background-color: #8B4513;
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        .completed {
+            background-color: #d4edda !important;
+            border-left-color: #28a745 !important;
+        }
+        button {
+            background-color: #8B4513;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #a0522d;
+        }
+        .table-style {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .table-style th, .table-style td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        .table-style th {
+            background-color: #8B4513;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Arthaśāstra Reading Course</h1>
+        <h2>Learn to Read Kautilya's Sanskrit from Scratch in 30 Days</h2>
+        <p><strong>Goal:</strong> Master chapters 1.1-1.4 of the Arthaśāstra to read fluently with comprehension</p>
+    </div>
+
+    <div class="progress-tracker">
+        <h3>Progress</h3>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <p>Day <span id="currentDay">1</span> of 30</p>
+        <p><span id="completedLessons">0</span> lessons completed</p>
+        <button onclick="markComplete()">Complete Today's Lesson</button>
+        <button onclick="resetProgress()">Reset Progress</button>
+    </div>
+
+    <!-- WEEK 1: FOUNDATION -->
+    <div class="week">
+        <h2>Week 1: Foundation (Days 1-7)</h2>
+        
+        <div class="day" id="day1">
+            <h3>Day 1: Introduction to Arthaśāstra Language</h3>
+            
+            <div class="sanskrit">
+                kṛṣipāśupālye vaṇijyā ca vārtā
+            </div>
+            
+            <div class="analysis">
+                <strong>Word breakdown:</strong><br>
+                • <strong>kṛṣi</strong> = agriculture (nom. sg. f. from √kṛṣ "to cultivate")<br>
+                • <strong>pāśupālye</strong> = animal husbandry (loc. sg. n. from paśu "animal" + pālana "protection")<br>
+                • <strong>vaṇijyā</strong> = trade, commerce (nom. sg. f. from √vaṇij "to trade")<br>
+                • <strong>ca</strong> = and (copulative particle)<br>
+                • <strong>vārtā</strong> = livelihood, economic activity (nom. sg. f.)
+            </div>
+            
+            <div class="translation">
+                Agriculture, animal husbandry, and trade constitute economic activity.
+            </div>
+            
+            <div class="vocab">
+                <strong>Key Vocabulary Day 1:</strong><br>
+                kṛṣi (agriculture), paśu (animal), pālana (protection), vaṇijyā (trade), vārtā (livelihood)
+            </div>
+            
+            <div class="grammar-tip">
+                <strong>Grammar Focus:</strong> Dvandva compound (kṛṣipāśupālye) - two activities joined together
+            </div>
+        </div>
+
+        <div class="day" id="day2">
+            <h3>Day 2: Economic Activities</h3>
+            
+            <div class="sanskrit">
+                dhānyapaśuhiraṇyakupyaviṣṭipradānād aupakārikī
+            </div>
+            
+            <div class="analysis">
+                <strong>Compound breakdown:</strong><br>
+                • <strong>dhānya</strong> = grains (from √dhā "to nourish")<br>
+                • <strong>paśu</strong> = livestock, animals<br>
+                • <strong>hiraṇya</strong> = gold, money<br>
+                • <strong>kupya</strong> = goods, articles (from √kup "to be suitable")<br>
+                • <strong>viṣṭi</strong> = labor, service<br>
+                • <strong>pradānāt</strong> = from giving, providing (abl. sg. from pra- + √dā)<br>
+                • <strong>aupakārikī</strong> = beneficial, helpful (fem. adj. from upakāra "help")
+            </div>
+            
+            <div class="translation">
+                It is beneficial through the provision of grains, livestock, gold, goods, and labor.
+            </div>
+            
+            <div class="vocab">
+                <strong>Key Vocabulary Day 2:</strong><br>
+                dhānya (grains), hiraṇya (gold/money), kupya (goods), viṣṭi (labor), pradāna (giving)
+            </div>
+        </div>
+
+        <div class="day" id="day3">
+            <h3>Day 3: Basic Sentence Structure</h3>
+            
+            <div class="sanskrit">
+                tayā svapakṣaṃ parapakṣaṃ ca vaśīkaroti
+            </div>
+            
+            <div class="analysis">
+                • <strong>tayā</strong> = by that (inst. sg. f. from tad "that")<br>
+                • <strong>svapakṣam</strong> = own party (acc. sg. from sva "own" + pakṣa "side")<br>
+                • <strong>parapakṣam</strong> = other party (acc. sg. from para "other" + pakṣa)<br>
+                • <strong>ca</strong> = and<br>
+                • <strong>vaśīkaroti</strong> = controls (3rd sg. pres. from vaśī- + √kṛ "to make subject")
+            </div>
+            
+            <div class="translation">
+                By that [economic activity], one controls both one's own party and the opposing party.
+            </div>
+            
+            <div class="grammar-tip">
+                <strong>Grammar Focus:</strong> Instrumental case (tayā) showing means/method
+            </div>
+        </div>
+
+        <div class="day" id="day4">
+            <h3>Day 4: Administrative Terms</h3>
+            
+            <div class="sanskrit">
+                koṣadaṇḍābhyāṃ anvīkṣikītrayīvārttānāṃ yogakṣemāsādhano daṇḍaḥ
+            </div>
+            
+            <div class="analysis">
+                • <strong>koṣa</strong> = treasury<br>
+                • <strong>daṇḍa</strong> = punishment, military force<br>
+                • <strong>ābhyām</strong> = by both (dual inst.)<br>
+                • <strong>anvīkṣikī</strong> = philosophy, logic<br>
+                • <strong>trayī</strong> = the three Vedas<br>
+                • <strong>vārttā</strong> = economics<br>
+                • <strong>yogakṣema</strong> = acquisition and preservation<br>
+                • <strong>āsādhanaḥ</strong> = accomplishing (from ā- + √sādh)
+            </div>
+            
+            <div class="translation">
+                Punishment/force, through treasury and military, accomplishes the acquisition and preservation of philosophy, Vedas, and economics.
+            </div>
+        </div>
+
+        <div class="day" id="day5">
+            <h3>Day 5: Compound Analysis Practice</h3>
+            
+            <div class="sanskrit">
+                tasya nītir daṇḍanītiḥ alabdhalābhārthā labdhapariprakṣaṇī
+            </div>
+            
+            <div class="analysis">
+                • <strong>tasya</strong> = of that (gen. sg.)<br>
+                • <strong>nītiḥ</strong> = policy, guidance<br>
+                • <strong>daṇḍanītiḥ</strong> = statecraft (daṇḍa + nīti)<br>
+                • <strong>alabdhalābhārthā</strong> = for gaining the ungained (compound)<br>
+                • <strong>labdhapariprakṣaṇī</strong> = protecting the gained (compound)
+            </div>
+            
+            <div class="translation">
+                Its policy is statecraft - for gaining what is not gained and protecting what is gained.
+            </div>
+        </div>
+
+        <div class="day" id="day6">
+            <h3>Day 6: Rulers and Administration</h3>
+            
+            <div class="sanskrit">
+                rakṣitavivardhanī vṛddhasya tīrthe pratipādanī ca
+            </div>
+            
+            <div class="analysis">
+                • <strong>rakṣita</strong> = protected (past participle)<br>
+                • <strong>vivardhanī</strong> = increasing, developing<br>
+                • <strong>vṛddhasya</strong> = of the increased (gen. sg.)<br>
+                • <strong>tīrthe</strong> = in holy place/proper place (loc. sg.)<br>
+                • <strong>pratipādanī</strong> = establishing, investing<br>
+                • <strong>ca</strong> = and
+            </div>
+            
+            <div class="translation">
+                And [it is] developing the protected [wealth] and properly investing what has increased.
+            </div>
+        </div>
+
+        <div class="day" id="day7">
+            <h3>Day 7: Week 1 Review</h3>
+            
+            <p><strong>Practice combining all sentences from this week:</strong></p>
+            
+            <div class="sanskrit">
+                kṛṣipāśupālye vaṇijyā ca vārtā dhānyapaśuhiraṇyakupyaviṣṭipradānād aupakārikī |<br>
+                tayā svapakṣaṃ parapakṣaṃ ca vaśīkaroti |
+            </div>
+            
+            <div class="vocab">
+                <strong>Week 1 Master Vocabulary (25 words):</strong><br>
+                kṛṣi, paśu, pālana, vaṇijyā, vārtā, dhānya, hiraṇya, kupya, viṣṭi, pradāna,<br>
+                svapakṣa, parapakṣa, vaśī, koṣa, daṇḍa, anvīkṣikī, trayī, yoga, kṣema,<br>
+                nīti, alabdha, lābha, labdha, rakṣita, vṛddha
+            </div>
+        </div>
+    </div>
+
+    <!-- WEEK 2: BUILDING FLUENCY -->
+    <div class="week">
+        <h2>Week 2: Building Fluency (Days 8-14)</h2>
+        
+        <div class="day" id="day8">
+            <h3>Day 8: Administrative Hierarchy</h3>
+            
+            <div class="sanskrit">
+                lokayātrā | tasmāl lokayātrārthaṃ nityam udyatadaṇḍaḥ syāt
+            </div>
+            
+            <div class="analysis">
+                • <strong>lokayātrā</strong> = welfare of people (loka "people" + yātrā "journey/maintenance")<br>
+                • <strong>tasmāt</strong> = therefore (abl. sg.)<br>
+                • <strong>lokayātrārtham</strong> = for the sake of people's welfare<br>
+                • <strong>nityam</strong> = always (adv.)<br>
+                • <strong>udyatadaṇḍaḥ</strong> = with raised punishment/ready force<br>
+                • <strong>syāt</strong> = should be (3rd sg. optative √as)
+            </div>
+            
+            <div class="translation">
+                [This is for] the welfare of people. Therefore, for the sake of people's welfare, one should always be ready with force.
+            </div>
+        </div>
+
+        <div class="day" id="day9">
+            <h3>Day 9: Governance Principles</h3>
+            
+            <div class="sanskrit">
+                na hy evamvidhaṃ vaśopanayanam asti bhūtānāṃ yathā daṇḍaḥ
+            </div>
+            
+            <div class="analysis">
+                • <strong>na hi</strong> = indeed not<br>
+                • <strong>evamvidham</strong> = of such kind (evam "thus" + vidha "kind")<br>
+                • <strong>vaśopanayanam</strong> = bringing under control<br>
+                • <strong>asti</strong> = exists (3rd sg. pres. √as)<br>
+                • <strong>bhūtānām</strong> = of beings (gen. pl.)<br>
+                • <strong>yathā</strong> = as, like<br>
+                • <strong>daṇḍaḥ</strong> = punishment, force
+            </div>
+            
+            <div class="translation">
+                Indeed, there is no such way of bringing beings under control as [through] force/punishment.
+            </div>
+        </div>
+
+        <div class="day" id="day10">
+            <h3>Day 10: Complex Compounds</h3>
+            
+            <div class="sanskrit">
+                iti kauṭilyaḥ | tīkṣṇadaṇḍo hi bhūtānām udvejaniyo bhavati
+            </div>
+            
+            <div class="analysis">
+                • <strong>iti</strong> = thus (quotative particle)<br>
+                • <strong>kauṭilyaḥ</strong> = Kautilya (author's name)<br>
+                • <strong>tīkṣṇadaṇḍaḥ</strong> = harsh punishment (tīkṣṇa "sharp" + daṇḍa)<br>
+                • <strong>hi</strong> = indeed, for<br>
+                • <strong>bhūtānām</strong> = for beings (gen. pl.)<br>
+                • <strong>udvejanivaḥ</strong> = causing fear/agitation (adj. from ud- + √vij)<br>
+                • <strong>bhavati</strong> = becomes (3rd sg. pres. √bhū)
+            </div>
+            
+            <div class="translation">
+                Thus [says] Kautilya: "Indeed, harsh punishment becomes frightening for beings."
+            </div>
+        </div>
+
+        <div class="day" id="day11">
+            <h3>Day 11: Balanced Governance</h3>
+            
+            <div class="sanskrit">
+                mṛdudaṇḍaḥ paribhūyate | yatharhadaṇḍaḥ pūjyate
+            </div>
+            
+            <div class="analysis">
+                • <strong>mṛdudaṇḍaḥ</strong> = mild punishment (mṛdu "soft" + daṇḍa)<br>
+                • <strong>paribhūyate</strong> = is despised (pass. 3rd sg. pres. from pari- + √bhū)<br>
+                • <strong>yatharhadaṇḍaḥ</strong> = appropriate punishment (yathārha "as fitting" + daṇḍa)<br>
+                • <strong>pūjyate</strong> = is respected (pass. 3rd sg. pres. from √pūj)
+            </div>
+            
+            <div class="translation">
+                Mild punishment is despised; appropriate punishment is respected.
+            </div>
+        </div>
+
+        <div class="day" id="day12">
+            <h3>Day 12: Quality of Justice</h3>
+            
+            <div class="sanskrit">
+                suvijñataprāṇito hi daṇḍaḥ prajā dharmārthakāmair yojayati
+            </div>
+            
+            <div class="analysis">
+                • <strong>suvijñataprāṇitaḥ</strong> = well-considered and administered<br>
+                • <strong>hi</strong> = indeed<br>
+                • <strong>daṇḍaḥ</strong> = punishment/justice<br>
+                • <strong>prajāḥ</strong> = subjects, people (acc. pl.)<br>
+                • <strong>dharmārthakāmaiḥ</strong> = with dharma, artha, and kama (inst. pl.)<br>
+                • <strong>yojayati</strong> = connects, engages (3rd sg. caus. from √yuj)
+            </div>
+            
+            <div class="translation">
+                Indeed, well-considered and administered justice engages people with dharma, artha, and kama.
+            </div>
+        </div>
+
+        <div class="day" id="day13">
+            <h3>Day 13: Consequences of Poor Governance</h3>
+            
+            <div class="sanskrit">
+                duṣpraṇītaḥ kāmakrodhābhyām avajñānād vā vanaprasthaparivrājakān api kopayati
+            </div>
+            
+            <div class="analysis">
+                • <strong>duṣpraṇītaḥ</strong> = poorly administered (duṣ- + praṇīta)<br>
+                • <strong>kāmakrodhābhyām</strong> = from desire and anger (dual inst.)<br>
+                • <strong>avajñānāt</strong> = from contempt/ignorance (abl. sg.)<br>
+                • <strong>vā</strong> = or<br>
+                • <strong>vanaprasthaparivrājakān</strong> = forest hermits and wandering ascetics (acc. pl.)<br>
+                • <strong>api</strong> = even<br>
+                • <strong>kopayati</strong> = angers (3rd sg. caus. from √kup)
+            </div>
+            
+            <div class="translation">
+                [When] poorly administered from desire and anger or from ignorance, it angers even forest hermits and wandering ascetics.
+            </div>
+        </div>
+
+        <div class="day" id="day14">
+            <h3>Day 14: Week 2 Review & Assessment</h3>
+            
+            <p><strong>Fluency Test: Read this passage without looking at analysis first:</strong></p>
+            
+            <div class="sanskrit">
+                kṛṣipāśupālye vaṇijyā ca vārtā dhānyapaśuhiraṇyakupyaviṣṭipradānād aupakārikī |<br>
+                tayā svapakṣaṃ parapakṣaṃ ca vaśīkaroti | lokayātrārthaṃ nityam udyatadaṇḍaḥ syāt |<br>
+                tīkṣṇadaṇḍo hi bhūtānām udvejaniyo bhavati | mṛdudaṇḍaḥ paribhūyate |<br>
+                yatharhadaṇḍaḥ pūjyate |
+            </div>
+            
+            <p><em>Can you read this fluently and understand the main ideas? If yes, you're ready for Week 3!</em></p>
+        </div>
+    </div>
+
+    <!-- WEEK 3: ADVANCED READING -->
+    <div class="week">
+        <h2>Week 3: Advanced Reading (Days 15-21)</h2>
+        
+        <div class="day" id="day15">
+            <h3>Day 15: Royal Duties</h3>
+            
+            <div class="sanskrit">
+                kim aṅga punar gṛhasthān | apraṇītaś ca na mātsyanyāyam udbhāvayati
+            </div>
+            
+            <div class="analysis">
+                • <strong>kim aṅga punar</strong> = what then about (emphatic expression)<br>
+                • <strong>gṛhasthān</strong> = householders (acc. pl.)<br>
+                • <strong>apraṇītaḥ</strong> = not administered, ungoverned<br>
+                • <strong>ca</strong> = and<br>
+                • <strong>na</strong> = not<br>
+                • <strong>mātsyanyāyam</strong> = law of fish (big fish eating small fish)<br>
+                • <strong>udbhāvayati</strong> = brings about (3rd sg. caus. from ud- + √bhū)
+            </div>
+            
+            <div class="translation">
+                What then about householders? And [when] not administered, it brings about the law of fish [anarchy].
+            </div>
+        </div>
+
+        <div class="day" id="day16">
+            <h3>Day 16: Social Order</h3>
+            
+            <div class="sanskrit">
+                balīyān abalam hi grasate daṇḍadharābhāve | sa tena guptaḥ prabhāvavati
+            </div>
+            
+            <div class="analysis">
+                • <strong>balīyān</strong> = stronger one (comparative from bala "strength")<br>
+                • <strong>abalam</strong> = weak one (acc. sg.)<br>
+                • <strong>hi</strong> = indeed<br>
+                • <strong>grasate</strong> = devours (3rd sg. pres. from √gras)<br>
+                • <strong>daṇḍadharābhāve</strong> = in absence of authority (loc. sg.)<br>
+                • <strong>sa</strong> = he<br>
+                • <strong>tena</strong> = by that (inst.)<br>
+                • <strong>guptaḥ</strong> = protected (past part.)<br>
+                • <strong>prabhāvavati</strong> = has power, prospers (3rd sg. from pra- + √bhū)
+            </div>
+            
+            <div class="translation">
+                Indeed, the stronger devours the weak in the absence of authority. Protected by that [authority], one prospers.
+            </div>
+        </div>
+
+        <div class="day" id="day17">
+            <h3>Day 17: Chapter 1.4 - Full Context</h3>
+            
+            <div class="sanskrit">
+                anvīkṣikītrayīvārttā daṇḍanītiś ca vidyāḥ | anvīkṣikī sāṃkhyayogalokāyatatva
+            </div>
+            
+            <div class="analysis">
+                • <strong>anvīkṣikītrayīvārttā</strong> = philosophy-Vedas-economics (compound)<br>
+                • <strong>daṇḍanītiḥ</strong> = statecraft<br>
+                • <strong>ca</strong> = and<br>
+                • <strong>vidyāḥ</strong> = sciences, knowledge (nom. pl.)<br>
+                • <strong>anvīkṣikī</strong> = philosophy<br>
+                • <strong>sāṃkhyayogalokāyatatva</strong> = Sāṃkhya, Yoga, and Lokāyata systems
+            </div>
+            
+            <div class="translation">
+                Philosophy, the Vedas, economics, and statecraft are the sciences. Philosophy [includes] Sāṃkhya, Yoga, and Lokāyata systems.
+            </div>
+        </div>
+
+        <div class="day" id="day18">
+            <h3>Day 18: Philosophical Schools</h3>
+            
+            <div class="sanskrit">
+                trayī ṛgvajuḥsāmākhyā | vārtā kṛṣipāśupālyavaṇijyā | sā eva daṇḍanītiḥ
+            </div>
+            
+            <div class="analysis">
+                • <strong>trayī</strong> = the three [Vedas]<br>
+                • <strong>ṛgvajuḥsāmākhyā</strong> = called Ṛg, Yajur, and Sāma<br>
+                • <strong>vārtā</strong> = economics<br>
+                • <strong>kṛṣipāśupālyavaṇijyā</strong> = agriculture, cattle-rearing, and trade<br>
+                • <strong>sā eva</strong> = that very<br>
+                • <strong>daṇḍanītiḥ</strong> = statecraft
+            </div>
+            
+            <div class="translation">
+                The three [Vedas] are called Ṛg, Yajur, and Sāma. Economics [includes] agriculture, cattle-rearing, and trade. That very [knowledge] is statecraft.
+            </div>
+        </div>
+
+        <div class="day" id="day19">
+            <h3>Day 19: Practical Application</h3>
+            
+            <div class="sanskrit">
+                caturṇām api varṇānām āśramācārajīvane rakṣikā | arthāvṛddhikarmāṇām upāyavatī
+            </div>
+            
+            <div class="analysis">
+                • <strong>caturṇām api</strong> = of all four (gen. pl. with api)<br>
+                • <strong>varṇānām</strong> = of castes (gen. pl.)<br>
+                • <strong>āśramācārajīvane</strong> = in āśrama conduct and livelihood<br>
+                • <strong>rakṣikā</strong> = protector (fem. adj.)<br>
+                • <strong>arthāvṛddhikarmāṇām</strong> = of wealth-increasing activities<br>
+                • <strong>upāyavatī</strong> = providing means (fem. adj.)
+            </div>
+            
+            <div class="translation">
+                [It is] the protector of the conduct and livelihood of all four castes in their āśramas, providing means for wealth-increasing activities.
+            </div>
+        </div>
+
+        <div class="day" id="day20">
+            <h3>Day 20: Comprehensive Reading</h3>
+            
+            <p><strong>Read this complete passage from Arthaśāstra 1.4.1-4:</strong></p>
+            
+            <div class="sanskrit">
+                kṛṣipāśupālye vaṇijyā ca vārtā dhānyapaśuhiraṇyakupyaviṣṭipradānād aupakārikī |<br>
+                tayā svapakṣaṃ parapakṣaṃ ca vaśīkaroti koṣadaṇḍābhyāṃ |<br>
+                anvīkṣikītrayīvārttānāṃ yogakṣemāsādhano daṇḍaḥ | tasya nītir daṇḍanītiḥ |<br>
+                alabdhalābhārthā labdhapariprakṣaṇī rakṣitavivardhanī vṛddhasya tīrthe pratipādanī ca ||
+            </div>
+            
+            <div class="translation">
+                <em>Test yourself: Can you read and understand this without looking at previous analyses?</em>
+            </div>
+        </div>
+
+        <div class="day" id="day21">
+            <h3>Day 21: Week 3 Mastery Check</h3>
+            
+            <p><strong>Reading Fluency Assessment:</strong></p>
+            <p>Time yourself reading the passage below. Goal: Under 2 minutes with 80% comprehension.</p>
+            
+            <div class="sanskrit">
+                anvīkṣikītrayīvārttā daṇḍanītiś ca vidyāḥ | trayī ṛgvajuḥsāmākhyā |<br>
+                anvīkṣikī sāṃkhyayogalokāyatattvam | vārtā kṛṣipāśupālyavaṇijyā |<br>
+                daṇḍanītiḥ caturṇām api varṇānām āśramācārajīvane rakṣikārthāvṛddhikarmāṇām upāyavatī |<br>
+                kṛṣipāśupālye vaṇijyā ca vārtā dhānyapaśuhiraṇyakupyaviṣṭipradānād aupakārikī ||
+            </div>
+            
+            <p><em>If you can read this fluently, you're ready for the final week!</em></p>
+        </div>
+    </div>
+
+    <!-- WEEK 4: MASTERY -->
+    <div class="week">
+        <h2>Week 4: Mastery & Independent Reading (Days 22-30)</h2>
+        
+        <div class="day" id="day22">
+            <h3>Day 22: Independent Reading - Chapter 1.1</h3>
+            
+            <p><strong>Challenge:</strong> Read this new passage without any help first, then check analysis.</p>
+            
+            <div class="sanskrit">
+                sukhasyāmūlaṃ dharmaḥ | dharmasya mūlam arthaḥ | arthasya mūlaṃ rājyam |<br>
+                rājyasya mūlaṃ indriyajayaḥ | indriyajayasya mūlaṃ vinayaḥ |<br>
+                vinayasya mūlaṃ vṛddhasevā | vṛddhasevā vidyālābhaḥ ||
+            </div>
+            
+            <details>
+                <summary>Click for analysis (try without first!)</summary>
+                <div class="analysis">
+                    • <strong>sukhasya</strong> = of happiness (gen. sg.)<br>
+                    • <strong>amūlam</strong> = root (nom. sg.)<br>
+                    • <strong>dharmaḥ</strong> = dharma, righteousness<br>
+                    • <strong>mūlam</strong> = root<br>
+                    • <strong>arthaḥ</strong> = wealth, prosperity<br>
+                    • <strong>rājyam</strong> = kingdom, rule<br>
+                    • <strong>indriyajayaḥ</strong> = mastery of senses<br>
+                    • <strong>vinayaḥ</strong> = discipline, training<br>
+                    • <strong>vṛddhasevā</strong> = service to elders<br>
+                    • <strong>vidyālābhaḥ</strong> = acquisition of knowledge
+                </div>
+            </details>
+        </div>
+
+        <div class="day" id="day23">
+            <h3>Day 23: Speed Reading Practice</h3>
+            
+            <p><strong>Goal:</strong> Read each passage in under 30 seconds</p>
+            
+            <div class="sanskrit">
+                <p><strong>Passage 1:</strong><br>
+                ācāryāt pādamādatte | pādaṃ śiṣyaḥ svamedhayā |<br>
+                pādaṃ sabrahmacāribhyaḥ | pādaṃ kālakrameṇa ca ||</p>
+                
+                <p><strong>Passage 2:</strong><br>
+                vidyāvinayasampanne brāhmaṇe gṛhamedhini |<br>
+                annaṃ dadyāt yathāśakti śraddhayā parayā yutaḥ ||</p>
+                
+                <p><strong>Passage 3:</strong><br>
+                rājadharmāṃs tataḥ śikṣen naro rājyaparāyaṇaḥ |<br>
+                vinayānvitacittasya sarvaṃ caitad anāyāsam ||</p>
+            </div>
+        </div>
+
+        <div class="day" id="day24">
+            <h3>Day 24: Complex Syntax</h3>
+            
+            <p>Master these challenging constructions from Arthaśāstra:</p>
+            
+            <div class="sanskrit">
+                apeyacārakair eva strīpuruṣāṇām antargatacittāvalokanasahāyeṣu |<br>
+                adhyakṣeṣu praṇidhijālasya vyavasthā | tathaiva deśakālakarmāvalokanārtham |<br>
+                purohitāmātyasenāpatirājñaś ca śikṣāvidhānaṃ prakaraṇamadhyāyaparichedebhyaḥ ||
+            </div>
+            
+            <details>
+                <summary>Advanced Analysis</summary>
+                <div class="analysis">
+                    This passage deals with espionage systems and administrative surveillance in the kingdom, demonstrating the complex administrative vocabulary of the Arthaśāstra.
+                </div>
+            </details>
+        </div>
+
+        <div class="day" id="day25-30">
+            <h3>Days 25-30: Final Mastery Project</h3>
+            
+            <p><strong>Project:</strong> Create your own analysis of Arthaśāstra 1.5 (not provided here)</p>
+            
+            <div class="task">
+                <h4>Your Assignment:</h4>
+                <ol>
+                    <li>Find Arthaśāstra 1.5 text from GRETIL</li>
+                    <li>Read through it completely</li>
+                    <li>Create word-by-word analysis for 5 verses</li>
+                    <li>Write a summary in English</li>
+                    <li>Identify 20 new vocabulary words</li>
+                </ol>
+            </div>
+            
+            <div class="grammar-tip">
+                <strong>Congratulations!</strong> If you've completed this course, you should now be able to read Arthaśāstra Sanskrit with reasonable fluency. You've learned over 100 key terms and mastered the complex compound structures typical of classical administrative Sanskrit.
+            </div>
+        </div>
+    </div>
+
+    <!-- REFERENCE SECTION -->
+    <div class="week">
+        <h2>Reference Materials</h2>
+        
+        <table class="table-style">
+            <tr>
+                <th>Category</th>
+                <th>Key Terms</th>
+                <th>Meaning</th>
+            </tr>
+            <tr>
+                <td rowspan="5">Economics</td>
+                <td>kṛṣi</td>
+                <td>Agriculture</td>
+            </tr>
+            <tr>
+                <td>pāśupālya</td>
+                <td>Animal husbandry</td>
+            </tr>
+            <tr>
+                <td>vaṇijyā</td>
+                <td>Trade, commerce</td>
+            </tr>
+            <tr>
+                <td>dhānya</td>
+                <td>Grains</td>
+            </tr>
+            <tr>
+                <td>hiraṇya</td>
+                <td>Gold, money</td>
+            </tr>
+            <tr>
+                <td rowspan="5">Administration</td>
+                <td>daṇḍa</td>
+                <td>Punishment, force</td>
+            </tr>
+            <tr>
+                <td>nīti</td>
+                <td>Policy, statecraft</td>
+            </tr>
+            <tr>
+                <td>koṣa</td>
+                <td>Treasury</td>
+            </tr>
+            <tr>
+                <td>rājya</td>
+                <td>Kingdom</td>
+            </tr>
+            <tr>
+                <td>adhyakṣa</td>
+                <td>Superintendent</td>
+            </tr>
+            <tr>
+                <td rowspan="3">Knowledge</td>
+                <td>anvīkṣikī</td>
+                <td>Philosophy</td>
+            </tr>
+            <tr>
+                <td>trayī</td>
+                <td>Three Vedas</td>
+            </tr>
+            <tr>
+                <td>vidyā</td>
+                <td>Knowledge, science</td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        let currentDay = 1;
+        let completedLessons = 0;
+        const totalLessons = 30;
+
+        // Load progress from localStorage
+        function loadProgress() {
+            const saved = localStorage.getItem('arthashastra_progress');
+            if (saved) {
+                const progress = JSON.parse(saved);
+                currentDay = progress.day || 1;
+                completedLessons = progress.completed || 0;
+                updateDisplay();
+            }
+        }
+
+        // Save progress to localStorage
+        function saveProgress() {
+            localStorage.setItem('arthashastra_progress', JSON.stringify({
+                day: currentDay,
+                completed: completedLessons
+            }));
+        }
+
+        // Update display elements
+        function updateDisplay() {
+            document.getElementById('currentDay').textContent = currentDay;
+            document.getElementById('completedLessons').textContent = completedLessons;
+            document.getElementById('progressFill').style.width = (completedLessons / totalLessons * 100) + '%';
+            
+            // Mark completed days
+            for (let i = 1; i <= completedLessons; i++) {
+                const dayElement = document.getElementById('day' + i);
+                if (dayElement) {
+                    dayElement.classList.add('completed');
+                }
+            }
+        }
+
+        // Mark current lesson as complete
+        function markComplete() {
+            if (completedLessons < totalLessons) {
+                completedLessons++;
+                if (currentDay < totalLessons) {
+                    currentDay++;
+                }
+                saveProgress();
+                updateDisplay();
+                
+                if (completedLessons === totalLessons) {
+                    alert('🎉 Congratulations! You have completed the Arthaśāstra reading course!');
+                }
+            }
+        }
+
+        // Reset progress
+        function resetProgress() {
+            if (confirm('Are you sure you want to reset all progress?')) {
+                currentDay = 1;
+                completedLessons = 0;
+                localStorage.removeItem('arthashastra_progress');
+                
+                // Remove completed styling
+                document.querySelectorAll('.day').forEach(day => {
+                    day.classList.remove('completed');
+                });
+                
+                updateDisplay();
+            }
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProgress();
+        });
+    </script>
+</body>
+</html>
