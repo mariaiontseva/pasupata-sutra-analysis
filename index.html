@@ -494,9 +494,9 @@
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', () => {
-            const currentVersion = '17.0';
+            const currentVersion = '18.0';  // Bumped for VBT mangala verses
             const storedVersion = localStorage.getItem('pasupata_version');
-            const cellClasses = ['sanskrit', 'words', 'literal', 'translation', 'grammar', 'meaning', 'jims'];
+            const cellClasses = ['sanskrit', 'words', 'literal', 'translation', 'grammar', 'meaning', 'jims', 'marks'];
 
             if (storedVersion !== currentVersion) {
                 // VERSION CHANGED - I updated HTML, reset Firebase
@@ -529,7 +529,8 @@
                 '.translation[contenteditable="true"], ' +
                 '.grammar[contenteditable="true"], ' +
                 '.meaning[contenteditable="true"], ' +
-                '.jims[contenteditable="true"]'
+                '.jims[contenteditable="true"], ' +
+                '.marks[contenteditable="true"]'
             );
 
             console.log('📝 Found', editableCells.length, 'editable cells');
